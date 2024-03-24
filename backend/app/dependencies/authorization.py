@@ -1,17 +1,19 @@
-from http import HTTPStatus
 from typing import Annotated
 
-from fastapi import Depends, HTTPException, Request
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-
-from app.lib.oauth2.token_validator import (
-    ValidatorError,
-    ZitadelIntrospectTokenValidator,
+from fastapi import Depends, Request
+from fastapi.security import (
+    HTTPAuthorizationCredentials,
+    HTTPBearer,
+    OAuth2AuthorizationCodeBearer,
 )
 
 token_auth_scheme = HTTPBearer()
 
-validator = ZitadelIntrospectTokenValidator()
+oauth2_scheme = OAuth2AuthorizationCodeBearer(
+    authorizationUrl="YOUR_ZITADEL_AUTHORIZATION_URL",
+    tokenUrl="YOUR_ZITADEL_TOKEN_URL",
+    scopes={"openid": "Access to OpenID Connect"},
+)
 
 
 async def auth_required(
@@ -24,17 +26,3 @@ async def auth_required(
     ],
 ) -> None:
     """Check if the user is authorized."""
-    validator.validate_request(request)
-    auth_token = validator.authenticate_token(token.credentials)
-
-    try:
-        validator.validate_token(
-            token=auth_token,
-            scopes=auth_token.get("scope"),
-            request=request,
-        )
-    except ValidatorError as err:
-        raise HTTPException(
-            status_code=HTTPStatus.UNAUTHORIZED,
-            detail=err.error,
-        ) from err
