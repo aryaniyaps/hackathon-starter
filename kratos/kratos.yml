@@ -1,10 +1,12 @@
+version: v1.0.0
+
 serve:
   public:
-    base_url: http://127.0.0.1:4433/
+    base_url: http://localhost:4433/
     cors:
       enabled: true
       allowed_origins:
-        - http://127.0.0.1:3000
+        - http://localhost:3000
       allowed_methods:
         - POST
         - GET
@@ -23,15 +25,16 @@ serve:
 
 session:
   cookie:
+    domain: localhost
     name: session
   whoami:
     # users can use the application without completing a second factor
     required_aal: aal1
 
 selfservice:
-  default_browser_return_url: http://127.0.0.1:3000/
+  default_browser_return_url: http://localhost:3000/
   allowed_return_urls:
-    - http://127.0.0.1:3000/
+    - http://localhost:3000/
 
   methods:
     password:
@@ -45,36 +48,41 @@ selfservice:
           # Set 'id' to the top-level domain.
           id: localhost
           # Set 'origin' to the exact URL of the page that prompts the user to use WebAuthn. You must include the scheme, host, and port.
-          origin: http://127.0.0.1:3000
+          origin: http://localhost:3000
+    oidc:
+      enabled: true
 
   flows:
     settings:
-      ui_url: http://127.0.0.1:3000/settings
+      ui_url: http://localhost:3000/settings
       required_aal: highest_available
 
     verification:
-      ui_url: http://127.0.0.1:3000/verification
+      ui_url: http://localhost:3000/verification
       enabled: true
 
     recovery:
-      ui_url: http://127.0.0.1:3000/recovery
+      ui_url: http://localhost:3000/recovery
       enabled: false
 
     logout:
       after:
-        default_browser_return_url: http://127.0.0.1:3000/login
+        default_browser_return_url: http://localhost:3000/login
 
     login:
-      ui_url: http://127.0.0.1:3000/login
+      ui_url: http://localhost:3000/login
 
     registration:
-      ui_url: http://127.0.0.1:3000/registration
+      ui_url: http://localhost:3000/registration
       after:
         webauthn:
           hooks:
             - hook: session
+        oidc:
+          hooks:
+            - hook: session
     error:
-      ui_url: http://127.0.0.1:3000/error
+      ui_url: http://localhost:3000/error
 
 log:
   level: debug
