@@ -30,6 +30,7 @@
         "username": {
           "type": "string",
           "title": "Username",
+          "pattern": "^[a-z0-9_]$",
           "minLength": 3,
           "maxLength": 32
         }
