@@ -1,8 +1,32 @@
 serve:
   public:
     base_url: http://127.0.0.1:4433/
+    cors:
+      enabled: true
+      allowed_origins:
+        - http://127.0.0.1:3000
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+      allowed_headers:
+        - Authorization
+        - Cookie
+        - Content-Type
+      exposed_headers:
+        - Content-Type
+        - Set-Cookie
   admin:
     base_url: http://kratos:4434/
+
+session:
+  cookie:
+    name: session
+  whoami:
+    # users can use the application without completing a second factor
+    required_aal: aal1
 
 selfservice:
   default_browser_return_url: http://127.0.0.1:3000/
@@ -11,15 +35,26 @@ selfservice:
 
   methods:
     password:
+      enabled: false
+    webauthn:
       enabled: true
+      config:
+        passwordless: true
+        rp:
+          display_name: Starter
+          # Set 'id' to the top-level domain.
+          id: localhost
+          # Set 'origin' to the exact URL of the page that prompts the user to use WebAuthn. You must include the scheme, host, and port.
+          origin: http://127.0.0.1:3000
 
   flows:
     settings:
       ui_url: http://127.0.0.1:3000/settings
+      required_aal: highest_available
 
     verification:
       ui_url: http://127.0.0.1:3000/verification
-      enabled: false
+      enabled: true
 
     recovery:
       ui_url: http://127.0.0.1:3000/recovery
@@ -35,7 +70,7 @@ selfservice:
     registration:
       ui_url: http://127.0.0.1:3000/registration
       after:
-        password:
+        webauthn:
           hooks:
             - hook: session
     error:
@@ -43,14 +78,6 @@ selfservice:
 
 log:
   level: debug
-
-hashers:
-  argon2:
-    parallelism: 1
-    memory: 128KB
-    iterations: 2
-    salt_length: 16
-    key_length: 16
 
 identity:
   schemas:
