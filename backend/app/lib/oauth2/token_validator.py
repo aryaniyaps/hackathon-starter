@@ -4,6 +4,7 @@ import time
 import requests
 from authlib.jose import jwt
 from authlib.oauth2.rfc7662 import IntrospectTokenValidator
+from fastapi import Request
 
 from app.config import settings
 
@@ -11,10 +12,9 @@ API_PRIVATE_KEY_FILE = {}
 
 
 class ValidatorError(Exception):
-    def __init__(self, error: dict[str, str], status_code: int):
+    def __init__(self, error: dict[str, str]):
         super().__init__()
         self.error = error
-        self.status_code = status_code
 
 
 class ZitadelIntrospectTokenValidator(IntrospectTokenValidator):
@@ -30,7 +30,7 @@ class ZitadelIntrospectTokenValidator(IntrospectTokenValidator):
             API_PRIVATE_KEY_FILE["key_id"] = data["keyId"]
             API_PRIVATE_KEY_FILE["private_key"] = data["key"]
 
-    def introspect_token(self, token_string):
+    def introspect_token(self, token_string: str):
         # Create JWT for client assertion
         payload = {
             "iss": API_PRIVATE_KEY_FILE["client_id"],
@@ -73,23 +73,20 @@ class ZitadelIntrospectTokenValidator(IntrospectTokenValidator):
                 return True
         return False
 
-    def validate_token(self, token, scopes, request):
+    def validate_token(self, token, scopes, request: Request) -> None:
         print(f"Token: {token}\n")
         now = int(time.time())
         if not token:
             raise ValidatorError(
                 {"code": "invalid_token_revoked", "description": "Token was revoked."},
-                401,
             )
         if not token.get("active"):
             raise ValidatorError(
                 {"code": "invalid_token_inactive", "description": "Token is inactive."},
-                401,
             )
         if token["exp"] < now:
             raise ValidatorError(
                 {"code": "invalid_token_expired", "description": "Token has expired."},
-                401,
             )
         if not self.match_token_scopes(token, scopes):
             raise ValidatorError(
@@ -97,10 +94,9 @@ class ZitadelIntrospectTokenValidator(IntrospectTokenValidator):
                     "code": "insufficient_scope",
                     "description": f"Token has insufficient scope. Route requires: {scopes}",
                 },
-                401,
             )
 
-    def __call__(self, token_string, scopes, request):
+    def __call__(self, token_string: str, scopes, request: Request):
         token = self.introspect_token(token_string)
         self.validate_token(token, scopes, request)
         return token
