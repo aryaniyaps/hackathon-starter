@@ -10,16 +10,31 @@
         "email": {
           "type": "string",
           "format": "email",
-          "title": "E-Mail",
+          "title": "Email address",
           "minLength": 3,
+          "maxLength": 255,
           "ory.sh/kratos": {
             "verification": {
               "via": "email"
+            },
+            "recovery": {
+              "via": "email"
+            },
+            "credentials": {
+              "webauthn": {
+                "identifier": true
+              }
             }
           }
+        },
+        "username": {
+          "type": "string",
+          "title": "Username",
+          "minLength": 3,
+          "maxLength": 32
         }
       },
-      "required": ["email"]
+      "required": ["email", "username"]
     }
   },
   "additionalProperties": false

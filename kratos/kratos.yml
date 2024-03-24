@@ -63,7 +63,7 @@ selfservice:
 
     recovery:
       ui_url: http://localhost:3000/recovery
-      enabled: false
+      enabled: true
 
     logout:
       after:
