@@ -1,4 +1,4 @@
-version: v1.0.0
+version: v1.1.0
 
 serve:
   public:
@@ -39,6 +39,20 @@ selfservice:
   methods:
     password:
       enabled: false
+    totp:
+      config:
+        issuer: issuer.ory.sh
+      enabled: true
+    lookup_secret:
+      enabled: true
+    link:
+      enabled: true
+      config:
+        lifespan: 1h
+    code:
+      enabled: true
+      config:
+        lifespan: 1h
     webauthn:
       enabled: true
       config:
@@ -48,14 +62,26 @@ selfservice:
           # Set 'id' to the top-level domain.
           id: localhost
           # Set 'origin' to the exact URL of the page that prompts the user to use WebAuthn. You must include the scheme, host, and port.
-          origin: http://localhost:3000
+          origins:
+            - http://localhost:3000
     oidc:
       enabled: true
+      config:
+        providers:
+          - id: google
+            provider: google
+            client_id: client_id
+            client_secret: client_secret
+            issuer_url: https://accounts.google.com
+            mapper_url: "base64://{YOUR_BASE64_ENCODED_JSONNET_HERE}"
+            scope:
+              - email
 
   flows:
     settings:
       ui_url: http://localhost:3000/settings
       required_aal: highest_available
+      privileged_session_max_age: 15m
 
     verification:
       ui_url: http://localhost:3000/verification
@@ -73,11 +99,13 @@ selfservice:
       ui_url: http://localhost:3000/login
 
     registration:
+      lifespan: 15m
       ui_url: http://localhost:3000/registration
       after:
         webauthn:
           hooks:
             - hook: session
+            - hook: show_verification_ui
         oidc:
           hooks:
             - hook: session

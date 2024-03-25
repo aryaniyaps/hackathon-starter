@@ -1,10 +1,52 @@
 version: "3.7"
 
 services:
+  postgres:
+    image: "bitnami/postgresql:16"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRESQL_USERNAME: user
+      POSTGRESQL_PASSWORD: pass
+      POSTGRESQL_DATABASE: kratos
+    volumes:
+      - "postgres_data:/bitnami/postgresql"
+
+  apisix:
+    image: apache/apisix:3.8.0-debian
+    restart: always
+    volumes:
+      - ./apisix/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+    depends_on:
+      - etcd
+    ports:
+      - "9180:9180/tcp"
+      - "9080:9080/tcp"
+      - "9091:9091/tcp"
+      - "9443:9443/tcp"
+      - "9092:9092/tcp"
+    networks:
+      - apisix
+
+  etcd:
+    image: bitnami/etcd:3.5.11
+    restart: always
+    volumes:
+      - etcd_data:/bitnami/etcd
+    environment:
+      ETCD_ENABLE_V2: "true"
+      ALLOW_NONE_AUTHENTICATION: "yes"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://etcd:2379"
+      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+    ports:
+      - "2379:2379/tcp"
+    networks:
+      - apisix
+
   hydra-migrate:
     image: oryd/hydra:v2.1.1
     environment:
-      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true&mode=rwc
+      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
     volumes:
       - type: volume
         source: hydra-sqlite
@@ -28,16 +70,16 @@ services:
       serve all --dev
     restart: on-failure # TODO figure out why we need this (incorporate health check into hydra migrate command?)
     environment:
-      - LOG_LEAK_SENSITIVE_VALUES=true
-      - URLS_SELF_ISSUER=http://127.0.0.1:4444
-      - URLS_SELF_PUBLIC=http://127.0.0.1:4444
-      - URLS_CONSENT=http://127.0.0.1:3000/consent
-      - URLS_LOGIN=http://127.0.0.1:3000/login
-      - URLS_LOGOUT=http://127.0.0.1:3000/logout
-      - SECRETS_SYSTEM=youReallyNeedToChangeThis
-      - OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES=public,pairwise
-      - OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT=youReallyNeedToChangeThis
-      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true&mode=rwc
+      LOG_LEAK_SENSITIVE_VALUES: true
+      URLS_SELF_ISSUER: http://127.0.0.1:4444
+      URLS_SELF_PUBLIC: http://127.0.0.1:4444
+      URLS_CONSENT: http://127.0.0.1:3000/consent
+      URLS_LOGIN: http://127.0.0.1:3000/login
+      URLS_LOGOUT: http://127.0.0.1:3000/logout
+      SECRETS_SYSTEM: youReallyNeedToChangeThis
+      OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES: public,pairwise
+      OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT: youReallyNeedToChangeThis
+      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
     networks:
       - intranet
     volumes:
@@ -49,11 +91,11 @@ services:
   kratos-selfservice-ui-node:
     image: oryd/kratos-selfservice-ui-node:v0.13.0-4
     environment:
-      - HYDRA_ADMIN_URL=http://hydra:4445
-      - KRATOS_PUBLIC_URL=http://kratos:4433
-      - KRATOS_ADMIN_URL=http://kratos:4434
-      - SECURITY_MODE=standalone
-      - KRATOS_BROWSER_URL=http://127.0.0.1:4433
+      HYDRA_ADMIN_URL: http://hydra:4445
+      KRATOS_PUBLIC_URL: http://kratos:4433
+      KRATOS_ADMIN_URL: http://kratos:4434
+      SECURITY_MODE: standalone
+      KRATOS_BROWSER_URL: http://127.0.0.1:4433
 
     ports:
       - "3000:3000"
@@ -65,7 +107,7 @@ services:
   kratos-migrate:
     image: oryd/kratos:v1.0.0
     environment:
-      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true&mode=rwc
+      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
     volumes:
       - type: volume
         source: kratos-sqlite
@@ -88,7 +130,7 @@ services:
       - "4434:4434" # admin
     restart: unless-stopped
     environment:
-      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
+      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
     command: serve -c /etc/config/kratos/kratos.yml --dev
     volumes:
       - type: volume
@@ -110,9 +152,18 @@ services:
       - intranet
 
 networks:
+  apisix:
+    driver: bridge
   intranet:
+    driver: bridge
 
 volumes:
   kratos-sqlite:
 
   hydra-sqlite:
+
+  etcd_data:
+    driver: local
+
+  postgres_data:
+    driver: local

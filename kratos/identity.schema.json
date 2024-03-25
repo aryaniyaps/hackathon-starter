@@ -12,7 +12,6 @@
           "format": "email",
           "title": "Email address",
           "minLength": 3,
-          "maxLength": 255,
           "ory.sh/kratos": {
             "verification": {
               "via": "email"

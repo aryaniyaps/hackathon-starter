@@ -1,0 +1,8 @@
+apisix:
+  node_listen: 9080              # APISIX listening port
+  enable_ipv6: false
+
+  enable_control: true
+  control:
+    ip: "0.0.0.0"
+    port: 9092
