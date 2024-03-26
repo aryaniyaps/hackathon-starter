@@ -2,6 +2,10 @@
   "id": "${KC_REALM_NAME}",
   "realm": "${KC_REALM_NAME}",
   "sslRequired": "none",
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
+  "rememberMe": true,
+  "verifyEmail": true,
   "enabled": true,
   "eventsEnabled": true,
   "eventsExpiration": 900,
@@ -9,6 +13,15 @@
   "adminEventsDetailsEnabled": true,
   "attributes": {
     "adminEventsExpiration": "900"
+  },
+  "smtpServer": {
+    "from": "noreply@example.org",
+    "fromDisplayName": "Starter",
+    "host": "mailhog",
+    "port": "1025",
+    "ssl": "false",
+    "starttls": "false",
+    "auth": "false"
   },
   "clients": [
     {
@@ -67,24 +80,24 @@
       }
     }
   ],
-  "users": [
+  "users": [],
+  "identityProviders": [
     {
-      "id": "admin",
-      "email": "admin@admin",
-      "username": "admin",
-      "firstName": "Aryan",
-      "lastName": "Iyappan",
+      "alias": "google",
+      "providerId": "google",
       "enabled": true,
-      "emailVerified": true,
-      "credentials": [
-        {
-          "temporary": false,
-          "type": "password",
-          "value": "password"
-        }
-      ],
-      "clientRoles": {
-        "account": ["manage-account"]
+      "trustEmail": true,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "linkOnly": false,
+      "firstBrokerLoginFlowAlias": "first broker login",
+      "config": {
+        "hideOnLoginPage": false,
+        "clientSecret": "${GOOGLE_CLIENT_SECRET}",
+        "clientId": "${GOOGLE_CLIENT_ID}",
+        "disableUserInfo": false,
+        "useJwksUrl": "true"
       }
     }
   ]
