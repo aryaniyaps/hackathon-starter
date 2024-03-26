@@ -1,10 +1,13 @@
 {
-  "id": "${KC_REALM_NAME}",
-  "realm": "${KC_REALM_NAME}",
+  "id": "starter",
+  "realm": "starter",
+  "displayName": "Starter",
   "sslRequired": "none",
   "registrationAllowed": true,
   "registrationEmailAsUsername": true,
-  "rememberMe": true,
+  "editUsernameAllowed": true,
+  "resetPasswordAllowed": true,
+  "rememberMe": false,
   "verifyEmail": true,
   "enabled": true,
   "eventsEnabled": true,
@@ -100,5 +103,13 @@
         "useJwksUrl": true
       }
     }
-  ]
+  ],
+  "browserFlow": "browser",
+  "registrationFlow": "registration",
+  "directGrantFlow": "direct grant",
+  "resetCredentialsFlow": "reset credentials",
+  "clientAuthenticationFlow": "clients",
+  "dockerAuthenticationFlow": "docker auth",
+  "keycloakVersion": "24.0.2",
+  "userManagedAccessAllowed": false
 }

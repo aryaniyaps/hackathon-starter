@@ -22,7 +22,6 @@ services:
       KC_DB_PASSWORD: pass
       KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
       KC_LOG_LEVEL: INFO
-      KC_REALM_NAME: starter
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: keycloak
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
