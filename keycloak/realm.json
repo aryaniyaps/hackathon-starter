@@ -104,6 +104,7 @@
       }
     }
   ],
+
   "browserFlow": "browser",
   "registrationFlow": "registration",
   "directGrantFlow": "direct grant",
