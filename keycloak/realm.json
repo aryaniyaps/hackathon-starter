@@ -13,8 +13,8 @@
   "clients": [
     {
       "clientId": "web-client",
-      "name": "",
-      "description": "",
+      "name": "Web Client",
+      "description": "NextJS web client",
       "rootUrl": "",
       "adminUrl": "",
       "baseUrl": "",
@@ -72,6 +72,8 @@
       "id": "admin",
       "email": "admin@admin",
       "username": "admin",
+      "firstName": "Aryan",
+      "lastName": "Iyappan",
       "enabled": true,
       "emailVerified": true,
       "credentials": [
@@ -80,7 +82,10 @@
           "type": "password",
           "value": "password"
         }
-      ]
+      ],
+      "clientRoles": {
+        "account": ["manage-account"]
+      }
     }
   ]
 }
