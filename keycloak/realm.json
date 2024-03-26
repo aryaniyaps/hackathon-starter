@@ -19,9 +19,9 @@
     "fromDisplayName": "Starter",
     "host": "mailhog",
     "port": "1025",
-    "ssl": "false",
-    "starttls": "false",
-    "auth": "false"
+    "ssl": false,
+    "starttls": false,
+    "auth": false
   },
   "clients": [
     {
@@ -49,13 +49,13 @@
       "frontchannelLogout": true,
       "protocol": "openid-connect",
       "attributes": {
-        "oidc.ciba.grant.enabled": "false",
+        "oidc.ciba.grant.enabled": false,
         "client.secret.creation.time": "1711453974",
-        "backchannel.logout.session.required": "true",
+        "backchannel.logout.session.required": true,
         "post.logout.redirect.uris": "http://localhost:3000",
-        "display.on.consent.screen": "false",
-        "oauth2.device.authorization.grant.enabled": "false",
-        "backchannel.logout.revoke.offline.tokens": "false"
+        "display.on.consent.screen": false,
+        "oauth2.device.authorization.grant.enabled": false,
+        "backchannel.logout.revoke.offline.tokens": false
       },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
@@ -97,7 +97,7 @@
         "clientSecret": "${GOOGLE_CLIENT_SECRET}",
         "clientId": "${GOOGLE_CLIENT_ID}",
         "disableUserInfo": false,
-        "useJwksUrl": "true"
+        "useJwksUrl": true
       }
     }
   ]
