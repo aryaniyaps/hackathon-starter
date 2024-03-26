@@ -8,162 +8,28 @@ services:
     environment:
       POSTGRESQL_USERNAME: user
       POSTGRESQL_PASSWORD: pass
-      POSTGRESQL_DATABASE: kratos
+      POSTGRESQL_DATABASE: keycloak
     volumes:
       - "postgres_data:/bitnami/postgresql"
 
-  apisix:
-    image: apache/apisix:3.8.0-debian
-    restart: always
-    volumes:
-      - ./apisix/config.yaml:/usr/local/apisix/conf/config.yaml:ro
-    depends_on:
-      - etcd
-    ports:
-      - "9180:9180/tcp"
-      - "9080:9080/tcp"
-      - "9091:9091/tcp"
-      - "9443:9443/tcp"
-      - "9092:9092/tcp"
-    networks:
-      - apisix
-
-  etcd:
-    image: bitnami/etcd:3.5.11
-    restart: always
-    volumes:
-      - etcd_data:/bitnami/etcd
-    environment:
-      ETCD_ENABLE_V2: "true"
-      ALLOW_NONE_AUTHENTICATION: "yes"
-      ETCD_ADVERTISE_CLIENT_URLS: "http://etcd:2379"
-      ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
-    ports:
-      - "2379:2379/tcp"
-    networks:
-      - apisix
-
-  hydra-migrate:
-    image: oryd/hydra:v2.1.1
-    environment:
-      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
-    volumes:
-      - type: volume
-        source: hydra-sqlite
-        target: /var/lib/sqlite
-        read_only: false
-    command: migrate sql -e --yes
-    restart: on-failure
-    networks:
-      - intranet
-
-  hydra:
-    image: oryd/hydra:v2.1.1
-    depends_on:
-      - hydra-migrate
-    ports:
-      - "4444:4444" # Public port
-      - "4445:4445" # Admin port
-      - "5555:5555" # Port for hydra token user
-    command:
-      # serve all --dangerous-force-http
-      serve all --dev
-    restart: on-failure # TODO figure out why we need this (incorporate health check into hydra migrate command?)
-    environment:
-      LOG_LEAK_SENSITIVE_VALUES: true
-      URLS_SELF_ISSUER: http://127.0.0.1:4444
-      URLS_SELF_PUBLIC: http://127.0.0.1:4444
-      URLS_CONSENT: http://127.0.0.1:3000/consent
-      URLS_LOGIN: http://127.0.0.1:3000/login
-      URLS_LOGOUT: http://127.0.0.1:3000/logout
-      SECRETS_SYSTEM: youReallyNeedToChangeThis
-      OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES: public,pairwise
-      OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT: youReallyNeedToChangeThis
-      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
-    networks:
-      - intranet
-    volumes:
-      - type: volume
-        source: hydra-sqlite
-        target: /var/lib/sqlite
-        read_only: false
-
-  kratos-selfservice-ui-node:
-    image: oryd/kratos-selfservice-ui-node:v0.13.0-4
-    environment:
-      HYDRA_ADMIN_URL: http://hydra:4445
-      KRATOS_PUBLIC_URL: http://kratos:4433
-      KRATOS_ADMIN_URL: http://kratos:4434
-      SECURITY_MODE: standalone
-      KRATOS_BROWSER_URL: http://127.0.0.1:4433
-
-    ports:
-      - "3000:3000"
-    networks:
-      - intranet
-    volumes:
-      - /tmp/ui-node/logs:/root/.npm/_logs
-
-  kratos-migrate:
-    image: oryd/kratos:v1.0.0
-    environment:
-      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
-    volumes:
-      - type: volume
-        source: kratos-sqlite
-        target: /var/lib/sqlite
-        read_only: false
-      - type: bind
-        source: ./kratos
-        target: /etc/config/kratos
-    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
-    restart: on-failure
-    networks:
-      - intranet
-
-  kratos:
-    depends_on:
-      - kratos-migrate
-    image: oryd/kratos:v1.0.0
-    ports:
-      - "4433:4433" # public
-      - "4434:4434" # admin
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.2
+    command: ["start-dev", "--import-realm"]
     restart: unless-stopped
     environment:
-      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
-    command: serve -c /etc/config/kratos/kratos.yml --dev
-    volumes:
-      - type: volume
-        source: kratos-sqlite
-        target: /var/lib/sqlite
-        read_only: false
-      - type: bind
-        source: ./kratos
-        target: /etc/config/kratos
-    networks:
-      - intranet
-
-  mailslurper:
-    image: oryd/mailslurper:latest-smtps
+      KC_DB: postgres
+      KC_DB_USERNAME: user
+      KC_DB_PASSWORD: pass
+      KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
+      KC_LOG_LEVEL: INFO
+      KC_REALM_NAME: starter
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: keycloak
     ports:
-      - "4436:4436"
-      - "4437:4437"
-    networks:
-      - intranet
-
-networks:
-  apisix:
-    driver: bridge
-  intranet:
-    driver: bridge
+      - 8181:8080
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
 
 volumes:
-  kratos-sqlite:
-
-  hydra-sqlite:
-
-  etcd_data:
-    driver: local
-
   postgres_data:
     driver: local
