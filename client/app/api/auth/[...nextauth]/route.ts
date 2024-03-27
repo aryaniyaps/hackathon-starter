@@ -1,5 +1,5 @@
 import { env } from "@/lib/env";
-import { refreshTokenRequest } from "@/lib/oidc";
+import { logoutRequest, refreshTokenRequest } from "@/lib/oidc";
 import NextAuth, { Account, User } from "next-auth";
 import { type JWT } from "next-auth/jwt";
 import { ProviderType } from "next-auth/providers/index";
@@ -113,6 +113,11 @@ const handler = NextAuth({
   session: {
     strategy: "jwt",
     maxAge: 60 * 30,
+  },
+  events: {
+    async signOut({ token }) {
+      await logoutRequest(token.refresh_token);
+    },
   },
   callbacks: {
     async jwt({

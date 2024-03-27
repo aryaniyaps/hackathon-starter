@@ -13,3 +13,16 @@ export async function refreshTokenRequest(refresh_token: string) {
     cache: "no-store",
   });
 }
+
+export async function logoutRequest(refresh_token: string) {
+  return await fetch(`${env.KEYCLOAK_ISSUER}/protocol/openid-connect/logout`, {
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    method: "POST",
+    body: new URLSearchParams({
+      client_id: env.KEYCLOAK_CLIENT_ID,
+      client_secret: env.KEYCLOAK_CLIENT_SECRET,
+      grant_type: "refresh_token",
+      refresh_token: refresh_token,
+    }),
+  });
+}

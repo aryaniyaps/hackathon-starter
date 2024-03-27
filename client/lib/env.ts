@@ -19,6 +19,8 @@ export const env = createEnv({
     KEYCLOAK_ISSUER: z.string().min(1),
     KEYCLOAK_CLIENT_ID: z.string().min(1),
     KEYCLOAK_CLIENT_SECRET: z.string().min(1),
+    KEYCLOAK_REALM: z.string().min(1),
+    KEYCLOAK_URL: z.string().min(1),
   },
   /**
    * Specify your client-side environment variables schema here. This way you can ensure the app
@@ -40,6 +42,8 @@ export const env = createEnv({
     KEYCLOAK_ISSUER: process.env.KEYCLOAK_ISSUER,
     KEYCLOAK_CLIENT_ID: process.env.KEYCLOAK_CLIENT_ID,
     KEYCLOAK_CLIENT_SECRET: process.env.KEYCLOAK_CLIENT_SECRET,
+    KEYCLOAK_REALM: process.env.KEYCLOAK_REALM,
+    KEYCLOAK_URL: process.env.KEYCLOAK_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
