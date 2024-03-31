@@ -14,3 +14,24 @@ Please see the tutorial [Configuring Passkey](https://keycloak.ch/keycloak-tutor
 
 [Keycloak]: https://keycloak.org
 [Keycloak.X]: https://www.keycloak.org/migration/migrating-to-quarkus
+
+
+## Running the server
+
+Run the following command first
+
+```
+mvn clean package
+```
+
+Run the server using the following command
+
+```
+./server/run-keycloak.sh
+```
+
+To setup the Keycloak server, run the following command in another terminal:
+
+```
+./server/run-keycloak-setup.sh
+```
