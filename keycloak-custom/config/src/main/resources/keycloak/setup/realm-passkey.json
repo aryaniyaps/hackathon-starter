@@ -128,7 +128,7 @@
     "VERIFY_PROFILE",
     "VERIFY_PROFILE_ERROR"
   ],
-  "loginTheme": "keywind",
+  "loginTheme": "keycloak.v2",
   "accountTheme": "keycloak.v2",
   "authenticationFlows": [
     {
