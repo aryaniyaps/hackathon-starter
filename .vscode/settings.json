@@ -10,5 +10,6 @@
   "python.testing.pytestEnabled": true,
   "python.testing.pytestArgs": [""],
   "python.terminal.activateEnvironment": false,
-  "python.analysis.ignore": ["*"]
+  "python.analysis.ignore": ["*"],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
