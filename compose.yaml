@@ -8,34 +8,111 @@ services:
     environment:
       POSTGRESQL_USERNAME: user
       POSTGRESQL_PASSWORD: pass
-      POSTGRESQL_DATABASE: keycloak
+      POSTGRESQL_DATABASE: kratos
     volumes:
       - "postgres_data:/bitnami/postgresql"
+    networks:
+      - intranet
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:24.0.2
-    command: ["start-dev", "--import-realm"]
+  hydra-migrate:
+    depends_on:
+      - postgres
+    image: oryd/hydra:v2.1.1
+    environment:
+      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+    command: migrate sql -e --yes
+    restart: on-failure
+    networks:
+      - intranet
+    volumes:
+      - type: bind
+        source: ./hydra
+        target: /etc/config/hydra
+
+  hydra:
+    image: oryd/hydra:v2.1.1
+    depends_on:
+      - hydra-migrate
+      - postgres
+    ports:
+      - "4444:4444" # Public port
+      - "4445:4445" # Admin port
+      - "5555:5555" # Port for hydra token user
+    command:
+      # serve all --dangerous-force-http
+      serve all --dev
+    restart: on-failure # TODO figure out why we need this (incorporate health check into hydra migrate command?)
+    environment:
+      LOG_LEAK_SENSITIVE_VALUES: true
+      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+    networks:
+      - intranet
+    volumes:
+      - type: bind
+        source: ./hydra
+        target: /etc/config/hydra
+
+  kratos-selfservice-ui-node:
+    image: oryd/kratos-selfservice-ui-node:v0.13.0-4
+    environment:
+      HYDRA_ADMIN_URL: http://hydra:4445
+      KRATOS_PUBLIC_URL: http://kratos:4433
+      KRATOS_ADMIN_URL: http://kratos:4434
+      SECURITY_MODE: standalone
+      KRATOS_BROWSER_URL: http://localhost:4433
+
+    ports:
+      - "3000:3000"
+    networks:
+      - intranet
+    volumes:
+      - /tmp/ui-node/logs:/root/.npm/_logs
+
+  kratos-migrate:
+    depends_on:
+      - postgres
+    image: oryd/kratos:v1.0.0
+    environment:
+      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+    volumes:
+      - type: bind
+        source: ./kratos
+        target: /etc/config/kratos
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+    restart: on-failure
+    networks:
+      - intranet
+
+  kratos:
+    depends_on:
+      - kratos-migrate
+      - postgres
+    image: oryd/kratos:v1.0.0
+    ports:
+      - "4433:4433" # public
+      - "4434:4434" # admin
     restart: unless-stopped
     environment:
-      KC_DB: postgres
-      KC_DB_USERNAME: user
-      KC_DB_PASSWORD: pass
-      KC_DB_URL: "jdbc:postgresql://postgres:5432/keycloak"
-      KC_LOG_LEVEL: INFO
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: keycloak
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-    ports:
-      - 8181:8080
+      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+    command: serve -c /etc/config/kratos/kratos.yml --dev
     volumes:
-      - ./keycloak:/opt/keycloak/data/import
+      - type: bind
+        source: ./kratos
+        target: /etc/config/kratos
+    networks:
+      - intranet
 
-  mailhog:
-    image: mailhog/mailhog:v1.0.1
+  mailslurper:
+    image: oryd/mailslurper:latest-smtps
     ports:
-      - "1025:1025"
-      - "8025:8025"
+      - "4436:4436"
+      - "4437:4437"
+    networks:
+      - intranet
+
+networks:
+  intranet:
+    driver: bridge
 
 volumes:
   postgres_data:

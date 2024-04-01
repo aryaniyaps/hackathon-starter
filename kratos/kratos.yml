@@ -1,0 +1,136 @@
+version: v1.1.0
+
+serve:
+  public:
+    base_url: http://localhost:4433/
+    cors:
+      enabled: true
+      allowed_origins:
+        - http://localhost:3000
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+      allowed_headers:
+        - Authorization
+        - Cookie
+        - Content-Type
+      exposed_headers:
+        - Content-Type
+        - Set-Cookie
+  admin:
+    base_url: http://kratos:4434/
+
+session:
+  cookie:
+    domain: localhost
+    name: session
+  whoami:
+    # users can use the application without completing a second factor
+    required_aal: aal1
+
+selfservice:
+  default_browser_return_url: http://localhost:3000/
+  allowed_return_urls:
+    - http://localhost:3000/
+
+  methods:
+    password:
+      enabled: false
+    totp:
+      config:
+        issuer: issuer.ory.sh
+      enabled: true
+    lookup_secret:
+      enabled: true
+    link:
+      enabled: true
+      config:
+        lifespan: 1h
+    code:
+      enabled: true
+      config:
+        lifespan: 1h
+    webauthn:
+      enabled: true
+      config:
+        passwordless: true
+        rp:
+          display_name: Starter
+          # Set 'id' to the top-level domain.
+          id: localhost
+          # Set 'origin' to the exact URL of the page that prompts the user to use WebAuthn. You must include the scheme, host, and port.
+          origins:
+            - http://localhost:3000
+    oidc:
+      enabled: true
+      config:
+        providers:
+          - id: google
+            provider: google
+            client_id: client_id
+            client_secret: client_secret
+            issuer_url: https://accounts.google.com
+            mapper_url: "base64://bG9jYWwgY2xhaW1zID0gew0KICBlbWFpbF92ZXJpZmllZDogZmFsc2UsDQp9ICsgc3RkLmV4dFZhcignY2xhaW1zJyk7DQoNCnsNCiAgaWRlbnRpdHk6IHsNCiAgICB0cmFpdHM6IHsNCiAgICAgIFtpZiAnZW1haWwnIGluIGNsYWltcyAmJiBjbGFpbXMuZW1haWxfdmVyaWZpZWQgdGhlbiAnZW1haWwnIGVsc2UgbnVsbF06IGNsYWltcy5lbWFpbCwNCiAgICAgIG5hbWU6IGNsYWltcy5uYW1lLA0KICAgIH0sDQogICAgbWV0YWRhdGFfcHVibGljOiB7DQogICAgICBnb29nbGVfdXNlcm5hbWU6IGNsYWltcy5wcmVmZXJyZWRfdXNlcm5hbWUsDQogICAgfSwNCiAgfSwNCn0NCg"
+            scope:
+              - email
+              - profile
+            # other supported scopes can be found in Google OAuth 2.0 dev docs
+            requested_claims:
+              id_token:
+                email:
+                  essential: true
+                email_verified:
+                  essential: true
+
+  flows:
+    settings:
+      ui_url: http://localhost:3000/settings
+      required_aal: highest_available
+      privileged_session_max_age: 15m
+
+    verification:
+      ui_url: http://localhost:3000/verification
+      enabled: true
+
+    recovery:
+      ui_url: http://localhost:3000/recovery
+      enabled: true
+
+    logout:
+      after:
+        default_browser_return_url: http://localhost:3000/login
+
+    login:
+      ui_url: http://localhost:3000/login
+
+    registration:
+      lifespan: 15m
+      ui_url: http://localhost:3000/registration
+      after:
+        webauthn:
+          hooks:
+            - hook: session
+            - hook: show_verification_ui
+        oidc:
+          hooks:
+            - hook: session
+    error:
+      ui_url: http://localhost:3000/error
+
+log:
+  level: debug
+
+identity:
+  schemas:
+    - id: default
+      url: file:///etc/config/kratos/identity.schema.json
+
+courier:
+  smtp:
+    connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+
+oauth2_provider:
+  url: http://hydra:4445
