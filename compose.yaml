@@ -2,15 +2,21 @@ version: "3.7"
 
 services:
   postgres:
-    image: "bitnami/postgresql:16"
+    image: "postgres:16"
     ports:
       - "5432:5432"
     environment:
-      POSTGRESQL_USERNAME: user
-      POSTGRESQL_PASSWORD: pass
-      POSTGRESQL_DATABASE: kratos
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DATABASES: kratos,hydra
     volumes:
-      - "postgres_data:/bitnami/postgresql"
+      - type: volume
+        source: postgres_data
+        target: /bitnami/postgresql
+        read_only: false
+      - type: bind
+        source: ./pg-scripts
+        target: /docker-entrypoint-initdb.d
     networks:
       - intranet
 
@@ -19,7 +25,7 @@ services:
       - postgres
     image: oryd/hydra:v2.1.1
     environment:
-      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+      DSN: postgres://user:pass@postgres:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
     command: migrate sql -e --yes
     restart: on-failure
     networks:
@@ -44,7 +50,7 @@ services:
     restart: on-failure # TODO figure out why we need this (incorporate health check into hydra migrate command?)
     environment:
       LOG_LEAK_SENSITIVE_VALUES: true
-      DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+      DSN: postgres://user:pass@postgres:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
     networks:
       - intranet
     volumes:
