@@ -1,4 +1,5 @@
 version: v1.1.0
+dsn: ""
 
 serve:
   public:
@@ -70,10 +71,12 @@ selfservice:
         providers:
           - id: google
             provider: google
-            client_id: client_id
-            client_secret: client_secret
+            client_id: ""
+            client_secret: ""
             issuer_url: https://accounts.google.com
-            mapper_url: "base64://bG9jYWwgY2xhaW1zID0gew0KICBlbWFpbF92ZXJpZmllZDogZmFsc2UsDQp9ICsgc3RkLmV4dFZhcignY2xhaW1zJyk7DQoNCnsNCiAgaWRlbnRpdHk6IHsNCiAgICB0cmFpdHM6IHsNCiAgICAgIFtpZiAnZW1haWwnIGluIGNsYWltcyAmJiBjbGFpbXMuZW1haWxfdmVyaWZpZWQgdGhlbiAnZW1haWwnIGVsc2UgbnVsbF06IGNsYWltcy5lbWFpbCwNCiAgICAgIG5hbWU6IGNsYWltcy5uYW1lLA0KICAgIH0sDQogICAgbWV0YWRhdGFfcHVibGljOiB7DQogICAgICBnb29nbGVfdXNlcm5hbWU6IGNsYWltcy5wcmVmZXJyZWRfdXNlcm5hbWUsDQogICAgfSwNCiAgfSwNCn0NCg"
+            mapper_url: "file:///etc/config/kratos/data-mappers/oidc.google.jsonnet"
+            auth_url: https://accounts.google.com/o/oauth2/v2/auth
+            token_url: https://www.googleapis.com/oauth2/v4/token
             scope:
               - email
               - profile
@@ -84,6 +87,9 @@ selfservice:
                   essential: true
                 email_verified:
                   essential: true
+
+    profile:
+      enabled: true
 
   flows:
     settings:
