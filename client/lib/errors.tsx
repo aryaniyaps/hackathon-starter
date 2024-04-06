@@ -1,16 +1,17 @@
 import { Toast, ToasterToast } from "@/components/ui/use-toast";
+import { GenericError } from "@ory/client";
 import { AxiosError } from "axios";
 import { NextRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
 
 // A small function to help us deal with errors coming from fetching a flow.
-export function handleGetFlowError<S>(
+export function handleFlowError<S>(
   router: NextRouter,
   flowType: "login" | "registration" | "settings" | "recovery" | "verification",
   resetFlow: Dispatch<SetStateAction<S | undefined>>,
   toast: ({ ...props }: Toast) => ToasterToast
 ) {
-  return async (err: AxiosError) => {
+  return async (err: AxiosError<GenericError>) => {
     switch (err.response?.data.error?.id) {
       case "session_inactive":
         await router.push("/login?return_to=" + window.location.href);
@@ -87,6 +88,3 @@ export function handleGetFlowError<S>(
     return Promise.reject(err);
   };
 }
-
-// A small function to help us deal with errors coming from initializing a flow.
-export const handleFlowError = handleGetFlowError;
