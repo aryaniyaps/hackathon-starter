@@ -1,7 +1,9 @@
 import { AxiosError } from "axios";
 import { redirect } from "next/navigation";
 
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
+
+// FIXME: handle toasts properly
 
 // A small function to help us deal with errors coming from fetching a flow.
 export function handleFlowError<S>(
@@ -31,26 +33,17 @@ export function handleFlowError<S>(
       return;
     case "self_service_flow_return_to_forbidden":
       // The flow expired, let's request a new one.
-      toast({
-        description: "The return_to address is not allowed.",
-        variant: "destructive",
-      });
+      toast.error("The return_to address is not allowed.");
       redirect("/" + flowType);
     case "self_service_flow_expired":
       // The flow expired, let's request a new one.
-      toast({
-        description:
-          "Your interaction expired, please fill out the form again.",
-        variant: "destructive",
-      });
+      toast.error("Your interaction expired, please fill out the form again.");
       redirect("/" + flowType);
     case "security_csrf_violation":
       // A CSRF violation occurred. Best to just refresh the flow!
-      toast({
-        description:
-          "A security violation was detected, please fill out the form again.",
-        variant: "destructive",
-      });
+      toast.error(
+        "A security violation was detected, please fill out the form again."
+      );
       redirect("/" + flowType);
     case "security_identity_mismatch":
       // The requested item was intended for someone else. Let's request a new flow...
