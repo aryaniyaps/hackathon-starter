@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -56,14 +57,27 @@ export default function LoginForm({
 
   return (
     <Card className="w-full items-center py-6 px-4 flex flex-col">
-      <CardHeader>
-        <CardTitle>
-          {flow.refresh
-            ? "Confirm Action"
-            : flow.requested_aal === "aal2"
-              ? "Two Factor Authentication"
-              : `Sign In to ${APP_NAME}`}
-        </CardTitle>
+      <CardHeader className="flex flex-col items-center">
+        {flow.refresh ? (
+          <>
+            <CardTitle>Confirm Action</CardTitle>
+            <CardDescription>
+              We need to confirm your identity before proceeding
+            </CardDescription>
+          </>
+        ) : flow.requested_aal === "aal2" ? (
+          <>
+            <CardTitle>Two Factor Authentication</CardTitle>
+            <CardDescription>
+              We need verification from one more factor
+            </CardDescription>
+          </>
+        ) : (
+          <>
+            <CardTitle>{`Sign In to ${APP_NAME}`}</CardTitle>
+            <CardDescription>It&apos;s good to see you again!</CardDescription>
+          </>
+        )}
       </CardHeader>
       <CardContent className="w-full">
         <Flow onSubmit={onSubmit} flow={flow} />

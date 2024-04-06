@@ -7,6 +7,7 @@ import { NodeInputProps } from "./helpers";
 export function NodeInputCheckbox<T>({
   node,
   attributes,
+  setValue,
   disabled,
 }: NodeInputProps) {
   const id = Math.random().toString(36).substring(2);
@@ -18,6 +19,9 @@ export function NodeInputCheckbox<T>({
         name={attributes.name}
         defaultChecked={attributes.value}
         disabled={attributes.disabled || disabled}
+        onChange={(e) => {
+          setValue(e.target.value);
+        }}
       />
       <div className="grid gap-1.5 leading-none">
         <Label htmlFor={id}>{getNodeLabel(node)}</Label>
