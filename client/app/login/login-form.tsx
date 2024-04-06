@@ -7,6 +7,7 @@ import { APP_NAME } from "@/lib/constants";
 import { handleFlowError } from "@/lib/errors";
 import ory from "@/lib/ory";
 import { LoginFlow, UpdateLoginFlowBody } from "@ory/client";
+import { AxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -43,12 +44,12 @@ export default function LoginForm({
       router.push("/");
       // We logged in successfully! Let's bring the user home.
     } catch (err) {
-      handleFlowError("login");
+      if (err instanceof AxiosError) handleFlowError(err, "login");
     }
   }
 
   return (
-    <Card className="w-full items-center py-6 flex flex-col gap-6 ">
+    <Card className="w-full items-center py-6 px-4 flex flex-col gap-12">
       <CardTitle>
         {(() => {
           if (flow?.refresh) {
@@ -59,7 +60,7 @@ export default function LoginForm({
           return `Sign In to ${APP_NAME}`;
         })()}
       </CardTitle>
-      <CardContent>
+      <CardContent className="w-full">
         <Flow onSubmit={onSubmit} flow={flow} />
       </CardContent>
       <CardFooter>
@@ -73,8 +74,12 @@ export default function LoginForm({
           </Button>
         ) : (
           <div className="flex flex-col gap-2 items-center">
-            <Link href="/registration">Create account</Link>
-            <Link href="/recovery">Recover your account</Link>
+            <Link href="/registration" className="text-primary">
+              Create account
+            </Link>
+            <Link href="/recovery" className="text-primary">
+              Recover your account
+            </Link>
           </div>
         )}
       </CardFooter>

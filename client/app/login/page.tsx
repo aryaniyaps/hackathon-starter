@@ -2,6 +2,7 @@ import { LoginFlow } from "@ory/client";
 
 import { handleFlowError } from "@/lib/errors";
 import ory from "@/lib/ory";
+import { AxiosError } from "axios";
 import LoginForm from "./login-form";
 
 export default async function LoginPage({
@@ -30,7 +31,7 @@ export default async function LoginPage({
       const { data } = await ory.getLoginFlow({ id: String(flowId) });
       flow = data;
     } catch (err) {
-      handleFlowError("login");
+      if (err instanceof AxiosError) handleFlowError(err, "login");
     }
   } else {
     // Otherwise we initialize it
@@ -42,7 +43,7 @@ export default async function LoginPage({
       });
       flow = data;
     } catch (err) {
-      handleFlowError("login");
+      if (err instanceof AxiosError) handleFlowError(err, "login");
     }
   }
 
