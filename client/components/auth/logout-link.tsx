@@ -1,5 +1,7 @@
+"use client";
+
 import { AxiosError } from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { DependencyList, useEffect, useState } from "react";
 
 import ory from "@/lib/ory";
@@ -32,7 +34,7 @@ export function LogoutLink(deps?: DependencyList) {
       ory
         .updateLogoutFlow({ token: logoutToken })
         .then(() => router.push("/login"))
-        .then(() => router.reload());
+        .then(() => router.refresh());
     }
   };
 }
