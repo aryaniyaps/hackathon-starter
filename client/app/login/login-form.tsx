@@ -2,7 +2,13 @@
 import { Flow } from "@/components/auth/flow";
 import { LogoutLink } from "@/components/auth/logout-link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { APP_NAME } from "@/lib/constants";
 import { handleFlowError } from "@/lib/errors";
 import ory from "@/lib/ory";
@@ -49,17 +55,16 @@ export default function LoginForm({
   }
 
   return (
-    <Card className="w-full items-center py-6 px-4 flex flex-col gap-12">
-      <CardTitle>
-        {(() => {
-          if (flow?.refresh) {
-            return "Confirm Action";
-          } else if (flow?.requested_aal === "aal2") {
-            return "Two-Factor Authentication";
-          }
-          return `Sign In to ${APP_NAME}`;
-        })()}
-      </CardTitle>
+    <Card className="w-full items-center py-6 px-4 flex flex-col">
+      <CardHeader>
+        <CardTitle>
+          {flow.refresh
+            ? "Confirm Action"
+            : flow.requested_aal === "aal2"
+              ? "Two Factor Authentication"
+              : `Sign In to ${APP_NAME}`}
+        </CardTitle>
+      </CardHeader>
       <CardContent className="w-full">
         <Flow onSubmit={onSubmit} flow={flow} />
       </CardContent>
