@@ -1,8 +1,9 @@
 "use client";
 import { Flow } from "@/components/auth/flow";
 import { LogoutLink } from "@/components/auth/logout-link";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import { APP_NAME } from "@/lib/constants";
 import { handleFlowError } from "@/lib/errors";
 import ory from "@/lib/ory";
 import { LoginFlow, UpdateLoginFlowBody } from "@ory/client";
@@ -14,12 +15,10 @@ export default function LoginForm({
   refresh,
   flow,
 }: {
-  aal: string;
-  refresh: string;
+  aal: boolean;
+  refresh: boolean;
   flow: LoginFlow;
 }) {
-  const { toast } = useToast();
-
   const router = useRouter();
 
   // This might be confusing, but we want to show the user an option
@@ -44,45 +43,41 @@ export default function LoginForm({
       router.push("/");
       // We logged in successfully! Let's bring the user home.
     } catch (err) {
-      handleFlowError("login", toast);
+      handleFlowError("login");
     }
   }
 
   return (
-    <>
-      <Card>
-        <CardTitle>
-          {(() => {
-            if (flow?.refresh) {
-              return "Confirm Action";
-            } else if (flow?.requested_aal === "aal2") {
-              return "Two-Factor Authentication";
-            }
-            return "Sign In";
-          })()}
-        </CardTitle>
+    <Card className="w-full items-center py-6 flex flex-col gap-6 ">
+      <CardTitle>
+        {(() => {
+          if (flow?.refresh) {
+            return "Confirm Action";
+          } else if (flow?.requested_aal === "aal2") {
+            return "Two-Factor Authentication";
+          }
+          return `Sign In to ${APP_NAME}`;
+        })()}
+      </CardTitle>
+      <CardContent>
         <Flow onSubmit={onSubmit} flow={flow} />
-      </Card>
-      {aal || refresh ? (
-        <Card>
-          <CardContent data-testid="logout-link" onClick={onLogout}>
+      </CardContent>
+      <CardFooter>
+        {aal || refresh ? (
+          <Button
+            className="w-full"
+            data-testid="logout-link"
+            onClick={onLogout}
+          >
             Log out
-          </CardContent>
-        </Card>
-      ) : (
-        <>
-          <Card>
-            <Link href="/registration" passHref>
-              <CardContent>Create account</CardContent>
-            </Link>
-          </Card>
-          <Card>
-            <Link href="/recovery" passHref>
-              <CardContent>Recover your account</CardContent>
-            </Link>
-          </Card>
-        </>
-      )}
-    </>
+          </Button>
+        ) : (
+          <div className="flex flex-col gap-2 items-center">
+            <Link href="/registration">Create account</Link>
+            <Link href="/recovery">Recover your account</Link>
+          </div>
+        )}
+      </CardFooter>
+    </Card>
   );
 }

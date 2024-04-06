@@ -50,5 +50,9 @@ export default async function LoginPage({
     return;
   }
 
-  return <LoginForm flow={flow} aal={String(aal)} refresh={String(refresh)} />;
+  return (
+    <div className="w-full h-full max-w-md mx-auto flex items-center">
+      <LoginForm flow={flow} aal={Boolean(aal)} refresh={Boolean(refresh)} />
+    </div>
+  );
 }
