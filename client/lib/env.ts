@@ -16,11 +16,6 @@ export const env = createEnv({
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
       process.env.VERCEL ? z.string().min(1) : z.string().url()
     ),
-    KEYCLOAK_ISSUER: z.string().min(1),
-    KEYCLOAK_CLIENT_ID: z.string().min(1),
-    KEYCLOAK_CLIENT_SECRET: z.string().min(1),
-    KEYCLOAK_REALM: z.string().min(1),
-    KEYCLOAK_URL: z.string().min(1),
     HYDRA_URL: z.string().min(1),
   },
   /**
@@ -30,6 +25,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
+    NEXT_PUBLIC_KRATOS_PUBLIC_URL: z.string().min(1),
   },
 
   /**
@@ -40,12 +36,8 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    KEYCLOAK_ISSUER: process.env.KEYCLOAK_ISSUER,
-    KEYCLOAK_CLIENT_ID: process.env.KEYCLOAK_CLIENT_ID,
-    KEYCLOAK_CLIENT_SECRET: process.env.KEYCLOAK_CLIENT_SECRET,
-    KEYCLOAK_REALM: process.env.KEYCLOAK_REALM,
-    KEYCLOAK_URL: process.env.KEYCLOAK_URL,
     HYDRA_URL: process.env.HYDRA_URL,
+    NEXT_PUBLIC_KRATOS_PUBLIC_URL: process.env.NEXT_PUBLIC_KRATOS_PUBLIC_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
