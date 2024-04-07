@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export function handleFlowError<S>(
   err: AxiosError<S>,
   flowType: "login" | "registration" | "settings" | "recovery" | "verification"
-) {
+): never {
   switch (err.response?.data.error?.id) {
     case "session_inactive":
       redirect("/login?return_to=" + window.location.href);

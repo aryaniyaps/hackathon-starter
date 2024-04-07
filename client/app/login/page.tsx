@@ -1,10 +1,12 @@
 import { LoginFlow } from "@ory/client";
 
 import { APP_NAME } from "@/lib/constants";
+import { env } from "@/lib/env";
 import { handleFlowError } from "@/lib/errors";
 import ory from "@/lib/ory";
 import { AxiosError } from "axios";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import LoginForm from "./login-form";
 
 export const metadata: Metadata = {
@@ -12,13 +14,25 @@ export const metadata: Metadata = {
   description: `Welcome back to ${APP_NAME}`,
 };
 
+async function getLoginFlow(flowId: string): Promise<LoginFlow> {
+  try {
+    const { data } = await ory.getLoginFlow({
+      id: String(flowId),
+    });
+    return data;
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      handleFlowError(err, "login");
+    }
+    throw err;
+  }
+}
+
 export default async function LoginPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  let flow: LoginFlow | null = null;
-
   const returnTo = searchParams["return_to"];
 
   // Get ?flow=... from the URL
@@ -32,27 +46,11 @@ export default async function LoginPage({
   // to perform two-factor authentication/verification.
   const aal = searchParams["all"];
 
-  try {
-    // If ?flow=.. was in the URL, we fetch it
-    if (flowId) {
-      const { data } = await ory.getLoginFlow({ id: String(flowId) });
-      flow = data;
-    } else {
-      // Otherwise we initialize it
-      const { data } = await ory.createBrowserLoginFlow({
-        refresh: Boolean(refresh),
-        aal: aal ? String(aal) : undefined,
-        returnTo: returnTo ? String(returnTo) : undefined,
-      });
-      flow = data;
-    }
-  } catch (err) {
-    if (err instanceof AxiosError) handleFlowError(err, "login");
+  if (!flowId) {
+    redirect(`${env.NEXT_PUBLIC_KRATOS_PUBLIC_URL}/self-service/login/browser`);
   }
 
-  if (!flow) {
-    return;
-  }
+  const flow = await getLoginFlow(String(flowId));
 
   return (
     <div className="w-full h-full max-w-md mx-auto flex items-center">
