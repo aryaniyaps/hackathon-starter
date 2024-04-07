@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
-      POSTGRES_DATABASES: kratos,hydra
+      POSTGRES_DATABASES: kratos,starter
     volumes:
       - type: volume
         source: postgres_data
@@ -20,48 +20,9 @@ services:
     networks:
       - intranet
 
-  hydra-migrate:
-    depends_on:
-      - postgres
-    image: oryd/hydra:v2.1.1
-    environment:
-      DSN: postgres://user:pass@postgres:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
-    command: migrate sql -e --yes
-    restart: on-failure
-    networks:
-      - intranet
-    volumes:
-      - type: bind
-        source: ./hydra
-        target: /etc/config/hydra
-
-  hydra:
-    image: oryd/hydra:v2.1.1
-    depends_on:
-      - hydra-migrate
-      - postgres
-    ports:
-      - "4444:4444" # Public port
-      - "4445:4445" # Admin port
-      - "5555:5555" # Port for hydra token user
-    command:
-      # serve all --dangerous-force-http
-      serve all --dev
-    restart: on-failure # TODO figure out why we need this (incorporate health check into hydra migrate command?)
-    environment:
-      LOG_LEAK_SENSITIVE_VALUES: true
-      DSN: postgres://user:pass@postgres:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
-    networks:
-      - intranet
-    volumes:
-      - type: bind
-        source: ./hydra
-        target: /etc/config/hydra
-
   kratos-selfservice-ui-node:
     image: oryd/kratos-selfservice-ui-node:v0.13.0-4
     environment:
-      HYDRA_ADMIN_URL: http://hydra:4445
       KRATOS_PUBLIC_URL: http://kratos:4433
       KRATOS_ADMIN_URL: http://kratos:4434
       SECURITY_MODE: standalone
