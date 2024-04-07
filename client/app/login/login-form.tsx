@@ -1,5 +1,5 @@
 "use client";
-import { Flow } from "@/components/auth/flow";
+import Flow from "@/components/auth/flow";
 import { LogoutLink } from "@/components/auth/logout-link";
 import { Button } from "@/components/ui/button";
 import {

@@ -25,26 +25,22 @@ export default async function LoginPage({
   // to perform two-factor authentication/verification.
   const aal = searchParams["all"];
 
-  // If ?flow=.. was in the URL, we fetch it
-  if (flowId) {
-    try {
+  try {
+    // If ?flow=.. was in the URL, we fetch it
+    if (flowId) {
       const { data } = await ory.getLoginFlow({ id: String(flowId) });
       flow = data;
-    } catch (err) {
-      if (err instanceof AxiosError) handleFlowError(err, "login");
-    }
-  } else {
-    // Otherwise we initialize it
-    try {
+    } else {
+      // Otherwise we initialize it
       const { data } = await ory.createBrowserLoginFlow({
         refresh: Boolean(refresh),
         aal: aal ? String(aal) : undefined,
         returnTo: returnTo ? String(returnTo) : undefined,
       });
       flow = data;
-    } catch (err) {
-      if (err instanceof AxiosError) handleFlowError(err, "login");
     }
+  } catch (err) {
+    if (err instanceof AxiosError) handleFlowError(err, "login");
   }
 
   if (!flow) {
