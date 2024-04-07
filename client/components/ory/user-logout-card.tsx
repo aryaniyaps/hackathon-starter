@@ -1,8 +1,6 @@
 import { FormattedMessage, useIntl } from "react-intl";
-import { gridStyle } from "../../theme";
-import { Button } from "../button";
-import { Card } from "../card";
-import { Typography } from "../typography";
+import { Button } from "../ui/button";
+import { Card, CardHeader, CardTitle } from "../ui/card";
 
 /**
  * UserLogoutCardProps
@@ -34,50 +32,44 @@ export const UserLogoutCard = ({
   const intl = useIntl();
 
   return (
-    <Card
-      className={className}
-      heading={
-        <div style={{ textAlign: "center" }}>
-          <Typography>
-            <FormattedMessage
-              id="logout.title"
-              defaultMessage="Do you wish to log out?"
-            />
-          </Typography>
-        </div>
-      }
-      image={cardImage}
-    >
+    <Card className={className} image={cardImage}>
+      <CardHeader>
+        <CardTitle>
+          <FormattedMessage
+            id="logout.title"
+            defaultMessage="Do you wish to log out?"
+          />
+        </CardTitle>
+      </CardHeader>
       <form action={action} method="post">
         <input type="hidden" name="_csrf" value={csrfToken} />
         <input type="hidden" name="challenge" value={challenge} />
-        <div className={gridStyle({ gap: 16 })}>
-          <div
-            className={gridStyle({ direction: "row" })}
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-row justify-between items-center">
             <Button
               type="submit"
               id="reject"
               value="No"
               name="submit"
-              variant="error"
-              header={intl.formatMessage({
+              variant="destructive"
+            >
+              {intl.formatMessage({
                 id: "logout.reject-button",
                 defaultMessage: "No",
               })}
-            />
+            </Button>
             <Button
               type="submit"
               id="accept"
               value="Yes"
               name="submit"
-              variant="semibold"
-              header={intl.formatMessage({
+              variant="default"
+            >
+              {intl.formatMessage({
                 id: "logout.accept-button",
                 defaultMessage: "Yes",
               })}
-            />
+            </Button>
           </div>
         </div>
       </form>

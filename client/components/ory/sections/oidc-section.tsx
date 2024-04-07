@@ -1,7 +1,6 @@
 import { filterNodesByGroups } from "@ory/integrations/ui";
 import { JSX } from "react";
 
-import { gridStyle } from "../../../theme";
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";
 import { SelfServiceFlow } from "../helpers/types";
 import { hasOidc } from "../helpers/utils";
@@ -16,9 +15,9 @@ export const OIDCSection = (flow: SelfServiceFlow): JSX.Element | null => {
     }).length > 0;
 
   return hasOidc(flow.ui.nodes) ? (
-    <div className={gridStyle({ gap: 32 })}>
+    <div className="flex flex-col gap-12">
       {hasOidcTraits && (
-        <div className={gridStyle({ gap: 16 })}>
+        <div className="flex flex-col gap-8">
           <FilterFlowNodes
             filter={{
               nodes: flow.ui.nodes,

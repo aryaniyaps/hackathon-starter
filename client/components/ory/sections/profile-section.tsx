@@ -1,7 +1,6 @@
 import { JSX } from "react";
 
 import { SettingsFlow } from "@ory/client";
-import { gridStyle } from "../../../theme";
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";
 import { SelfServiceFlow } from "../helpers/types";
 import { hasProfile } from "../helpers/utils";
@@ -15,7 +14,7 @@ export const ProfileSettingsSection = ({
 }: ProfileSettingsProps): JSX.Element => {
   const filter = { nodes: flow.ui.nodes, groups: "profile" };
   return (
-    <div className={gridStyle({ gap: 32 })}>
+    <div className="flex flex-col gap-12">
       <FilterFlowNodes
         filter={{ ...filter, excludeAttributes: "submit,button" }}
       />
@@ -31,7 +30,7 @@ export const ProfileRegistrationSection = (
   flow: SelfServiceFlow
 ): JSX.Element | null => {
   return hasProfile(flow.ui.nodes) ? (
-    <div className={gridStyle({ gap: 32 })}>
+    <div className="flex flex-col gap-12">
       <FilterFlowNodes
         filter={{
           nodes: flow.ui.nodes,

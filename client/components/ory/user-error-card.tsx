@@ -1,18 +1,16 @@
 import { FlowError } from "@ory/client";
 import { JSX } from "react";
 
+import Link from "next/link";
 import { FormattedMessage, useIntl } from "react-intl";
-import { colorSprinkle, gridStyle, typographyStyle } from "../../theme";
-import { ButtonLink, CustomHref } from "../button-link";
-import { Card } from "../card";
-import { CodeBox } from "../codebox";
-import { Message } from "../message";
+import { Button } from "../ui/button";
+import { Card, CardHeader, CardTitle } from "../ui/card";
 
 /**
  * UserErrorCardProps
  * @param title - the title of the error card
  * @param error - Ory FlowError
- * @param backUrl - the URL to redirect the user to. A custom function can be passed to the CustomHref type
+ * @param backUrl - the URL to redirect the user to
  * @param cardImage - card image is usually the company logo
  * @param contactSupportEmail - the email address to contact support
  * @param className - css class overrides for the UserErrorCard
@@ -20,7 +18,7 @@ import { Message } from "../message";
 export interface UserErrorCardProps {
   title?: string;
   error: FlowError;
-  backUrl: CustomHref | string;
+  backUrl: string;
   cardImage?: string | React.ReactElement;
   contactSupportEmail?: string;
   className?: string;
@@ -75,35 +73,30 @@ export const UserErrorCard = ({
   }
 
   return (
-    <Card
-      className={className}
-      heading={
-        <h2 className={typographyStyle({ type: "regular", size: "small" })}>
-          {title}
-        </h2>
-      }
-      image={cardImage}
-      size="wide"
-    >
-      <div
-        className={gridStyle({ gap: 32, direction: "column" })}
-        data-testid="ui/error/message"
-      >
+    <Card className={className} image={cardImage}>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <div className="flex flex-col gap-12" data-testid="ui/error/message">
         {!is500 && (
-          <Message severity="error">
+          <p className="text-destructive">
             <FormattedMessage
               id="error.description"
               defaultMessage="An error occurred with the following message:"
             />
             &nbsp;
             {err.reason}
-          </Message>
+          </p>
         )}
-        <CodeBox data-testid="code-box" toggleText="Error details">
+        {/* Codebox goes here, replaced by div for now */}
+        <div
+          data-testid="code-box"
+          // toggleText="Error details"
+        >
           {JSON.stringify(error, null, 2)}
-        </CodeBox>
+        </div>
         {contactSupportEmail && (
-          <Message className={colorSprinkle({ color: "foregroundMuted" })}>
+          <p className="text-muted-foreground">
             <FormattedMessage
               id="error.support-email-link"
               description="A label and link below the error. The link href is 'mailto:{contactSupportEmail}'."
@@ -111,19 +104,24 @@ export const UserErrorCard = ({
               values={{
                 contactSupportEmail,
                 a: (chunks) => (
-                  <ButtonLink href={`mailto:${contactSupportEmail}`}>
-                    &nbsp;{chunks}
-                  </ButtonLink>
+                  <Link href={`mailto:${contactSupportEmail}`}>
+                    <Button variant="link">&nbsp;{chunks}</Button>
+                  </Link>
                 ),
               }}
             />
-          </Message>
+          </p>
         )}
-        <Message>
-          <ButtonLink href={backUrl}>
-            <FormattedMessage id="error.back-button" defaultMessage="Go Back" />
-          </ButtonLink>
-        </Message>
+        <p>
+          <Link href={backUrl}>
+            <Button variant="link">
+              <FormattedMessage
+                id="error.back-button"
+                defaultMessage="Go Back"
+              />
+            </Button>
+          </Link>
+        </p>
       </div>
     </Card>
   );

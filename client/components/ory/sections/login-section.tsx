@@ -2,14 +2,14 @@ import { UiNode } from "@ory/client";
 import { JSX } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { gridStyle } from "../../../theme";
-import { ButtonLink, CustomHref } from "../../button-link";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";
 import { hasPassword } from "../helpers/utils";
 
 export interface LoginSectionProps {
   nodes: UiNode[];
-  forgotPasswordURL?: CustomHref | string;
+  forgotPasswordURL?: string;
 }
 
 export const LoginSection = ({
@@ -17,8 +17,8 @@ export const LoginSection = ({
   forgotPasswordURL,
 }: LoginSectionProps): JSX.Element | null => {
   return hasPassword(nodes) ? (
-    <div className={gridStyle({ gap: 32 })}>
-      <div className={gridStyle({ gap: 16 })}>
+    <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-8">
         <FilterFlowNodes
           filter={{
             nodes: nodes,
@@ -27,15 +27,14 @@ export const LoginSection = ({
           }}
         />
         {forgotPasswordURL && (
-          <ButtonLink
-            data-testid="forgot-password-link"
-            href={forgotPasswordURL}
-          >
-            <FormattedMessage
-              id="login.forgot-password"
-              defaultMessage="Forgot password?"
-            />
-          </ButtonLink>
+          <Link href={forgotPasswordURL}>
+            <Button data-testid="forgot-password-link" variant="link">
+              <FormattedMessage
+                id="login.forgot-password"
+                defaultMessage="Forgot password?"
+              />
+            </Button>
+          </Link>
         )}
       </div>
       <FilterFlowNodes

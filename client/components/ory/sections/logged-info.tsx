@@ -1,8 +1,4 @@
 import { FormattedMessage } from "react-intl";
-import {
-  identifierNameStyle,
-  identifierStyle,
-} from "../../../theme/identifier.css";
 import { SelfServiceFlow } from "../helpers/types";
 
 export interface IdentifierInfoProps {
@@ -21,12 +17,14 @@ export const LoggedInInfo = ({ flow }: IdentifierInfoProps) => {
   if (!identifier || !("value" in identifier)) return null;
 
   return (
-    <div className={identifierStyle}>
+    <div className="flex flex-col items-center m-4 mb-0 p-2">
       <FormattedMessage
         id="login.logged-in-as-label"
         defaultMessage="You're logged in as:"
       />
-      <div className={identifierNameStyle}>{identifier.value}</div>
+      <div className="px-2 py-1 font-bold mt-2 text-muted-foreground">
+        {identifier.value}
+      </div>
     </div>
   );
 };

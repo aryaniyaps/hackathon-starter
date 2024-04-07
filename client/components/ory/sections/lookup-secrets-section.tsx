@@ -1,7 +1,6 @@
 import { UiNode } from "@ory/client";
 import { JSX } from "react";
 
-import { gridStyle } from "../../../theme";
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";
 import { hasLookupSecret } from "../helpers/utils";
 
@@ -13,7 +12,7 @@ export const LookupSecretsSection = ({
   nodes,
 }: LookupSecretsSectionProps): JSX.Element | null => {
   return hasLookupSecret(nodes) ? (
-    <div className={gridStyle({ gap: 32 })}>
+    <div className="flex flex-col gap-12">
       <FilterFlowNodes
         filter={{
           nodes: nodes,
