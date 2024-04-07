@@ -3,31 +3,29 @@ import { JSX } from "react";
 import { useIntl } from "react-intl";
 
 import { GridStyle, gridStyle, Severity } from "../../../theme";
-import { Message, MessageStyleProps } from "../../message";
 import { uiTextToFormattedMessage } from "./node";
 
 export type NodeMessagesProps = {
   nodes?: UiNode[];
   uiMessages?: UiText[];
-} & GridStyle &
-  MessageStyleProps;
+} & GridStyle;
 
 type NodeMessageProps = {
   message: UiText;
   key: string;
-} & MessageStyleProps;
+};
 
 const NodeMessage = ({ key, message, ...props }: NodeMessageProps) => {
   const intl = useIntl();
   return (
-    <Message
+    <p
       key={key}
       data-testid={`ui/message/${message.id}`}
       severity={message.type as Severity}
       {...props}
     >
       {uiTextToFormattedMessage(message, intl)}
-    </Message>
+    </p>
   );
 };
 

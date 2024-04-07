@@ -8,14 +8,13 @@ import {
 import { JSX, MouseEvent } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/utils/style";
 import Link from "next/link";
-import { pxToRem } from "../../../common";
-import { ButtonSocial, ButtonSocialProps } from "../../button-social";
 import { Image } from "../../image";
 import { NodeMessages } from "./node-messages";
 
@@ -29,7 +28,7 @@ interface ButtonSubmit {
 
 export interface NodeOverrideProps {
   buttonOverrideProps?: Partial<ButtonProps>;
-  buttonSocialOverrideProps?: Partial<ButtonSocialProps>;
+  buttonSocialOverrideProps?: Partial<ButtonProps>;
 }
 
 export type NodeProps = {
@@ -194,6 +193,18 @@ function dataAttributes(attrs: UiNodeAttributes): Record<string, string> {
   );
 }
 
+/*
+Render the relevant icon for the given social platform provider.
+*/
+function getSocialButtonIcon(platform: string): JSX.Element | null {
+  switch (platform.toLowerCase()) {
+    case "google":
+      return <Icons.google className="w-4 h-4" />;
+    default:
+      return null;
+  }
+}
+
 export const Node = ({
   node,
   className,
@@ -224,14 +235,7 @@ export const Node = ({
     const id = node.attributes.id;
     return node.attributes.text.id === 1050015 ? (
       <div
-        className="flex flex-row gap-2"
-        style={{
-          display: "inline-flex",
-          flexWrap: "wrap",
-          gap: pxToRem(48),
-          maxWidth: "fit-content",
-          alignItems: "center",
-        }}
+        className="inline-flex flex-wrap gap-12 max-w-fit items-center"
         data-testid={`node/text/${id}`}
       >
         <p
@@ -308,18 +312,20 @@ export const Node = ({
         }
 
         return isSocial ? (
-          <ButtonSocial
-            className={className}
-            header={formatMessage(getNodeLabel(node))}
+          <Button
             brand={(attrs.value as string).toLowerCase()}
-            variant={"semibold"}
-            size={"medium"}
-            fullWidth
+            className={cn("w-full flex gap-2", className)}
+            variant={"default"}
+            size={"default"}
             disabled={attrs.disabled}
             {...(buttonSocialOverrideProps && buttonSocialOverrideProps)}
             {...submit}
             {...dataAttributes(attrs)}
-          />
+          >
+            {/* display logo based on attrs.value here */}
+            {getSocialButtonIcon(attrs.value as string)}
+            {formatMessage(getNodeLabel(node))}
+          </Button>
         ) : (
           <Button
             className={cn("w-full", className)}

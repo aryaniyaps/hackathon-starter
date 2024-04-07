@@ -114,7 +114,6 @@ export const UserAuthCard = ({
   subtitle,
   flowType,
   additionalProps,
-  cardImage,
   onSubmit,
   includeScripts,
   className,
