@@ -1,6 +1,5 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -11,13 +10,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <SessionProvider
-        refetchInterval={
-          60 * 4 // 4 minutes
-        }
-      >
-        {children}
-      </SessionProvider>
+      {children}
     </NextThemesProvider>
   );
 }
