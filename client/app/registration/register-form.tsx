@@ -1,17 +1,17 @@
 "use client";
 import { UserAuthCard } from "@/components/ory/user-auth-card";
 import ory from "@/lib/ory";
-import { LoginFlow, UpdateLoginFlowBody } from "@ory/client";
+import { RegistrationFlow, UpdateRegistrationFlowBody } from "@ory/client";
 import { useRouter } from "next/navigation";
 
-export default function LoginForm({ flow }: { flow: LoginFlow }) {
+export default function RegisterForm({ flow }: { flow: RegistrationFlow }) {
   const router = useRouter();
 
-  const submitFlow = (values: UpdateLoginFlowBody) =>
+  const submitFlow = (values: UpdateRegistrationFlowBody) =>
     ory
-      .updateLoginFlow({
+      .updateRegistrationFlow({
         flow: String(flow?.id),
-        updateLoginFlowBody: values,
+        updateRegistrationFlowBody: values,
       })
       // We logged in successfully! Let's bring the user home.
       .then(() => {
@@ -26,18 +26,17 @@ export default function LoginForm({ flow }: { flow: LoginFlow }) {
   return (
     <UserAuthCard
       // This defines what kind of card we want to render.
-      flowType={"login"}
+      flowType={"registration"}
       // we always need the flow data which populates the form fields and error messages dynamically
       flow={flow}
-      // the login card should allow the user to go to the registration page and the recovery page
+      // the registration card needs a way to navigate to the login page
       additionalProps={{
-        forgotPasswordURL: "/recovery",
-        signupURL: "/registration",
+        loginURL: "/login",
       }}
       // we might need webauthn support which requires additional js
       includeScripts={true}
-      // we submit the form data to Ory
-      onSubmit={({ body }) => submitFlow(body as UpdateLoginFlowBody)}
+      // submit the registration form data to Ory
+      onSubmit={({ body }) => submitFlow(body as UpdateRegistrationFlowBody)}
     />
   );
 }

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 // A small function to help us deal with errors coming from fetching a flow.
 export function handleFlowError<S>(
-  err: AxiosError,
+  err: AxiosError<S>,
   flowType: "login" | "registration" | "settings" | "recovery" | "verification"
 ) {
   switch (err.response?.data.error?.id) {
