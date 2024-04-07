@@ -11,7 +11,6 @@ import { Separator } from "../ui/separator";
  * UserConsentCardProps
  * @param csrfToken - CSRF token
  * @param consent - Ory OAuth2ConsentRequest
- * @param cardImage - card image is usually the logo of the client
  * @param client_name - the client name to display to the user
  * @param requested_scope - a list of requested scope
  * @param client - Ory OAuth2Client
@@ -21,7 +20,6 @@ import { Separator } from "../ui/separator";
 export interface UserConsentCardProps {
   csrfToken: string;
   consent: OAuth2ConsentRequest;
-  cardImage?: string | React.ReactElement;
   client_name: string;
   requested_scope?: string[];
   client?: OAuth2Client;
@@ -32,7 +30,6 @@ export interface UserConsentCardProps {
 export const UserConsentCard = ({
   csrfToken,
   consent,
-  cardImage,
   client_name = "Unnamed Client",
   requested_scope = [],
   client,
@@ -42,7 +39,7 @@ export const UserConsentCard = ({
   const intl = useIntl();
 
   return (
-    <Card className={className} image={cardImage}>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{client_name}</CardTitle>
       </CardHeader>

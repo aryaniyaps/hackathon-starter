@@ -1,7 +1,7 @@
 import { JSX } from "react";
 
-import { colorSprinkle } from "../../../theme";
-import { ButtonLink, CustomHref } from "../../button-link";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { Message } from "../../message";
 
 export interface ErrorProps {
@@ -17,14 +17,14 @@ export interface ErrorProps {
 }
 
 export interface AdditionalProps {
-  forgotPasswordURL?: CustomHref | string;
-  signupURL?: CustomHref | string;
-  logoutURL?: CustomHref | string;
-  loginURL?: CustomHref | string;
+  forgotPasswordURL?: string;
+  signupURL?: string;
+  logoutURL?: string;
+  loginURL?: string;
 }
 
 export interface MessageSectionProps {
-  url?: CustomHref | string;
+  url?: string;
   buttonText: string;
   dataTestId?: string;
   text?: string;
@@ -36,10 +36,10 @@ export const MessageSection = ({
   buttonText,
   dataTestId,
 }: MessageSectionProps): JSX.Element => (
-  <Message className={colorSprinkle({ color: "foregroundMuted" })}>
+  <Message className="text-muted-foreground">
     {text}&nbsp;
-    <ButtonLink data-testid={dataTestId} href={url}>
-      {buttonText}
-    </ButtonLink>
+    <Link href={url}>
+      <Button data-testid={dataTestId}>{buttonText}</Button>
+    </Link>
   </Message>
 );

@@ -12,12 +12,12 @@ export type NodeMessagesProps = {
 } & GridStyle &
   MessageStyleProps;
 
-type nodeMessageProps = {
+type NodeMessageProps = {
   message: UiText;
   key: string;
 } & MessageStyleProps;
 
-const NodeMessage = ({ key, message, ...props }: nodeMessageProps) => {
+const NodeMessage = ({ key, message, ...props }: NodeMessageProps) => {
   const intl = useIntl();
   return (
     <Message

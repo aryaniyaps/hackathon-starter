@@ -11,7 +11,6 @@ import { Card, CardHeader, CardTitle } from "../ui/card";
  * @param title - the title of the error card
  * @param error - Ory FlowError
  * @param backUrl - the URL to redirect the user to
- * @param cardImage - card image is usually the company logo
  * @param contactSupportEmail - the email address to contact support
  * @param className - css class overrides for the UserErrorCard
  */
@@ -19,7 +18,6 @@ export interface UserErrorCardProps {
   title?: string;
   error: FlowError;
   backUrl: string;
-  cardImage?: string | React.ReactElement;
   contactSupportEmail?: string;
   className?: string;
 }
@@ -40,7 +38,6 @@ export const UserErrorCard = ({
   title,
   error,
   backUrl,
-  cardImage,
   contactSupportEmail,
   className,
 }: UserErrorCardProps): JSX.Element => {
@@ -73,7 +70,7 @@ export const UserErrorCard = ({
   }
 
   return (
-    <Card className={className} image={cardImage}>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

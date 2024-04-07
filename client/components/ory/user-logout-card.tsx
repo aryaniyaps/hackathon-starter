@@ -8,14 +8,12 @@ import { Card, CardHeader, CardTitle } from "../ui/card";
  * @param challenge - Ory LogoutRequest challenge
  * @param action - the URL used for the form action
  * @param className - css class overrides for the UserLogoutCard
- * @param cardImage - card image is usually the company logo
  */
 export interface UserLogoutCardProps {
   csrfToken: string;
   challenge: string;
   action: string;
   className?: string;
-  cardImage?: string | React.ReactElement;
 }
 
 /**
@@ -27,12 +25,11 @@ export const UserLogoutCard = ({
   challenge,
   action,
   className,
-  cardImage,
 }: UserLogoutCardProps) => {
   const intl = useIntl();
 
   return (
-    <Card className={className} image={cardImage}>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>
           <FormattedMessage

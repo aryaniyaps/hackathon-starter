@@ -17,8 +17,8 @@ import {
 } from "../ui/card";
 import { Separator } from "../ui/separator";
 import { MessageSection, MessageSectionProps } from "./helpers/common";
-import { NodeMessages } from "./helpers/error-messages";
 import { FilterFlowNodes } from "./helpers/filter-flow-nodes";
+import { NodeMessages } from "./helpers/node-messages";
 import { useScriptNodes } from "./helpers/node-script";
 import {
   UserAuthForm,
@@ -69,7 +69,6 @@ export interface RecoverySectionAdditionalProps {
  * UserAuthCardProps used by the UserAuthCard
  * @param title - title of the user auth card
  * @param subtitle - subtitle of the user auth card, usually used to display additional information
- * @param cardImage - an image to display on the card header (usually a logo)
  * @param includeScripts - include webauthn scripts in the card (optional)
  * @param className - className to pass to the card component
  * @param additionalProps - additional props to pass to the form (optional)
@@ -77,7 +76,6 @@ export interface RecoverySectionAdditionalProps {
 export type UserAuthCardProps = {
   title?: string;
   subtitle?: string;
-  cardImage?: string | React.ReactElement | React.FunctionComponent;
   includeScripts?: boolean;
   className?: string;
 } & UserAuthFormAdditionalProps &
@@ -462,11 +460,7 @@ export const UserAuthCard = ({
   }
 
   return (
-    <Card
-      className={className}
-      image={cardImage}
-      data-testid={`${flowType}-auth-card`}
-    >
+    <Card className={className} data-testid={`${flowType}-auth-card`}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         {subtitle && <CardDescription>{subtitle}</CardDescription>}

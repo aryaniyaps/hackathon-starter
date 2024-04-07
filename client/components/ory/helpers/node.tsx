@@ -8,16 +8,16 @@ import {
 import { JSX, MouseEvent } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/utils/style";
+import Link from "next/link";
 import { pxToRem } from "../../../common";
-import { gridStyle } from "../../../theme";
-import { Button, ButtonProps } from "../../button";
-import { ButtonLink } from "../../button-link";
 import { ButtonSocial, ButtonSocialProps } from "../../button-social";
-import { Checkbox } from "../../checkbox";
 import { Image } from "../../image";
-import { InputField } from "../../input-field";
-import { Typography } from "../../typography";
-import { NodeMessages } from "./error-messages";
+import { NodeMessages } from "./node-messages";
 
 interface ButtonSubmit {
   type: "submit" | "reset" | "button" | undefined;
@@ -224,7 +224,7 @@ export const Node = ({
     const id = node.attributes.id;
     return node.attributes.text.id === 1050015 ? (
       <div
-        className={gridStyle({ gap: 4, direction: "row" })}
+        className="flex flex-row gap-2"
         style={{
           display: "inline-flex",
           flexWrap: "wrap",
@@ -234,13 +234,12 @@ export const Node = ({
         }}
         data-testid={`node/text/${id}`}
       >
-        <Typography
-          variant="body1"
+        <p
+          className="basis-full"
           data-testid={`node/text/${node.attributes.id}/label`}
-          style={{ flexBasis: "100%" }}
         >
           {formatMessage(node.meta.label)}
-        </Typography>
+        </p>
         {(
           node.attributes.text.context as {
             secrets: UiText[];
@@ -252,13 +251,10 @@ export const Node = ({
         ))}
       </div>
     ) : (
-      <div className={gridStyle({ gap: 4 })} data-testid={`node/text/${id}`}>
-        <Typography
-          variant="body1"
-          data-testid={`node/text/${node.attributes.id}/label`}
-        >
+      <div className="flex flex-col gap-2" data-testid={`node/text/${id}`}>
+        <p data-testid={`node/text/${node.attributes.id}/label`}>
           {formatMessage(node.meta.label)}
-        </Typography>
+        </p>
         <pre data-testid={`node/text/${id}/text`}>
           <code>{formatMessage(node.attributes.text)}</code>
         </pre>
@@ -326,70 +322,83 @@ export const Node = ({
           />
         ) : (
           <Button
-            className={className}
-            header={formatMessage(getNodeLabel(node))}
-            variant={"semibold"}
-            size={"medium"}
-            fullWidth
+            className={cn("w-full", className)}
+            variant={"default"}
+            size={"default"}
             disabled={attrs.disabled}
             {...(buttonOverrideProps && buttonOverrideProps)}
             {...submit}
             {...dataAttributes(attrs)}
-          />
+          >
+            {formatMessage(getNodeLabel(node))}
+          </Button>
         );
       case "datetime-local":
       case "checkbox":
         return (
-          <Checkbox
-            className={className}
-            helperMessage={
-              <NodeMessages nodes={[node]} gap={4} textPosition={"start"} />
-            }
-            label={formatMessage(getNodeLabel(node))}
-            name={attrs.name}
-            required={attrs.required}
-            defaultValue={attrs.value as string | number | string[]}
-            disabled={attrs.disabled}
-            defaultChecked={Boolean(attrs.value)}
-            dataTestid={`node/input/${attrs.name}`}
-            {...dataAttributes(attrs)}
-          />
+          <div
+            className="items-center flex space-x-2"
+            data-testid={`node/input/${attrs.name}`}
+          >
+            <Checkbox
+              id={`node/input/${attrs.name}-checkbox`}
+              name={attrs.name}
+              required={attrs.required}
+              defaultValue={attrs.value as string | number | string[]}
+              disabled={attrs.disabled}
+              defaultChecked={Boolean(attrs.value)}
+              {...dataAttributes(attrs)}
+            />
+            <Label
+              className={className}
+              htmlFor={`node/input/${attrs.name}-checkbox`}
+            >
+              {formatMessage(getNodeLabel(node))}
+            </Label>
+          </div>
         );
       default:
         return (
-          <InputField
-            helperMessage={
-              <NodeMessages nodes={[node]} gap={4} textPosition={"start"} />
-            }
-            dataTestid={`node/input/${attrs.name}`}
-            className={className}
-            name={attrs.name}
-            header={formatMessage(getNodeLabel(node))}
-            type={attrs.type}
-            autoComplete={
-              attrs.autocomplete ??
-              (attrs.name === "identifier" ? "username" : "")
-            }
-            defaultValue={attrs.value as string | number | string[]}
-            required={attrs.required}
-            disabled={attrs.disabled}
-            pattern={attrs.pattern}
-            {...dataAttributes(attrs)}
-          />
+          <div
+            className="flex flex-col gap-2"
+            data-testid={`node/input/${attrs.name}`}
+          >
+            <Label htmlFor={`node/input/${attrs.name}-input`}>
+              {formatMessage(getNodeLabel(node))}
+            </Label>
+            <Input
+              id={`node/input/${attrs.name}-input`}
+              className={className}
+              name={attrs.name}
+              type={attrs.type}
+              autoComplete={
+                attrs.autocomplete ??
+                (attrs.name === "identifier" ? "username" : "")
+              }
+              defaultValue={attrs.value as string | number | string[]}
+              required={attrs.required}
+              disabled={attrs.disabled}
+              pattern={attrs.pattern}
+              {...dataAttributes(attrs)}
+            />
+            <p>
+              {<NodeMessages nodes={[node]} gap={4} textPosition={"start"} />}
+            </p>
+          </div>
         );
     }
   } else if (isUiNodeAnchorAttributes(node.attributes)) {
     return (
-      <ButtonLink
-        href={node.attributes.href}
-        title={formatMessage(node.attributes.title)}
-        data-testid={`node/anchor/${node.attributes.id}`}
-        className={className}
-        position="center"
-        {...dataAttributes(node.attributes)}
-      >
-        {formatMessage(node.attributes.title)}
-      </ButtonLink>
+      <Link href={node.attributes.href}>
+        <Button
+          title={formatMessage(node.attributes.title)}
+          data-testid={`node/anchor/${node.attributes.id}`}
+          className={className}
+          {...dataAttributes(node.attributes)}
+        >
+          {formatMessage(node.attributes.title)}
+        </Button>
+      </Link>
     );
   }
   return null;
