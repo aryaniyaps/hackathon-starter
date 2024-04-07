@@ -9,3 +9,5 @@ add the following URL to authorized redirect URIs:
 http://localhost:4433/self-service/methods/oidc/callback/google
 
 assuming Ory Kratos is hosted at localhost:4433
+
+refer https://github.com/spa5k/kratos-next for UI implementation
