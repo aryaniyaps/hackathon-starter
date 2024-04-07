@@ -1,3 +1,4 @@
+"use client";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button } from "../ui/button";
 import { Card, CardHeader, CardTitle } from "../ui/card";

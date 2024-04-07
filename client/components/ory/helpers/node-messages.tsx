@@ -2,13 +2,13 @@ import { UiNode, UiText } from "@ory/client";
 import { JSX } from "react";
 import { useIntl } from "react-intl";
 
-import { GridStyle, gridStyle, Severity } from "../../../theme";
+import { gridStyle, Severity } from "../../../theme";
 import { uiTextToFormattedMessage } from "./node";
 
 export type NodeMessagesProps = {
   nodes?: UiNode[];
   uiMessages?: UiText[];
-} & GridStyle;
+};
 
 type NodeMessageProps = {
   message: UiText;

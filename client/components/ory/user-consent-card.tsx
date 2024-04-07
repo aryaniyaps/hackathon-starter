@@ -1,3 +1,4 @@
+"use client";
 import { OAuth2Client, OAuth2ConsentRequest } from "@ory/client";
 
 import { FormattedMessage, useIntl } from "react-intl";

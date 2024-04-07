@@ -9,13 +9,13 @@ import { JSX, MouseEvent } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { Icons } from "@/components/icons";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/utils/style";
+import Image from "next/image";
 import Link from "next/link";
-import { Image } from "../../image";
 import { NodeMessages } from "./node-messages";
 
 interface ButtonSubmit {
@@ -194,8 +194,8 @@ function dataAttributes(attrs: UiNodeAttributes): Record<string, string> {
 }
 
 /*
-Render the relevant icon for the given social platform provider.
-*/
+ * Render the relevant icon for the given social platform provider.
+ */
 function getSocialButtonIcon(platform: string): JSX.Element | null {
   switch (platform.toLowerCase()) {
     case "google":
@@ -221,15 +221,19 @@ export const Node = ({
 
   if (isUiNodeImageAttributes(node.attributes)) {
     return (
-      <Image
-        src={node.attributes.src}
-        alt={formatMessage(node.meta.label)}
+      <div
+        className="flex flex-col gap-2"
         data-testid={`node/image/${node.attributes.id}`}
-        header={formatMessage(node.meta.label)}
-        width={node.attributes.width}
-        height={node.attributes.height}
-        {...dataAttributes(node.attributes)}
-      />
+      >
+        <p className="text-sm">{formatMessage(node.meta.label)}</p>
+        <Image
+          src={node.attributes.src}
+          alt={formatMessage(node.meta.label)}
+          width={node.attributes.width}
+          height={node.attributes.height}
+          {...dataAttributes(node.attributes)}
+        />
+      </div>
     );
   } else if (isUiNodeTextAttributes(node.attributes)) {
     const id = node.attributes.id;
@@ -313,7 +317,6 @@ export const Node = ({
 
         return isSocial ? (
           <Button
-            brand={(attrs.value as string).toLowerCase()}
             className={cn("w-full flex gap-2", className)}
             variant={"default"}
             size={"default"}
@@ -388,7 +391,13 @@ export const Node = ({
               {...dataAttributes(attrs)}
             />
             <p>
-              {<NodeMessages nodes={[node]} gap={4} textPosition={"start"} />}
+              {
+                <NodeMessages
+                  nodes={[node]}
+                  //  gap={4}
+                  //  textPosition={"start"}
+                />
+              }
             </p>
           </div>
         );
