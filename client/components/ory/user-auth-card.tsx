@@ -8,11 +8,14 @@ import { filterNodesByGroups } from "@ory/integrations/ui";
 import { JSX } from "react";
 import { useIntl } from "react-intl";
 
-import { gridStyle, typographyStyle } from "../../theme";
-import type { CustomHref } from "../button-link";
-import { Card } from "../card";
-import { Divider } from "../divider";
-import { Message } from "../message";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Separator } from "../ui/separator";
 import { MessageSection, MessageSectionProps } from "./helpers/common";
 import { NodeMessages } from "./helpers/error-messages";
 import { FilterFlowNodes } from "./helpers/filter-flow-nodes";
@@ -45,21 +48,21 @@ import { ProfileRegistrationSection } from "./sections/profile-section";
 import { RegistrationSection } from "./sections/registration-section";
 
 export interface LoginSectionAdditionalProps {
-  forgotPasswordURL?: CustomHref | string;
-  signupURL?: CustomHref | string;
-  logoutURL?: CustomHref | string;
+  forgotPasswordURL?: string;
+  signupURL?: string;
+  logoutURL?: string;
 }
 
 export interface RegistrationSectionAdditionalProps {
-  loginURL?: CustomHref | string;
+  loginURL?: string;
 }
 
 export interface VerificationSectionAdditionalProps {
-  signupURL?: CustomHref | string;
+  signupURL?: string;
 }
 
 export interface RecoverySectionAdditionalProps {
-  loginURL?: CustomHref | string;
+  loginURL?: string;
 }
 
 /**
@@ -301,7 +304,7 @@ export const UserAuthCard = ({
           onSubmit={onSubmit}
           submitOnEnter={true}
         >
-          <div className={gridStyle({ gap: 32 })}>
+          <div className="flex flex-col gap-12">
             <FilterFlowNodes
               filter={{
                 nodes: flow.ui.nodes,
@@ -343,7 +346,7 @@ export const UserAuthCard = ({
         <div key={index}>
           {index > 0 ? (
             <>
-              <Divider /> {flow}
+              <Separator /> {flow}
             </>
           ) : (
             flow
@@ -461,20 +464,18 @@ export const UserAuthCard = ({
   return (
     <Card
       className={className}
-      heading={
-        <h2 className={typographyStyle({ type: "regular", size: "small" })}>
-          {title}
-        </h2>
-      }
       image={cardImage}
       data-testid={`${flowType}-auth-card`}
     >
-      <div className={gridStyle({ gap: 32 })}>
-        {subtitle && <Message severity="default">{subtitle}</Message>}
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        {subtitle && <CardDescription>{subtitle}</CardDescription>}
+      </CardHeader>
+      <CardContent className="flex flex-col gap-12">
         <NodeMessages uiMessages={flow.ui.messages} />
         {$oidc && (
           <>
-            <Divider />
+            <Separator />
             <UserAuthForm flow={flow} data-testid={`${flowType}-flow-oidc`}>
               {$oidc}
             </UserAuthForm>
@@ -482,7 +483,7 @@ export const UserAuthCard = ({
         )}
         {$code && (
           <>
-            <Divider />
+            <Separator />
             <UserAuthForm flow={flow} data-testid={`${flowType}-flow-code`}>
               {$code}
             </UserAuthForm>
@@ -490,7 +491,7 @@ export const UserAuthCard = ({
         )}
         {$flow && !isTwoFactor() && (
           <>
-            <Divider />
+            <Separator />
             <UserAuthForm
               flow={flow}
               submitOnEnter={true}
@@ -523,7 +524,7 @@ export const UserAuthCard = ({
 
         {canShowPasskey() && (
           <>
-            <Divider />
+            <Separator />
             <UserAuthForm
               flow={flow}
               submitOnEnter={true}
@@ -542,7 +543,7 @@ export const UserAuthCard = ({
 
         {canShowPasswordless() && (
           <>
-            <Divider />
+            <Separator />
             <UserAuthForm
               flow={flow}
               submitOnEnter={true}
@@ -561,7 +562,7 @@ export const UserAuthCard = ({
 
         {$profile && (
           <>
-            <Divider />
+            <Separator />
             <UserAuthForm flow={flow} data-testid={`${flowType}-flow-profile`}>
               {$profile}
             </UserAuthForm>
@@ -569,7 +570,7 @@ export const UserAuthCard = ({
         )}
 
         {message && MessageSection(message)}
-      </div>
+      </CardContent>
     </Card>
   );
 };

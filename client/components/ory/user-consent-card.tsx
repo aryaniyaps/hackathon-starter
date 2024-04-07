@@ -1,13 +1,11 @@
-import { gridStyle } from "../../theme";
-import { Button } from "../button";
-import { Card } from "../card";
-import { Typography } from "../typography";
-
 import { OAuth2Client, OAuth2ConsentRequest } from "@ory/client";
 
 import { FormattedMessage, useIntl } from "react-intl";
-import { Checkbox } from "../checkbox";
-import { Divider } from "../divider";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
+import { Separator } from "../ui/separator";
 
 /**
  * UserConsentCardProps
@@ -44,117 +42,116 @@ export const UserConsentCard = ({
   const intl = useIntl();
 
   return (
-    <Card
-      className={className}
-      heading={
-        <div style={{ textAlign: "center" }}>
-          <Typography type="bold">{client_name}</Typography>
-        </div>
-      }
-      image={cardImage}
-    >
-      <form action={action} method="post">
-        <input type="hidden" name="_csrf" value={csrfToken} />
-        <input
-          type="hidden"
-          name="consent_challenge"
-          value={consent?.challenge}
-        />
-        <div className={gridStyle({ gap: 16 })}>
-          <div className={gridStyle({ gap: 4 })} style={{ marginBottom: 16 }}>
-            <Typography>
-              <FormattedMessage
-                id="consent.requested-permissions-label"
-                defaultMessage="The application requests access to the following permissions:"
-              />
-            </Typography>
-          </div>
-          <div className={gridStyle({ gap: 4 })}>
-            {requested_scope.map((scope) => (
-              <Checkbox
-                key={scope}
-                label={scope}
-                value={scope}
-                name="grant_scope"
-              />
-            ))}
-          </div>
-          <div className={gridStyle({ gap: 4 })}>
-            <Typography size="xsmall">
-              <FormattedMessage
-                id="consent.description"
-                defaultMessage="Only grant permissions if you trust this site or app. You do not need to accept all permissions."
-              />
-            </Typography>
-          </div>
-          <div className={gridStyle({ direction: "row" })}>
-            {client?.policy_uri && (
-              <a href={client.policy_uri} target="_blank" rel="noreferrer">
-                <Typography size="xsmall">
-                  <FormattedMessage
-                    id="consent.privacy-policy-label"
-                    defaultMessage="Privacy Policy"
+    <Card className={className} image={cardImage}>
+      <CardHeader>
+        <CardTitle>{client_name}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form action={action} method="post">
+          <input type="hidden" name="_csrf" value={csrfToken} />
+          <input
+            type="hidden"
+            name="consent_challenge"
+            value={consent?.challenge}
+          />
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-2 mb-8">
+              <p>
+                <FormattedMessage
+                  id="consent.requested-permissions-label"
+                  defaultMessage="The application requests access to the following permissions:"
+                />
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              {requested_scope.map((scope, idx) => (
+                <div className="items-center flex space-x-2" key={scope}>
+                  <Checkbox
+                    id={`scope-${scope}-${idx}`}
+                    value={scope}
+                    name="grant_scope"
                   />
-                </Typography>
-              </a>
-            )}
-            {client?.tos_uri && (
-              <a href={client.tos_uri} target="_blank" rel="noreferrer">
-                <Typography size="xsmall">
-                  <FormattedMessage
-                    id="consent.terms-of-service-label"
-                    defaultMessage="Terms of Service"
-                  />
-                </Typography>
-              </a>
-            )}
+                  <Label htmlFor={`scope-${scope}-${idx}`}>{scope}</Label>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-xs">
+                <FormattedMessage
+                  id="consent.description"
+                  defaultMessage="Only grant permissions if you trust this site or app. You do not need to accept all permissions."
+                />
+              </p>
+            </div>
+            <div className="flex flex-row">
+              {client?.policy_uri && (
+                <a href={client.policy_uri} target="_blank" rel="noreferrer">
+                  <p className="text-xs">
+                    <FormattedMessage
+                      id="consent.privacy-policy-label"
+                      defaultMessage="Privacy Policy"
+                    />
+                  </p>
+                </a>
+              )}
+              {client?.tos_uri && (
+                <a href={client.tos_uri} target="_blank" rel="noreferrer">
+                  <p className="text-xs">
+                    <FormattedMessage
+                      id="consent.terms-of-service-label"
+                      defaultMessage="Terms of Service"
+                    />
+                  </p>
+                </a>
+              )}
+            </div>
+            <Separator />
+            <div className="flex flex-col gap-6">
+              <div className="items-center flex space-x-2">
+                <Checkbox id="remember" name="remember" />
+                <Label htmlFor="remember">
+                  {intl.formatMessage({
+                    id: "consent.remember-tooltip",
+                    defaultMessage: "remember my decision",
+                  })}
+                </Label>
+              </div>
+              <p className="text-xs">
+                <FormattedMessage
+                  id="consent.remember-label"
+                  defaultMessage="Remember this decision for next time. The application will not be able to ask for additional permissions without your consent."
+                />
+              </p>
+            </div>
+            <div className="flex flex-row justify-between items-center">
+              <Button
+                type="submit"
+                id="reject"
+                name="consent_action"
+                value="reject"
+                variant="destructive"
+              >
+                {intl.formatMessage({
+                  id: "consent.action-reject",
+                  defaultMessage: "Deny",
+                })}
+              </Button>
+              <Button
+                type="submit"
+                id="accept"
+                name="consent_action"
+                value="accept"
+                variant="default"
+              >
+                {intl.formatMessage({
+                  id: "consent.action-accept",
+                  defaultMessage: "Allow",
+                })}
+              </Button>
+            </div>
           </div>
-          <Divider />
-          <div className={gridStyle({ gap: 8 })}>
-            <Checkbox
-              label={intl.formatMessage({
-                id: "consent.remember-tooltip",
-                defaultMessage: "remember my decision",
-              })}
-              id="remember"
-              name="remember"
-            />
-            <Typography size="xsmall">
-              <FormattedMessage
-                id="consent.remember-label"
-                defaultMessage="Remember this decision for next time. The application will not be able to ask for additional permissions without your consent."
-              />
-            </Typography>
-          </div>
-          <div
-            className={gridStyle({ direction: "row" })}
-            style={{ justifyContent: "space-between", alignItems: "center" }}
-          >
-            <Button
-              type="submit"
-              id="reject"
-              name="consent_action"
-              value="reject"
-              variant="error"
-              header={intl.formatMessage({
-                id: "consent.action-reject",
-                defaultMessage: "Deny",
-              })}
-            />
-            <Button
-              type="submit"
-              id="accept"
-              name="consent_action"
-              value="accept"
-              variant="semibold"
-              header={intl.formatMessage({
-                id: "consent.action-accept",
-                defaultMessage: "Allow",
-              })}
-            />
-          </div>
-        </div>
-      </form>
+        </form>
+      </CardContent>
     </Card>
   );
 };
