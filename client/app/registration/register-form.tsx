@@ -7,21 +7,21 @@ import { useRouter } from "next/navigation";
 export default function RegisterForm({ flow }: { flow: RegistrationFlow }) {
   const router = useRouter();
 
-  const submitFlow = (values: UpdateRegistrationFlowBody) =>
-    ory
-      .updateRegistrationFlow({
+  async function submitFlow(values: UpdateRegistrationFlowBody) {
+    try {
+      await ory.updateRegistrationFlow({
         flow: String(flow?.id),
         updateRegistrationFlowBody: values,
-      })
-      // We logged in successfully! Let's bring the user home.
-      .then(() => {
-        if (flow?.return_to) {
-          window.location.href = flow?.return_to;
-          return;
-        }
-        router.push("/");
-      })
-      .catch(handleError);
+      });
+      if (flow?.return_to) {
+        window.location.href = flow?.return_to;
+        return;
+      }
+      router.push("/");
+    } catch (err) {
+      // handleError(err);
+    }
+  }
 
   return (
     <UserAuthCard
@@ -36,7 +36,9 @@ export default function RegisterForm({ flow }: { flow: RegistrationFlow }) {
       // we might need webauthn support which requires additional js
       includeScripts={true}
       // submit the registration form data to Ory
-      onSubmit={({ body }) => submitFlow(body as UpdateRegistrationFlowBody)}
+      onSubmit={async ({ body }) =>
+        await submitFlow(body as UpdateRegistrationFlowBody)
+      }
     />
   );
 }

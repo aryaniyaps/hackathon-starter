@@ -7,21 +7,21 @@ import { useRouter } from "next/navigation";
 export default function VerificationForm({ flow }: { flow: VerificationFlow }) {
   const router = useRouter();
 
-  const submitFlow = (values: UpdateVerificationFlowBody) =>
-    ory
-      .updateVerificationFlow({
+  async function submitFlow(values: UpdateVerificationFlowBody) {
+    try {
+      await ory.updateVerificationFlow({
         flow: String(flow?.id),
         updateVerificationFlowBody: values,
-      })
-      // We logged in successfully! Let's bring the user home.
-      .then(() => {
-        if (flow?.return_to) {
-          window.location.href = flow?.return_to;
-          return;
-        }
-        router.push("/");
-      })
-      .catch(handleError);
+      });
+      if (flow?.return_to) {
+        window.location.href = flow?.return_to;
+        return;
+      }
+      router.push("/");
+    } catch (err) {
+      // handleError(err);
+    }
+  }
 
   return (
     <UserAuthCard
@@ -36,7 +36,9 @@ export default function VerificationForm({ flow }: { flow: VerificationFlow }) {
       // we might need webauthn support which requires additional js
       includeScripts={true}
       // we submit the form data to Ory
-      onSubmit={({ body }) => submitFlow(body as UpdateVerificationFlowBody)}
+      onSubmit={async ({ body }) =>
+        await submitFlow(body as UpdateVerificationFlowBody)
+      }
     />
   );
 }

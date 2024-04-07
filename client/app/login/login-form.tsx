@@ -4,24 +4,26 @@ import ory from "@/lib/ory";
 import { LoginFlow, UpdateLoginFlowBody } from "@ory/client";
 import { useRouter } from "next/navigation";
 
+// TODO: submit forms serverside with nextjs actions, that would fix and
+// standardize the error handling
 export default function LoginForm({ flow }: { flow: LoginFlow }) {
   const router = useRouter();
 
-  const submitFlow = (values: UpdateLoginFlowBody) =>
-    ory
-      .updateLoginFlow({
+  async function submitFlow(values: UpdateLoginFlowBody) {
+    try {
+      await ory.updateLoginFlow({
         flow: String(flow?.id),
         updateLoginFlowBody: values,
-      })
-      // We logged in successfully! Let's bring the user home.
-      .then(() => {
-        if (flow?.return_to) {
-          window.location.href = flow?.return_to;
-          return;
-        }
-        router.push("/");
-      })
-      .catch(handleError);
+      });
+      if (flow?.return_to) {
+        window.location.href = flow?.return_to;
+        return;
+      }
+      router.push("/");
+    } catch (err) {
+      // handleError(err);
+    }
+  }
 
   return (
     <UserAuthCard
@@ -37,7 +39,9 @@ export default function LoginForm({ flow }: { flow: LoginFlow }) {
       // we might need webauthn support which requires additional js
       includeScripts={true}
       // we submit the form data to Ory
-      onSubmit={({ body }) => submitFlow(body as UpdateLoginFlowBody)}
+      onSubmit={async ({ body }) =>
+        await submitFlow(body as UpdateLoginFlowBody)
+      }
     />
   );
 }

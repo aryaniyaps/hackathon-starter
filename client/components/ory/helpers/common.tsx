@@ -2,7 +2,6 @@ import { JSX } from "react";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Message } from "../../message";
 
 export interface ErrorProps {
   code: number;
@@ -36,10 +35,10 @@ export const MessageSection = ({
   buttonText,
   dataTestId,
 }: MessageSectionProps): JSX.Element => (
-  <Message className="text-muted-foreground">
+  <p className="text-muted-foreground">
     {text}&nbsp;
     <Link href={url}>
       <Button data-testid={dataTestId}>{buttonText}</Button>
     </Link>
-  </Message>
+  </p>
 );
