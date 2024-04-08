@@ -6,6 +6,7 @@ import { handleFlowError } from "@/lib/errors";
 import ory from "@/lib/ory";
 import { AxiosError } from "axios";
 import { Metadata } from "next";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import LoginForm from "./login-form";
 
@@ -15,9 +16,12 @@ export const metadata: Metadata = {
 };
 
 async function getLoginFlow(flowId: string): Promise<LoginFlow> {
+  const cookie = headers().get("cookie") || "";
+
   try {
     const { data } = await ory.getLoginFlow({
       id: String(flowId),
+      cookie,
     });
     return data;
   } catch (err) {
@@ -47,6 +51,7 @@ export default async function LoginPage({
   const aal = searchParams["all"];
 
   if (!flowId) {
+    console.log("NO FLOW ID FOUND");
     redirect(`${env.NEXT_PUBLIC_KRATOS_PUBLIC_URL}/self-service/login/browser`);
   }
 

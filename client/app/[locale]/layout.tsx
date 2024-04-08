@@ -18,10 +18,10 @@ export default function LocaleLayout({
   params: { locale: string };
 }>) {
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
         <main>
-          <Providers>{children}</Providers>
+          <Providers locale={locale}>{children}</Providers>
         </main>
         <Toaster />
       </body>

@@ -1,5 +1,5 @@
 "use client";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import { Card, CardHeader, CardTitle } from "../ui/card";
 
@@ -27,17 +27,12 @@ export const UserLogoutCard = ({
   action,
   className,
 }: UserLogoutCardProps) => {
-  const intl = useIntl();
+  const t = useTranslations("logout");
 
   return (
     <Card className={className}>
       <CardHeader>
-        <CardTitle>
-          <FormattedMessage
-            id="logout.title"
-            defaultMessage="Do you wish to log out?"
-          />
-        </CardTitle>
+        <CardTitle>{t("title")}</CardTitle>
       </CardHeader>
       <form action={action} method="post">
         <input type="hidden" name="_csrf" value={csrfToken} />
@@ -51,10 +46,7 @@ export const UserLogoutCard = ({
               name="submit"
               variant="destructive"
             >
-              {intl.formatMessage({
-                id: "logout.reject-button",
-                defaultMessage: "No",
-              })}
+              {t("reject-button")}
             </Button>
             <Button
               type="submit"
@@ -63,10 +55,7 @@ export const UserLogoutCard = ({
               name="submit"
               variant="default"
             >
-              {intl.formatMessage({
-                id: "logout.accept-button",
-                defaultMessage: "Yes",
-              })}
+              {t("accept-button")}
             </Button>
           </div>
         </div>

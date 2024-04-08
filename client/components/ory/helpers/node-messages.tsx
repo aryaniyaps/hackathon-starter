@@ -1,13 +1,15 @@
 import { UiNode, UiText } from "@ory/client";
 import { JSX } from "react";
-import { useIntl } from "react-intl";
 
-import { gridStyle, Severity } from "../../../theme";
+import { useFormatter, useTranslations } from "next-intl";
+import { Severity } from "../../../theme";
 import { uiTextToFormattedMessage } from "./node";
 
 export type NodeMessagesProps = {
   nodes?: UiNode[];
   uiMessages?: UiText[];
+  direction: "row" | "column";
+  gap: number;
 };
 
 type NodeMessageProps = {
@@ -16,7 +18,9 @@ type NodeMessageProps = {
 };
 
 const NodeMessage = ({ key, message, ...props }: NodeMessageProps) => {
-  const intl = useIntl();
+  const t = useTranslations();
+  const formatter = useFormatter();
+
   return (
     <p
       key={key}
@@ -24,7 +28,7 @@ const NodeMessage = ({ key, message, ...props }: NodeMessageProps) => {
       severity={message.type as Severity}
       {...props}
     >
-      {uiTextToFormattedMessage(message, intl)}
+      {uiTextToFormattedMessage(message, formatter, t)}
     </p>
   );
 };
@@ -61,10 +65,11 @@ export const NodeMessages = ({
 
   return $allMessages.length > 0 ? (
     <div
-      className={gridStyle({
-        gap: gap ?? 16,
-        direction: direction,
-      })}
+      className={
+        direction == "row"
+          ? `flex flex-row gap-${gap}`
+          : `flex flex-col gap-${gap}`
+      }
     >
       {$allMessages}
     </div>

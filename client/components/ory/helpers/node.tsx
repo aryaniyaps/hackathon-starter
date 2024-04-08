@@ -6,7 +6,6 @@ import {
   isUiNodeTextAttributes,
 } from "@ory/integrations/ui";
 import { JSX, MouseEvent } from "react";
-import { IntlShape, useIntl } from "react-intl";
 
 import { Icons } from "@/components/icons";
 import { Button, ButtonProps } from "@/components/ui/button";
@@ -14,6 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/utils/style";
+import { useFormatter, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { NodeMessages } from "./node-messages";
@@ -98,7 +98,8 @@ export const getNodeLabel = (node: UiNode): UiText | undefined => {
  */
 export const uiTextToFormattedMessage = (
   { id, context = {}, text }: Omit<UiText, "type">,
-  intl: IntlShape
+  formatter: ReturnType<typeof useFormatter>,
+  t: ReturnType<typeof useTranslations<string>>
 ) => {
   const contextInjectedMessage = Object.entries(context).reduce(
     (accumulator, [key, value]) => {
@@ -140,21 +141,21 @@ export const uiTextToFormattedMessage = (
         return {
           ...accumulator,
           [key]: value,
-          [key + "_list"]: intl.formatList<string>(value),
+          [key + "_list"]: formatter.list(value),
         };
       } else if (key.endsWith("_unix")) {
         if (typeof value === "number") {
           return {
             ...accumulator,
-            [key]: intl.formatDate(new Date(value * 1000)),
-            [key + "_since"]: intl.formatDateTimeRange(
+            [key]: formatter.dateTime(new Date(value * 1000)),
+            [key + "_since"]: formatter.dateTimeRange(
               new Date(value),
               new Date()
             ),
             [key + "_since_minutes"]: Math.abs(
               (value - new Date().getTime() / 1000) / 60
             ).toFixed(2),
-            [key + "_until"]: intl.formatDateTimeRange(
+            [key + "_until"]: formatter.dateTimeRange(
               new Date(),
               new Date(value)
             ),
@@ -172,13 +173,7 @@ export const uiTextToFormattedMessage = (
     {}
   );
 
-  return intl.formatMessage(
-    {
-      id: `identities.messages.${id}`,
-      defaultMessage: text,
-    },
-    contextInjectedMessage
-  );
+  return t(`identities.messages.${id}`, contextInjectedMessage);
 };
 
 function dataAttributes(attrs: UiNodeAttributes): Record<string, string> {
@@ -211,12 +206,14 @@ export const Node = ({
   buttonOverrideProps,
   buttonSocialOverrideProps,
 }: NodeProps): JSX.Element | null => {
-  const intl = useIntl();
+  const t = useTranslations();
+  const formatter = useFormatter();
+
   const formatMessage = (uiText: UiText | undefined) => {
     if (!uiText) {
       return "";
     }
-    return uiTextToFormattedMessage(uiText, intl);
+    return uiTextToFormattedMessage(uiText, formatter, t);
   };
 
   if (isUiNodeImageAttributes(node.attributes)) {
@@ -390,15 +387,7 @@ export const Node = ({
               pattern={attrs.pattern}
               {...dataAttributes(attrs)}
             />
-            <p>
-              {
-                <NodeMessages
-                  nodes={[node]}
-                  //  gap={4}
-                  //  textPosition={"start"}
-                />
-              }
-            </p>
+            <p>{<NodeMessages nodes={[node]} gap={4} direction="column" />}</p>
           </div>
         );
     }

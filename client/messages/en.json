@@ -1,5 +1,43 @@
 {
-  "Index": {
-    "title": "Hello world!"
+  "login": {
+    "title-refresh": "Confirm it's you",
+    "title-aal2": "Two Factor Authentication",
+    "title": "Sign in",
+    "subtitle-oauth2": "To authenticate {clientName}",
+    "logout-label": "Something's not working?",
+    "logout-button": "Logout",
+    "registration-label": "Don't have an account?",
+    "registration-button": "Sign up",
+    "logged-in-as-label": "You're logged in as:",
+    "forgot-password": "Forgot password?"
+  },
+  "registration": {
+    "title": "Register an account",
+    "subtitle-oauth2": "To authenticate {clientName}",
+    "login-label": "Already have an account?",
+    "login-button": "Sign in"
+  },
+  "recovery": {
+    "title": "Recover your account",
+    "login-label": "Remember your credentials?",
+    "login-button": "Sign in"
+  },
+  "verification": {
+    "title": "Verify your account",
+    "registration-label": "Don't have an account?",
+    "registration-button": "Sign up"
+  },
+  "error": {
+    "title-not-found": "404 - Page not found",
+    "title-internal-server-error": "Internal Server Error",
+    "title": "An error occurred",
+    "description": "An error occurred with the following message:",
+    "support-email-link": "If the problem persists, please contact",
+    "back-button": "Go back"
+  },
+  "logout": {
+    "title": "Do you wish to log out?",
+    "reject-button": "No",
+    "accept-button": "Yes"
   }
 }

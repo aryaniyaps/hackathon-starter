@@ -6,6 +6,7 @@ import { handleFlowError } from "@/lib/errors";
 import ory from "@/lib/ory";
 import { AxiosError } from "axios";
 import { Metadata } from "next";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import RegisterForm from "./register-form";
 
@@ -15,9 +16,12 @@ export const metadata: Metadata = {
 };
 
 async function getRegistrationFlow(flowId: string): Promise<RegistrationFlow> {
+  const cookie = headers().get("cookie") || "";
+
   try {
     const { data } = await ory.getRegistrationFlow({
       id: String(flowId),
+      cookie,
     });
     return data;
   } catch (err) {

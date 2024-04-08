@@ -7,8 +7,8 @@ import {
 } from "@ory/client";
 import { filterNodesByGroups } from "@ory/integrations/ui";
 import { JSX } from "react";
-import { useIntl } from "react-intl";
 
+import { useTranslations } from "next-intl";
 import {
   Card,
   CardContent,
@@ -119,7 +119,7 @@ export const UserAuthCard = ({
   includeScripts,
   className,
 }: UserAuthCardProps): JSX.Element => {
-  const intl = useIntl();
+  const t = useTranslations();
 
   if (includeScripts) {
     useScriptNodes({ nodes: flow.ui.nodes });
@@ -129,39 +129,21 @@ export const UserAuthCard = ({
     switch (flowType) {
       case "login":
         if (flow.refresh) {
-          title = intl.formatMessage({
-            id: "login.title-refresh",
-            defaultMessage: "Confirm it's you",
-          });
+          title = t("login.title-refresh");
         } else if (flow.requested_aal === "aal2") {
-          title = intl.formatMessage({
-            id: "login.title-aal2",
-            defaultMessage: "Two-Factor Authentication",
-          });
+          title = t("login.title-aal2");
         } else {
-          title = intl.formatMessage({
-            id: "login.title",
-            defaultMessage: "Sign in",
-          });
+          title = t("login.title");
         }
         break;
       case "registration":
-        title = intl.formatMessage({
-          id: "registration.title",
-          defaultMessage: "Register an account",
-        });
+        title = t("registration.title");
         break;
       case "recovery":
-        title = intl.formatMessage({
-          id: "recovery.title",
-          defaultMessage: "Recover your account",
-        });
+        title = t("recovery.title");
         break;
       case "verification":
-        title = intl.formatMessage({
-          id: "verification.title",
-          defaultMessage: "Verify your account",
-        });
+        title = t("verification.title");
         break;
     }
   }
@@ -169,32 +151,20 @@ export const UserAuthCard = ({
     switch (flowType) {
       case "login":
         if (flow.oauth2_login_request) {
-          subtitle = intl.formatMessage(
-            {
-              id: "login.subtitle-oauth2",
-              defaultMessage: "To authenticate {clientName}",
-            },
-            {
-              clientName:
-                flow.oauth2_login_request.client?.client_name ??
-                flow.oauth2_login_request.client?.client_uri,
-            }
-          );
+          subtitle = t("login.subtitle-oauth2", {
+            clientName:
+              flow.oauth2_login_request.client?.client_name ??
+              flow.oauth2_login_request.client?.client_uri,
+          });
         }
         break;
       case "registration":
         if (flow.oauth2_login_request) {
-          subtitle = intl.formatMessage(
-            {
-              id: "registration.subtitle-oauth2",
-              defaultMessage: "To authenticate {clientName}",
-            },
-            {
-              clientName:
-                flow.oauth2_login_request.client?.client_name ??
-                flow.oauth2_login_request.client?.client_uri,
-            }
-          );
+          subtitle = t("registration.subtitle-oauth2", {
+            clientName:
+              flow.oauth2_login_request.client?.client_name ??
+              flow.oauth2_login_request.client?.client_uri,
+          });
         }
         break;
     }
@@ -366,27 +336,15 @@ export const UserAuthCard = ({
 
       if (isLoggedIn(flow) && additionalProps?.logoutURL) {
         message = {
-          text: intl.formatMessage({
-            id: "login.logout-label",
-            defaultMessage: "Something's not working?",
-          }),
-          buttonText: intl.formatMessage({
-            id: "login.logout-button",
-            defaultMessage: "Logout",
-          }),
+          text: t("login.logout-label"),
+          buttonText: t("login.logout-button"),
           dataTestId: "logout-link",
           url: additionalProps.logoutURL,
         };
       } else if (additionalProps?.signupURL) {
         message = {
-          text: intl.formatMessage({
-            id: "login.registration-label",
-            defaultMessage: "Don't have an account?",
-          }),
-          buttonText: intl.formatMessage({
-            id: "login.registration-button",
-            defaultMessage: "Sign up",
-          }),
+          text: t("login.registration-label"),
+          buttonText: t("login.registration-button"),
           url: additionalProps.signupURL,
           dataTestId: "signup-link",
         };
@@ -403,15 +361,9 @@ export const UserAuthCard = ({
       });
       if (additionalProps?.loginURL) {
         message = {
-          text: intl.formatMessage({
-            id: "registration.login-label",
-            defaultMessage: "Already have an account?",
-          }),
+          text: t("registration.login-label"),
           url: additionalProps.loginURL,
-          buttonText: intl.formatMessage({
-            id: "registration.login-button",
-            defaultMessage: "Sign in",
-          }),
+          buttonText: t("registration.login-button"),
           dataTestId: "cta-link",
         };
       }
@@ -423,14 +375,8 @@ export const UserAuthCard = ({
       });
       if (additionalProps?.loginURL) {
         message = {
-          text: intl.formatMessage({
-            id: "recovery.login-label",
-            defaultMessage: "Remember your credentials?",
-          }),
-          buttonText: intl.formatMessage({
-            id: "recovery.login-button",
-            defaultMessage: "Sign in",
-          }),
+          text: t("recovery.login-label"),
+          buttonText: t("recovery.login-button"),
           url: additionalProps.loginURL,
           dataTestId: "cta-link",
         };
@@ -442,14 +388,8 @@ export const UserAuthCard = ({
       });
       if (additionalProps?.signupURL) {
         message = {
-          text: intl.formatMessage({
-            id: "verification.registration-label",
-            defaultMessage: "Don't have an account?",
-          }),
-          buttonText: intl.formatMessage({
-            id: "verification.registration-button",
-            defaultMessage: "Sign up",
-          }),
+          text: t("verification.registration-label"),
+          buttonText: t("verification.registration-button"),
           url: additionalProps.signupURL,
           dataTestId: "cta-link",
         };

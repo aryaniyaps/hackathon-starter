@@ -1,4 +1,4 @@
-import { FormattedMessage } from "react-intl";
+import { useTranslations } from "next-intl";
 import { SelfServiceFlow } from "../helpers/types";
 
 export interface IdentifierInfoProps {
@@ -10,6 +10,7 @@ export interface IdentifierInfoProps {
  * @param flow - Ory Flow object
  */
 export const LoggedInInfo = ({ flow }: IdentifierInfoProps) => {
+  const t = useTranslations();
   const identifier = flow.ui.nodes.find(
     (i) => "name" in i.attributes && i.attributes.name === "identifier"
   )?.attributes;
@@ -18,10 +19,7 @@ export const LoggedInInfo = ({ flow }: IdentifierInfoProps) => {
 
   return (
     <div className="flex flex-col items-center m-4 mb-0 p-2">
-      <FormattedMessage
-        id="login.logged-in-as-label"
-        defaultMessage="You're logged in as:"
-      />
+      {t("login.logged-in-as-label")}
       <div className="px-2 py-1 font-bold mt-2 text-muted-foreground">
         {identifier.value}
       </div>

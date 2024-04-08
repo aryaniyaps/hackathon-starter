@@ -2,8 +2,8 @@
 import { FlowError } from "@ory/client";
 import { JSX } from "react";
 
+import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { FormattedMessage, useIntl } from "react-intl";
 import { Button } from "../ui/button";
 import { Card, CardHeader, CardTitle } from "../ui/card";
 
@@ -42,7 +42,7 @@ export const UserErrorCard = ({
   contactSupportEmail,
   className,
 }: UserErrorCardProps): JSX.Element => {
-  const intl = useIntl();
+  const t = useTranslations("error");
 
   const err = error.error as errorMessage;
   const status = err.code;
@@ -51,22 +51,13 @@ export const UserErrorCard = ({
   if (!title) {
     switch (status) {
       case 404:
-        title = intl.formatMessage({
-          id: "error.title-not-found",
-          defaultMessage: "404 - Page not found",
-        });
+        title = t("title-not-found");
         break;
       case 500:
-        title = intl.formatMessage({
-          id: "error.title-internal-server-error",
-          defaultMessage: "Internal Server Error",
-        });
+        title = t("title-internal-server-error");
         break;
       default:
-        title = intl.formatMessage({
-          id: "error.title",
-          defaultMessage: "An error occurred",
-        });
+        title = t("title");
     }
   }
 
@@ -78,10 +69,7 @@ export const UserErrorCard = ({
       <div className="flex flex-col gap-12" data-testid="ui/error/message">
         {!is500 && (
           <p className="text-destructive">
-            <FormattedMessage
-              id="error.description"
-              defaultMessage="An error occurred with the following message:"
-            />
+            {t("description")}
             &nbsp;
             {err.reason}
           </p>
@@ -95,29 +83,15 @@ export const UserErrorCard = ({
         </div>
         {contactSupportEmail && (
           <p className="text-muted-foreground">
-            <FormattedMessage
-              id="error.support-email-link"
-              description="A label and link below the error. The link href is 'mailto:{contactSupportEmail}'."
-              defaultMessage="If the problem persists, please contact <a>{contactSupportEmail}</a>"
-              values={{
-                contactSupportEmail,
-                a: (chunks) => (
-                  <Link href={`mailto:${contactSupportEmail}`}>
-                    <Button variant="link">&nbsp;{chunks}</Button>
-                  </Link>
-                ),
-              }}
-            />
+            {t("support-email-link")}
+            <Link href={`mailto:${contactSupportEmail}`}>
+              <Button variant="link">&nbsp;{contactSupportEmail}</Button>
+            </Link>
           </p>
         )}
         <p>
           <Link href={backUrl}>
-            <Button variant="link">
-              <FormattedMessage
-                id="error.back-button"
-                defaultMessage="Go Back"
-              />
-            </Button>
+            <Button variant="link">{t("back-button")}</Button>
           </Link>
         </p>
       </div>

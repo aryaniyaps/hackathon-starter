@@ -1,8 +1,8 @@
 import { UiNode } from "@ory/client";
 import { JSX } from "react";
-import { FormattedMessage } from "react-intl";
 
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";
 import { hasPassword } from "../helpers/utils";
@@ -16,6 +16,7 @@ export const LoginSection = ({
   nodes,
   forgotPasswordURL,
 }: LoginSectionProps): JSX.Element | null => {
+  const t = useTranslations();
   return hasPassword(nodes) ? (
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-8">
@@ -29,10 +30,7 @@ export const LoginSection = ({
         {forgotPasswordURL && (
           <Link href={forgotPasswordURL}>
             <Button data-testid="forgot-password-link" variant="link">
-              <FormattedMessage
-                id="login.forgot-password"
-                defaultMessage="Forgot password?"
-              />
+              {t("login.forgot-password")}
             </Button>
           </Link>
         )}
