@@ -3,7 +3,27 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import ory from "./lib/ory";
 
-export async function middleware(request: NextRequest) {
+import createMiddleware from "next-intl/middleware";
+
+const i18nMiddleware = createMiddleware({
+  // A list of all locales that are supported
+  locales: ["en", "de"],
+
+  // Used when no locale matches
+  defaultLocale: "en",
+  // we don't need a locale prefix because the app runs
+  // behind an authentication layer, and there's no need
+  // for SEO (can change if needed!)
+  localePrefix: "never",
+  // we aren't generating alternate links
+  // because locale prefix is set to `never`
+  alternateLinks: false,
+});
+
+export default async function middleware(request: NextRequest) {
+  // run internationalization middleware
+  i18nMiddleware(request);
+
   try {
     const { status, data } = await ory.toSession({
       cookie: request.headers.get("cookie") || "",
@@ -38,5 +58,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/about/:path*", ""],
+  matcher: ["/", "/:path*"],
 };
