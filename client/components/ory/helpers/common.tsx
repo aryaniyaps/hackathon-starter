@@ -36,9 +36,11 @@ export const MessageSection = ({
   dataTestId,
 }: MessageSectionProps): JSX.Element => (
   <p className="text-muted-foreground">
-    {text}&nbsp;
+    {text}
     <Link href={url}>
-      <Button data-testid={dataTestId}>{buttonText}</Button>
+      <Button data-testid={dataTestId} variant="link">
+        {buttonText}
+      </Button>
     </Link>
   </p>
 );

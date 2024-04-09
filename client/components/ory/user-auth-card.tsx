@@ -8,6 +8,8 @@ import {
 import { filterNodesByGroups } from "@ory/integrations/ui";
 import { JSX } from "react";
 
+import { APP_NAME } from "@/lib/constants";
+import { cn } from "@/utils/style";
 import { useTranslations } from "next-intl";
 import {
   Card,
@@ -133,7 +135,7 @@ export const UserAuthCard = ({
         } else if (flow.requested_aal === "aal2") {
           title = t("login.title-aal2");
         } else {
-          title = t("login.title");
+          title = t("login.title", { appName: APP_NAME });
         }
         break;
       case "registration":
@@ -400,13 +402,20 @@ export const UserAuthCard = ({
   }
 
   return (
-    <Card className={className} data-testid={`${flowType}-auth-card`}>
-      <CardHeader>
+    <Card
+      className={cn("max-w-md w-full px-8 py-4", className)}
+      data-testid={`${flowType}-auth-card`}
+    >
+      <CardHeader className="text-center">
         <CardTitle>{title}</CardTitle>
         {subtitle && <CardDescription>{subtitle}</CardDescription>}
       </CardHeader>
       <CardContent className="flex flex-col gap-12">
-        <NodeMessages uiMessages={flow.ui.messages} />
+        <NodeMessages
+          uiMessages={flow.ui.messages}
+          direction="column"
+          gap={4}
+        />
         {$oidc && (
           <>
             <Separator />
@@ -440,6 +449,8 @@ export const UserAuthCard = ({
         {isTwoFactor() && (
           <>
             <NodeMessages
+              direction="column"
+              gap={4}
               nodes={filterNodesByGroups({
                 nodes: flow.ui.nodes,
                 groups: [

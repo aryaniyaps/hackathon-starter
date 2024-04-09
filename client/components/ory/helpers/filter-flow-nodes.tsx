@@ -52,7 +52,7 @@ export const FilterFlowNodes = ({
   return nodes.length > 0 ? (
     <>
       {nodes.filter((node) => node.hidden).map((node) => node.node)}
-      <div className="flex flex-col gap-12 overflow-auto">
+      <div className="flex flex-col gap-12 px-2 overflow-y-auto">
         {nodes.filter((node) => !node.hidden).map((node) => node.node)}
       </div>
     </>

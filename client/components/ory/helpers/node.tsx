@@ -173,6 +173,7 @@ export const uiTextToFormattedMessage = (
     {}
   );
 
+  // FIXME: we could ass text here, but it won't be localized! we need some way to add title here
   return t(`identities.messages.${id}`, contextInjectedMessage);
 };
 
