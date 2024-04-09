@@ -51,8 +51,19 @@ export default async function LoginPage({
   const aal = searchParams["all"];
 
   if (!flowId) {
-    console.log("NO FLOW ID FOUND");
-    redirect(`${env.NEXT_PUBLIC_KRATOS_PUBLIC_URL}/self-service/login/browser`);
+    const redirectUrl = new URL(
+      `${env.NEXT_PUBLIC_KRATOS_PUBLIC_URL}/self-service/login/browser`
+    );
+
+    if (refresh != undefined)
+      redirectUrl.searchParams.set("refresh", String(refresh));
+
+    if (returnTo != undefined)
+      redirectUrl.searchParams.set("return_to", String(returnTo));
+
+    if (aal != undefined) redirectUrl.searchParams.set("aal", String(aal));
+
+    redirect(redirectUrl.toString());
   }
 
   const flow = await getLoginFlow(String(flowId));

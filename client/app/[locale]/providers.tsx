@@ -1,16 +1,17 @@
 "use client";
 
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 export function Providers({
   children,
   locale,
+  messages,
 }: {
   children: React.ReactNode;
   locale: string;
+  messages: AbstractIntlMessages;
 }) {
-  const messages = useMessages();
   return (
     <NextThemesProvider
       attribute="class"
@@ -18,7 +19,11 @@ export function Providers({
       enableSystem
       disableTransitionOnChange
     >
-      <NextIntlClientProvider locale={locale} messages={messages}>
+      <NextIntlClientProvider
+        locale={locale}
+        messages={messages}
+        timeZone="Asia/Kolkata"
+      >
         {children}
       </NextIntlClientProvider>
     </NextThemesProvider>

@@ -39,5 +39,14 @@
     "title": "Do you wish to log out?",
     "reject-button": "No",
     "accept-button": "Yes"
+  },
+  "identities": {
+    "messages": {
+      "1010002": "Sign in with Google",
+      "1070004": "Email ID",
+      "1010001": "Login",
+      "1040002": "Register with Google",
+      "1040004": "Register"
+    }
   }
 }

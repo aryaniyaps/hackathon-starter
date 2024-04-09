@@ -2,7 +2,6 @@ import { UiNode, UiText } from "@ory/client";
 import { JSX } from "react";
 
 import { useFormatter, useTranslations } from "next-intl";
-import { Severity } from "../../../theme";
 import { uiTextToFormattedMessage } from "./node";
 
 export type NodeMessagesProps = {
@@ -22,12 +21,7 @@ const NodeMessage = ({ key, message, ...props }: NodeMessageProps) => {
   const formatter = useFormatter();
 
   return (
-    <p
-      key={key}
-      data-testid={`ui/message/${message.id}`}
-      severity={message.type as Severity}
-      {...props}
-    >
+    <p key={key} data-testid={`ui/message/${message.id}`} {...props}>
       {uiTextToFormattedMessage(message, formatter, t)}
     </p>
   );

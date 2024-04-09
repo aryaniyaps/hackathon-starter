@@ -1,10 +1,14 @@
 import { Toaster } from "@/components/ui/sonner";
-import "@/styles/globals.css";
 import type { Metadata } from "next";
+import { useMessages } from "next-intl";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,11 +21,14 @@ export default function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }>) {
+  const messages = useMessages();
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={fontSans.variable}>
         <main>
-          <Providers locale={locale}>{children}</Providers>
+          <Providers locale={locale} messages={messages}>
+            {children}
+          </Providers>
         </main>
         <Toaster />
       </body>

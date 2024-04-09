@@ -42,9 +42,14 @@ export default async function VerificationPage({
   const flowId = searchParams["flow"];
 
   if (!flowId) {
-    redirect(
+    const redirectUrl = new URL(
       `${env.NEXT_PUBLIC_KRATOS_PUBLIC_URL}/self-service/verification/browser`
     );
+
+    if (returnTo != undefined)
+      redirectUrl.searchParams.set("return_to", String(returnTo));
+
+    redirect(redirectUrl.toString());
   }
 
   const flow = await getVerificationFlow(String(flowId));
