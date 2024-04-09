@@ -50,6 +50,8 @@ export default createMiddleware({
 // }
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ["/", "/:path*"],
+  matcher: [
+    // Skip all paths that should not be internationalized
+    "/((?!_next|.*\\..*).*)",
+  ],
 };
