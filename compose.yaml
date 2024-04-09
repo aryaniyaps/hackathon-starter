@@ -38,7 +38,7 @@ services:
   kratos-migrate:
     depends_on:
       - postgres
-    image: oryd/kratos:v1.0.0
+    image: oryd/kratos:v1.1.0
     environment:
       DSN: postgres://user:pass@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
       SELFSERVICE_METHODS_OIDC_CONFIG_PROVIDERS_0_CLIENT_ID: ${GOOGLE_CLIENT_ID}
@@ -56,7 +56,7 @@ services:
     depends_on:
       - kratos-migrate
       - postgres
-    image: oryd/kratos:v1.0.0
+    image: oryd/kratos:v1.1.0
     ports:
       - "4433:4433" # public
       - "4434:4434" # admin

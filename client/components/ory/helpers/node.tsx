@@ -214,6 +214,7 @@ export const Node = ({
     if (!uiText) {
       return "";
     }
+
     return uiTextToFormattedMessage(uiText, formatter, t);
   };
 
@@ -367,7 +368,9 @@ export const Node = ({
       default:
         return (
           <div
-            className="flex flex-col gap-4"
+            className={cn("flex flex-col gap-4", {
+              hidden: attrs.type === "hidden",
+            })}
             data-testid={`node/input/${attrs.name}`}
           >
             <Label htmlFor={`node/input/${attrs.name}-input`}>

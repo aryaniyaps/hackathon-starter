@@ -1,4 +1,4 @@
-import { UiNode, UiText } from "@ory/client";
+import { UiNode, UiText, UiTextTypeEnum } from "@ory/client";
 import { JSX } from "react";
 
 import { cn } from "@/utils/style";
@@ -27,8 +27,9 @@ const NodeMessage = ({ key, message, global, ...props }: NodeMessageProps) => {
       key={key}
       data-testid={`ui/message/${message.id}`}
       className={cn({
-        "text-destructive": message.type === "error",
-        "text-center": global,
+        "text-destructive-foreground bg-destructive/75":
+          message.type === UiTextTypeEnum.Error && global,
+        "text-center border px-6 py-4 rounded-lg": global,
       })}
       {...props}
     >
@@ -69,13 +70,6 @@ export const NodeMessages = ({
   const $allMessages = [...($groupMessages ?? []), ...($messages ?? [])];
 
   return $allMessages.length > 0 ? (
-    <div
-      className={cn(
-        { "border px-6 py-4 rounded-lg": global },
-        `flex flex-col gap-${gap} `
-      )}
-    >
-      {$allMessages}
-    </div>
+    <div className={cn(`flex flex-col gap-${gap} `)}>{$allMessages}</div>
   ) : null;
 };
