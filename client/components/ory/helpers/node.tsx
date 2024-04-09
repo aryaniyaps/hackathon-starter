@@ -173,7 +173,7 @@ export const uiTextToFormattedMessage = (
     {}
   );
 
-  // FIXME: we could ass text here, but it won't be localized! we need some way to add title here
+  // FIXME: we could add text here, but it won't be localized! we need some way to add title here
   return t(`identities.messages.${id}`, contextInjectedMessage);
 };
 
@@ -367,7 +367,7 @@ export const Node = ({
       default:
         return (
           <div
-            className="flex flex-col gap-2"
+            className="flex flex-col gap-4"
             data-testid={`node/input/${attrs.name}`}
           >
             <Label htmlFor={`node/input/${attrs.name}-input`}>
@@ -388,7 +388,7 @@ export const Node = ({
               pattern={attrs.pattern}
               {...dataAttributes(attrs)}
             />
-            <p>{<NodeMessages nodes={[node]} gap={4} direction="column" />}</p>
+            <p>{<NodeMessages nodes={[node]} gap={4} />}</p>
           </div>
         );
     }

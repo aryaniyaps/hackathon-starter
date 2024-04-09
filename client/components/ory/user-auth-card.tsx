@@ -411,11 +411,7 @@ export const UserAuthCard = ({
         {subtitle && <CardDescription>{subtitle}</CardDescription>}
       </CardHeader>
       <CardContent className="flex flex-col gap-12">
-        <NodeMessages
-          uiMessages={flow.ui.messages}
-          direction="column"
-          gap={4}
-        />
+        <NodeMessages global uiMessages={flow.ui.messages} gap={4} />
         {$oidc && (
           <>
             <Separator />
@@ -449,7 +445,6 @@ export const UserAuthCard = ({
         {isTwoFactor() && (
           <>
             <NodeMessages
-              direction="column"
               gap={4}
               nodes={filterNodesByGroups({
                 nodes: flow.ui.nodes,

@@ -1,7 +1,9 @@
 "use client";
 import { UserAuthCard } from "@/components/ory/user-auth-card";
+import { handleError } from "@/lib/errors";
 import ory from "@/lib/ory";
 import { LoginFlow, UpdateLoginFlowBody } from "@ory/client";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 
 // TODO: submit forms serverside with nextjs actions, that would fix and
@@ -21,7 +23,7 @@ export default function LoginForm({ flow }: { flow: LoginFlow }) {
       }
       router.push("/");
     } catch (err) {
-      // handleError(err);
+      if (err instanceof AxiosError) handleError(err, undefined, "/login");
     }
   }
 
