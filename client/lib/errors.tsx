@@ -19,7 +19,7 @@ export function handleFlowError<S>(
         }
         // 2FA is enabled and enforced, but user did not perform 2fa yet!
         window.location.href = redirectTo.toString();
-        return;
+        break;
       }
       redirect("/login?aal=aal2&return_to=" + window.location.href);
     case "session_already_available":
@@ -49,7 +49,7 @@ export function handleFlowError<S>(
     case "browser_location_change_required":
       // Ory Kratos asked us to point the user to this URL.
       window.location.href = err.response.data.redirect_browser_to;
-      return;
+      break;
   }
 
   switch (err.response?.status) {
@@ -58,8 +58,8 @@ export function handleFlowError<S>(
       redirect("/" + flowType);
   }
 
-  // We are not able to handle the error? Return it.
-  return Promise.reject(err);
+  // We are not able to handle the error? Throw it.
+  throw err;
 }
 
 export const handleError = async (
@@ -82,7 +82,6 @@ export const handleError = async (
     case 400: {
       if (responseData.error?.id == "session_already_available") {
         redirect("/");
-        return Promise.resolve();
       }
 
       break;
@@ -91,14 +90,11 @@ export const handleError = async (
     case 401: {
       console.warn("handleError hook 401: Navigate to /login");
       redirect("/login");
-      return Promise.resolve();
     }
     case 403: {
       // the user might have a session, but would require 2FA (Two-Factor Authentication)
       if (responseData.error?.id === "session_aal2_required") {
         redirect("/login?aal2=true");
-        Router.reload();
-        return Promise.resolve();
       }
 
       if (
@@ -124,7 +120,6 @@ export const handleError = async (
       };
 
       redirect(`/error?error=${encodeURIComponent(JSON.stringify(errorMsg))}`);
-      return Promise.resolve();
     }
     // error.id handling
     //    "self_service_flow_expired"
@@ -145,7 +140,6 @@ export const handleError = async (
       } else if (defaultNav !== undefined) {
         console.warn("sdkError 410: Navigate to", defaultNav);
         redirect(defaultNav);
-        return Promise.resolve();
       }
       break;
     }
@@ -168,7 +162,6 @@ export const handleError = async (
         if (currentUrl.pathname !== redirectUrl.pathname) {
           console.warn("sdkError 422: Update path");
           redirect(redirectUrl.pathname + redirectUrl.search);
-          return Promise.resolve();
         }
 
         // for webauthn we need to reload the flow

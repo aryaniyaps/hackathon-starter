@@ -319,7 +319,7 @@ export const Node = ({
         return isSocial ? (
           <Button
             className={cn("w-full flex gap-2", className)}
-            variant={"default"}
+            variant={"secondary"}
             size={"default"}
             disabled={attrs.disabled}
             {...(buttonSocialOverrideProps && buttonSocialOverrideProps)}
