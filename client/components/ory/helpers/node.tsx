@@ -388,7 +388,7 @@ export const Node = ({
               pattern={attrs.pattern}
               {...dataAttributes(attrs)}
             />
-            <p>{<NodeMessages nodes={[node]} gap={4} />}</p>
+            <NodeMessages nodes={[node]} gap={4} />
           </div>
         );
     }

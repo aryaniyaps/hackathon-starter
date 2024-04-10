@@ -1,5 +1,6 @@
 import { LoginFlow } from "@ory/client";
 
+import { UserAuthCard } from "@/components/ory/user-auth-card";
 import { APP_NAME } from "@/lib/constants";
 import { env } from "@/lib/env";
 import { handleFlowError } from "@/lib/errors";
@@ -8,7 +9,6 @@ import { AxiosError } from "axios";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import LoginForm from "./login-form";
 
 export const metadata: Metadata = {
   title: `Sign In to ${APP_NAME}`,
@@ -70,7 +70,19 @@ export default async function LoginPage({
 
   return (
     <div className="w-full h-full max-w-md mx-auto flex items-center">
-      <LoginForm flow={flow} />
+      <UserAuthCard
+        // This defines what kind of card we want to render.
+        flowType={"login"}
+        // we always need the flow data which populates the form fields and error messages dynamically
+        flow={flow}
+        // the login card should allow the user to go to the registration page and the recovery page
+        additionalProps={{
+          forgotPasswordURL: "/recovery",
+          signupURL: "/registration",
+        }}
+        // we might need webauthn support which requires additional js
+        includeScripts={true}
+      />
     </div>
   );
 }

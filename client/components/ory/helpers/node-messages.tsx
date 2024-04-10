@@ -27,6 +27,7 @@ const NodeMessage = ({ key, message, global, ...props }: NodeMessageProps) => {
       key={key}
       data-testid={`ui/message/${message.id}`}
       className={cn({
+        "text-destructive text-sm font-bold": !global,
         "text-destructive-foreground bg-destructive/75":
           message.type === UiTextTypeEnum.Error && global,
         "text-center border px-6 py-4 rounded-lg": global,
