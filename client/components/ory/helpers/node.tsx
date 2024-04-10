@@ -5,7 +5,7 @@ import {
   isUiNodeInputAttributes,
   isUiNodeTextAttributes,
 } from "@ory/integrations/ui";
-import { JSX, MouseEvent } from "react";
+import { JSX, MouseEvent, useId } from "react";
 
 import { Icons } from "@/components/icons";
 import { Button, ButtonProps } from "@/components/ui/button";
@@ -210,6 +210,8 @@ export const Node = ({
   const t = useTranslations();
   const formatter = useFormatter();
 
+  const labelId = useId();
+
   const formatMessage = (uiText: UiText | undefined) => {
     if (!uiText) {
       return "";
@@ -349,7 +351,7 @@ export const Node = ({
             data-testid={`node/input/${attrs.name}`}
           >
             <Checkbox
-              id={`node/input/${attrs.name}-checkbox`}
+              id={labelId}
               name={attrs.name}
               required={attrs.required}
               defaultValue={attrs.value as string | number | string[]}
@@ -357,10 +359,7 @@ export const Node = ({
               defaultChecked={Boolean(attrs.value)}
               {...dataAttributes(attrs)}
             />
-            <Label
-              className={className}
-              htmlFor={`node/input/${attrs.name}-checkbox`}
-            >
+            <Label className={className} htmlFor={labelId}>
               {formatMessage(getNodeLabel(node))}
             </Label>
           </div>
@@ -373,11 +372,9 @@ export const Node = ({
             })}
             data-testid={`node/input/${attrs.name}`}
           >
-            <Label htmlFor={`node/input/${attrs.name}-input`}>
-              {formatMessage(getNodeLabel(node))}
-            </Label>
+            <Label htmlFor={labelId}>{formatMessage(getNodeLabel(node))}</Label>
             <Input
-              id={`node/input/${attrs.name}-input`}
+              id={labelId}
               className={className}
               name={attrs.name}
               type={attrs.type}
