@@ -49,12 +49,23 @@ export const FilterFlowNodes = ({
       ),
       hidden: getNodeInputType(node.attributes) === "hidden",
     }));
-  return nodes.length > 0 ? (
+
+  const visibleNodes = nodes
+    .filter((node) => !node.hidden)
+    .map((node) => node.node);
+
+  const hiddenNodes = nodes
+    .filter((node) => node.hidden)
+    .map((node) => node.node);
+
+  return (
     <>
-      {nodes.filter((node) => node.hidden).map((node) => node.node)}
-      <div className="flex flex-col gap-12 px-2 overflow-y-auto">
-        {nodes.filter((node) => !node.hidden).map((node) => node.node)}
-      </div>
+      {hiddenNodes.length > 0 ? <>{hiddenNodes}</> : null}
+      {visibleNodes.length > 0 ? (
+        <div className="flex flex-col gap-8 px-2 py-2 overflow-y-auto">
+          {visibleNodes}
+        </div>
+      ) : null}
     </>
-  ) : null;
+  );
 };
