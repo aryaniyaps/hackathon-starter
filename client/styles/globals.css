@@ -67,9 +67,9 @@
   body,
   body > main,
   #__next {
-    @apply h-full w-full;
+    @apply h-screen w-full;
     @apply whitespace-normal;
     @apply box-border;
-    @apply overflow-y-auto;
+    @apply overflow-y-hidden;
   }
 }
