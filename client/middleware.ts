@@ -2,7 +2,7 @@ import { ResponseError } from "@ory/client-fetch";
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale, localePrefix, locales } from "./lib/i18n";
-import ory from "./lib/ory";
+import kratos from "./lib/kratos";
 
 const intlMiddleware = createMiddleware({
   // A list of all locales that are supported
@@ -37,7 +37,7 @@ export default async function middleware(request: NextRequest) {
     // TODO: write error page at /error or don't redirect there, we can let nextjs handle errors too
     try {
       const cookie = request.headers.get("cookie") || "";
-      await ory.toSession({ cookie });
+      await kratos.toSession({ cookie });
     } catch (err) {
       if (err instanceof ResponseError) {
         const data = await err.response.json();

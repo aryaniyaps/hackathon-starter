@@ -41,7 +41,6 @@ export default function LogoutDialog() {
     input
   ) => {
     await logout.mutateAsync({ rememberSession: input.rememberSession });
-    router.replace("/login");
   };
 
   return (

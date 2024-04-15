@@ -1,17 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import ory from "../ory";
+import kratos from "../kratos";
 
 export default function useLogout() {
   return useMutation({
     mutationFn: async ({ rememberSession }: { rememberSession: boolean }) => {
-      const logoutFlow = await ory.createBrowserLogoutFlow();
+      const logoutFlow = await kratos.createBrowserLogoutFlow();
 
-      return await fetch(logoutFlow.logout_url, {
-        method: "GET",
-        credentials: "include",
-        mode: "cors",
-        redirect: "follow",
-      });
+      return await kratos.updateLogoutFlow({ token: logoutFlow.logout_token });
     },
   });
 }
