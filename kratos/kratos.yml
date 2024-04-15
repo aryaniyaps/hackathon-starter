@@ -33,7 +33,7 @@ session:
     required_aal: aal1
 
 selfservice:
-  default_browser_return_url: http://localhost:3000/
+  default_browser_return_url: http://localhost:3000/dashboard
   allowed_return_urls:
     - http://localhost:3000/
 
@@ -74,7 +74,7 @@ selfservice:
             client_id: ""
             client_secret: ""
             issuer_url: https://accounts.google.com
-            mapper_url: "file:///etc/config/kratos/data-mappers/oidc.google.jsonnet"
+            mapper_url: file:///etc/config/kratos/data-mappers/oidc.google.jsonnet
             auth_url: https://accounts.google.com/o/oauth2/v2/auth
             token_url: https://www.googleapis.com/oauth2/v4/token
             scope:
