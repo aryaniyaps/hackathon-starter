@@ -7,12 +7,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import useCurrentSession from "@/lib/hooks/useCurrentSession";
 import { Link } from "@/lib/navigation";
 import { useTranslations } from "next-intl";
 
 export default function UserNav() {
-  const { data: user } = useCurrentUser();
+  const { data: user } = useCurrentSession();
 
   const t = useTranslations("dashboard.user-nav");
 

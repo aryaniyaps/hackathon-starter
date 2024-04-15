@@ -1,17 +1,19 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import parseUserAgent from "@/utils/userAgent";
 import { Session } from "@ory/client-fetch";
+import { useFormatter } from "next-intl";
 import RevokeSessionDialog from "./revoke-session-dialog";
 
-const dateTimeFormat = new Intl.DateTimeFormat("en", {
-  day: "2-digit",
-  month: "long",
-  year: "numeric",
-});
-
-export default function SessionCard({ session }: { session: Session }) {
+export default function SessionCard({
+  session,
+  isCurrentSession = false,
+}: {
+  session: Session;
+  isCurrentSession: boolean;
+}) {
+  const formatter = useFormatter();
   return (
     <Card>
       <CardHeader>
@@ -30,17 +32,24 @@ export default function SessionCard({ session }: { session: Session }) {
               </div>
             ))}
           </div>
-          <RevokeSessionDialog sessionId={session.id} />
+          {isCurrentSession ? (
+            <Badge>Current session</Badge>
+          ) : (
+            <RevokeSessionDialog sessionId={session.id} />
+          )}
         </div>
       </CardHeader>
-      <CardFooter className="flex gap-2">
-        <p className="text-xs text-muted-foreground">
-          created at {dateTimeFormat.format(session.issued_at)}
-        </p>
-        <Separator orientation="vertical" />
-        <p className="text-xs text-muted-foreground">
-          expires at {dateTimeFormat.format(session.expires_at)}
-        </p>
+      <CardFooter className="flex gap-4">
+        {session.issued_at ? (
+          <p className="text-xs text-muted-foreground">
+            created {formatter.relativeTime(session.issued_at)}
+          </p>
+        ) : null}
+        {session.expires_at ? (
+          <p className="text-xs text-muted-foreground">
+            expires in {formatter.relativeTime(session.expires_at)}
+          </p>
+        ) : null}
       </CardFooter>
     </Card>
   );

@@ -1,10 +1,10 @@
 "use client";
 import { APP_NAME } from "@/lib/constants";
-import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import useCurrentSession from "@/lib/hooks/useCurrentSession";
 import { useTranslations } from "next-intl";
 
 export default function AccountSettingsPage() {
-  const { data: user } = useCurrentUser();
+  const { data: user } = useCurrentSession();
 
   const t = useTranslations("settings.account");
 
