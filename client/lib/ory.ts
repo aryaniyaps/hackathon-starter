@@ -1,18 +1,11 @@
 import { Configuration, FrontendApi } from "@ory/client-fetch";
-import { edgeConfig } from "@ory/integrations/next";
 import { env } from "./env";
 
-const localConfig = {
-  basePath: env.NEXT_PUBLIC_KRATOS_PUBLIC_URL,
-  baseOptions: {
-    withCredentials: true,
-  },
-};
-
 const ory = new FrontendApi(
-  new Configuration(
-    env.NEXT_PUBLIC_KRATOS_PUBLIC_URL ? localConfig : edgeConfig
-  )
+  new Configuration({
+    basePath: env.NEXT_PUBLIC_KRATOS_PUBLIC_URL,
+    credentials: "include",
+  })
 );
 
 export default ory;

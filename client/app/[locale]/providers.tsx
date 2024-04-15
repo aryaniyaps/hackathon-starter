@@ -1,5 +1,7 @@
 "use client";
 
+import { getQueryClient } from "@/lib/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
@@ -12,6 +14,7 @@ export function Providers({
   locale: string;
   messages: AbstractIntlMessages;
 }) {
+  const queryClient = getQueryClient();
   return (
     <NextThemesProvider
       attribute="class"
@@ -24,7 +27,9 @@ export function Providers({
         messages={messages}
         timeZone="Asia/Kolkata"
       >
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </NextIntlClientProvider>
     </NextThemesProvider>
   );

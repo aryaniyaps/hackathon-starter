@@ -11,6 +11,12 @@ export const defaultLocale = "en";
 
 export const pathnames = {
   "/": "/",
+  "/settings": "/settings",
+  "/dashboard": "/dashboard",
+  "/login": "/login",
+  "/registration": "/registration",
+  "/recovery": "/recovery",
+  "/verification": "/verification",
 } satisfies Pathnames<typeof locales>;
 
 export default getRequestConfig(async ({ locale }) => {
