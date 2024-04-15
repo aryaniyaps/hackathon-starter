@@ -17,6 +17,10 @@ const intlMiddleware = createMiddleware({
 
 const protectedRoutes = ["/"];
 
+// FIXME: should we redirect users from recovery and verification pages
+// if they are already authenticated?
+const authRoutes = ["/login", "/registration", "/recovery", "/verification"];
+
 export default async function middleware(request: NextRequest) {
   // check user session
   if (protectedRoutes.includes(request.nextUrl.pathname)) {

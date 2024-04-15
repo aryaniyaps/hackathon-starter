@@ -1,7 +1,7 @@
 // Copyright © 2023 Ory Corp
 // SPDX-License-Identifier: Apache-2.0
 
-import { UiNode } from "@ory/client";
+import { UiNode } from "@ory/client-fetch";
 
 export const hasGroup = (group: string) => (nodes: UiNode[]) =>
   nodes.some(({ type, group: g }) => type === "input" && g === group);

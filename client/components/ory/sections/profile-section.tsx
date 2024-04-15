@@ -1,6 +1,6 @@
 import { JSX } from "react";
 
-import { SettingsFlow } from "@ory/client";
+import { SettingsFlow } from "@ory/client-fetch";
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";
 import { SelfServiceFlow } from "../helpers/types";
 import { hasProfile } from "../helpers/utils";

@@ -7,7 +7,7 @@ import {
   RegistrationFlow,
   SettingsFlow,
   VerificationFlow,
-} from "@ory/client";
+} from "@ory/client-fetch";
 
 export type SelfServiceFlow =
   | LoginFlow

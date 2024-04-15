@@ -4,7 +4,7 @@ import {
   UpdateRegistrationFlowBody,
   UpdateSettingsFlowBody,
   UpdateVerificationFlowBody,
-} from "@ory/client";
+} from "@ory/client-fetch";
 import { FilterNodesByGroups } from "@ory/integrations/ui";
 import { JSX } from "react";
 

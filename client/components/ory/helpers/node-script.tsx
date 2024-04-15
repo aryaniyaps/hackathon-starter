@@ -1,4 +1,4 @@
-import { UiNode, UiNodeScriptAttributes } from "@ory/client";
+import { UiNode, UiNodeScriptAttributes } from "@ory/client-fetch";
 import { filterNodesByGroups } from "@ory/integrations/ui";
 import { HTMLAttributeReferrerPolicy, useEffect } from "react";
 

@@ -1,5 +1,5 @@
 "use client";
-import { FlowError } from "@ory/client";
+import { FlowError } from "@ory/client-fetch";
 import { JSX } from "react";
 
 import { useTranslations } from "next-intl";

@@ -1,4 +1,4 @@
-import { UiNode, UiText, UiTextTypeEnum } from "@ory/client";
+import { UiNode, UiText, UiTextTypeEnum } from "@ory/client-fetch";
 import { JSX } from "react";
 
 import { cn } from "@/utils/style";
