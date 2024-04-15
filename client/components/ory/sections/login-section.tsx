@@ -18,8 +18,8 @@ export const LoginSection = ({
 }: LoginSectionProps): JSX.Element | null => {
   const t = useTranslations();
   return hasPassword(nodes) ? (
-    <div className="flex flex-col gap-12">
-      <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6">
         <FilterFlowNodes
           filter={{
             nodes: nodes,

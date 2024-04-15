@@ -240,7 +240,7 @@ export const Node = ({
     const id = node.attributes.id;
     return node.attributes.text.id === 1050015 ? (
       <div
-        className="inline-flex flex-wrap gap-12 max-w-fit items-center"
+        className="inline-flex flex-wrap gap-8 max-w-fit items-center"
         data-testid={`node/text/${id}`}
       >
         <p

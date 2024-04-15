@@ -14,8 +14,8 @@ export interface LinkSectionProps {
  * - https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation
  */
 export const LinkSection = ({ nodes }: LinkSectionProps): JSX.Element => (
-  <div className="flex flex-col gap-12">
-    <div className="flex flex-col gap-8">
+  <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
       <FilterFlowNodes
         filter={{
           nodes: nodes,

@@ -274,7 +274,7 @@ export const UserAuthCard = ({
           onSubmit={onSubmit}
           submitOnEnter={true}
         >
-          <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-8">
             <FilterFlowNodes
               filter={{
                 nodes: flow.ui.nodes,

@@ -14,13 +14,13 @@ export const ProfileSettingsSection = ({
 }: ProfileSettingsProps): JSX.Element => {
   const filter = { nodes: flow.ui.nodes, groups: "profile" };
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-8">
       <FilterFlowNodes
         filter={{ ...filter, excludeAttributes: "submit,button" }}
       />
       <FilterFlowNodes
         filter={{ ...filter, attributes: "submit,button" }}
-        buttonOverrideProps={{ fullWidth: false }}
+        buttonOverrideProps={{ className: "w-min" }}
       />
     </div>
   );
@@ -30,7 +30,7 @@ export const ProfileRegistrationSection = (
   flow: SelfServiceFlow
 ): JSX.Element | null => {
   return hasProfile(flow.ui.nodes) ? (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-8">
       <FilterFlowNodes
         filter={{
           nodes: flow.ui.nodes,

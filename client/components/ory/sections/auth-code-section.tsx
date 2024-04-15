@@ -30,7 +30,7 @@ export const AuthCodeSection = ({
           attributes: ["hidden"],
         }}
       />
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-8">
         {/* default group is used here automatically for login */}
         <FilterFlowNodes
           filter={{

@@ -8,8 +8,8 @@ export const PasswordlessSection = (
   flow: SelfServiceFlow
 ): JSX.Element | null => {
   return hasWebauthn(flow.ui.nodes) ? (
-    <div className="flex flex-col gap-12">
-      <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6">
         <FilterFlowNodes
           filter={{
             nodes: flow.ui.nodes,
@@ -34,8 +34,8 @@ export const PasswordlessSection = (
 
 export const PasskeySection = (flow: SelfServiceFlow): JSX.Element | null => {
   return hasPasskey(flow.ui.nodes) ? (
-    <div className="flex flex-col gap-12">
-      <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6">
         <FilterFlowNodes
           filter={{
             nodes: flow.ui.nodes,
@@ -62,7 +62,7 @@ export const PasskeyLoginSection = (
   flow: SelfServiceFlow
 ): JSX.Element | null => {
   return hasPasskey(flow.ui.nodes) ? (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-8">
       <FilterFlowNodes
         filter={{
           nodes: flow.ui.nodes,
@@ -80,8 +80,8 @@ export const PasswordlessLoginSection = (
 ): JSX.Element | null => {
   if (hasWebauthn(flow.ui.nodes)) {
     return (
-      <div className="flex flex-col gap-12">
-        <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6">
           <FilterFlowNodes
             filter={{
               nodes: flow.ui.nodes,

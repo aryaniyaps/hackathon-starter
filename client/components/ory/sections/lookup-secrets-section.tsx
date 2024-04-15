@@ -12,7 +12,7 @@ export const LookupSecretsSection = ({
   nodes,
 }: LookupSecretsSectionProps): JSX.Element | null => {
   return hasLookupSecret(nodes) ? (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-8">
       <FilterFlowNodes
         filter={{
           nodes: nodes,
