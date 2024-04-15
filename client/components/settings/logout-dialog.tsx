@@ -1,4 +1,5 @@
 import useLogout from "@/lib/hooks/useLogout";
+import { useRouter } from "@/lib/navigation";
 import { useTranslations } from "next-intl";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
@@ -15,10 +16,13 @@ import {
 
 export default function LogoutDialog() {
   const logout = useLogout();
+  const router = useRouter();
   const t = useTranslations("settings");
 
   async function handleLogout() {
     await logout.mutateAsync();
+    router.push("/login");
+    router.refresh();
   }
 
   return (

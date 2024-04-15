@@ -3,6 +3,14 @@
     "placeholder": "Sprache ändern",
     "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unbekannt}}"
   },
+  "dashboard": {
+    "user-nav": {
+      "settings-label": "Einstellungen"
+    },
+    "search-bar": {
+      "placeholder": "Suchen..."
+    }
+  },
   "settings": {
     "title": "Einstellungen",
     "back-to-dashboard-label": "Zurück zum Dashboard",

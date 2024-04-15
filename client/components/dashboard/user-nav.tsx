@@ -9,9 +9,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
 import { Link } from "@/lib/navigation";
+import { useTranslations } from "next-intl";
 
 export default function UserNav() {
   const { data: user } = useCurrentUser();
+
+  const t = useTranslations("dashboard.user-nav");
 
   return (
     <DropdownMenu>
@@ -30,7 +33,7 @@ export default function UserNav() {
       <DropdownMenuContent align="end" sideOffset={15}>
         <DropdownMenuLabel>{user.identity?.traits.email}</DropdownMenuLabel>
         <Link href="/settings">
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem>{t("settings-label")}</DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
     </DropdownMenu>
