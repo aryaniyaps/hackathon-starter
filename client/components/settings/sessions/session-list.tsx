@@ -13,6 +13,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import SessionCard from "./session-card";
 
+// TODO: handle empty state (no other active sessions)
 export default function SessionList() {
   const [page, setPage] = useState(0);
 

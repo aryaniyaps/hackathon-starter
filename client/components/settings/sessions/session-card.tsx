@@ -11,7 +11,7 @@ export default function SessionCard({
   isCurrentSession = false,
 }: {
   session: Session;
-  isCurrentSession: boolean;
+  isCurrentSession?: boolean;
 }) {
   const formatter = useFormatter();
   return (
