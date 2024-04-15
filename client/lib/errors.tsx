@@ -1,19 +1,20 @@
-import { AxiosError } from "axios";
+import { ResponseError } from "@ory/client-fetch";
 import { redirect } from "next/navigation";
 
 // FIXME: handle toasts properly
 
 // A small function to help us deal with errors coming from fetching a flow.
-export function handleFlowError<S>(
-  err: AxiosError<S>,
+export async function handleFlowError<S>(
+  err: ResponseError,
   flowType: "login" | "registration" | "settings" | "recovery" | "verification"
-): never {
-  switch (err.response?.data.error?.id) {
+): Promise<never> {
+  const data = await err.response.json();
+  switch (data.error?.id) {
     case "session_inactive":
       redirect("/login?return_to=" + window.location.href);
     case "session_aal2_required":
-      if (err.response?.data.redirect_browser_to) {
-        const redirectTo = new URL(err.response?.data.redirect_browser_to);
+      if (data.redirect_browser_to) {
+        const redirectTo = new URL(data.redirect_browser_to);
         if (flowType === "settings") {
           redirectTo.searchParams.set("return_to", window.location.href);
         }
@@ -27,8 +28,8 @@ export function handleFlowError<S>(
       redirect("/");
     case "session_refresh_required":
       // We need to re-authenticate to perform this action
-      window.location.href = err.response?.data.redirect_browser_to;
-      return;
+      window.location.href = data.redirect_browser_to;
+      break;
     case "self_service_flow_return_to_forbidden":
       // The flow expired, let's request a new one.
       // toast.error("The return_to address is not allowed.");
@@ -48,7 +49,7 @@ export function handleFlowError<S>(
       redirect("/" + flowType);
     case "browser_location_change_required":
       // Ory Kratos asked us to point the user to this URL.
-      window.location.href = err.response.data.redirect_browser_to;
+      window.location.href = data.redirect_browser_to;
       break;
   }
 

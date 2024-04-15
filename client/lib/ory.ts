@@ -1,4 +1,4 @@
-import { Configuration, FrontendApi } from "@ory/client";
+import { Configuration, FrontendApi } from "@ory/client-fetch";
 import { edgeConfig } from "@ory/integrations/next";
 import { env } from "./env";
 

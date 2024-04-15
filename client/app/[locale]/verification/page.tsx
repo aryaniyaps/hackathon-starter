@@ -1,11 +1,11 @@
-import { VerificationFlow } from "@ory/client";
+import { VerificationFlow } from "@ory/client-fetch";
 
 import { UserAuthCard } from "@/components/ory/user-auth-card";
 import { APP_NAME } from "@/lib/constants";
 import { env } from "@/lib/env";
 import { handleFlowError } from "@/lib/errors";
 import ory from "@/lib/ory";
-import { AxiosError } from "axios";
+import { ResponseError } from "@ory/client-fetch";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -18,14 +18,13 @@ async function getVerificationFlow(flowId: string): Promise<VerificationFlow> {
   const cookie = headers().get("cookie") || "";
 
   try {
-    const { data } = await ory.getVerificationFlow({
+    return await ory.getVerificationFlow({
       id: String(flowId),
       cookie,
     });
-    return data;
   } catch (err) {
-    if (err instanceof AxiosError) {
-      handleFlowError(err, "login");
+    if (err instanceof ResponseError) {
+      await handleFlowError(err, "login");
     }
     throw err;
   }

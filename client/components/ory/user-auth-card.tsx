@@ -4,7 +4,7 @@ import {
   RecoveryFlow,
   RegistrationFlow,
   VerificationFlow,
-} from "@ory/client";
+} from "@ory/client-fetch";
 import { filterNodesByGroups } from "@ory/integrations/ui";
 import { JSX } from "react";
 
