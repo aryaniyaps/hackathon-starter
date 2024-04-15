@@ -21,6 +21,7 @@ const protectedRoutes = [
   "/dashboard",
   "/settings",
   "/settings/appearance",
+  "/settings/language",
 ];
 
 // FIXME: should we redirect users from recovery and verification pages
@@ -52,10 +53,7 @@ export default async function middleware(request: NextRequest) {
             redirectUrl.searchParams.set("return_to", request.nextUrl.pathname);
             return NextResponse.redirect(redirectUrl);
           default:
-            console.log(err);
-            return NextResponse.redirect(
-              new URL(`/error?error=${JSON.stringify(err)}`, request.url)
-            );
+            console.error(err);
         }
       }
     }

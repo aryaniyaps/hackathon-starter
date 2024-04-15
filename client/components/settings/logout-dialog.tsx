@@ -1,6 +1,6 @@
 import useLogout from "@/lib/hooks/useLogout";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import { Icons } from "../icons";
@@ -32,7 +32,7 @@ const logoutSchema = z.object({
 
 export default function LogoutDialog() {
   const logout = useLogout();
-  const router = useRouter();
+  const t = useTranslations("settings");
   const form = useForm({
     resolver: zodResolver(logoutSchema),
     defaultValues: { rememberSession: true },
@@ -53,15 +53,13 @@ export default function LogoutDialog() {
           variant="destructive"
           className="flex gap-2 w-full justify-start items-center bg-transparent text-left text-foreground hover:text-destructive-foreground"
         >
-          <Icons.logOut className="w-4 h-4" /> <p>Logout</p>
+          <Icons.logOut className="w-4 h-4" /> <p>{t("logout-button")}</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Logout</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to logout?
-          </DialogDescription>
+          <DialogTitle>{t("logout-button")}</DialogTitle>
+          <DialogDescription>{t("logout-description")}</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -98,10 +96,10 @@ export default function LogoutDialog() {
 
             <DialogFooter className="flex w-full items-end gap-4">
               <DialogClose asChild>
-                <Button variant="ghost">Cancel</Button>
+                <Button variant="ghost">{t("logout-cancel-button")}</Button>
               </DialogClose>
               <Button variant="destructive" type="submit">
-                Logout
+                {t("logout-button")}
               </Button>
             </DialogFooter>
           </form>

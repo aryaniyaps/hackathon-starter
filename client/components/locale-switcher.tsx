@@ -39,7 +39,7 @@ export default function LocaleSwitcher({ locale }: { locale: string }) {
       onValueChange={handleLocaleChange}
     >
       <SelectTrigger className="min-w-36">
-        <SelectValue placeholder="Language" />
+        <SelectValue placeholder={t("placeholder")} />
       </SelectTrigger>
       <SelectContent>
         {locales.map((locale) => (

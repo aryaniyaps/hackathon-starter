@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -25,6 +26,10 @@ const appearanceSchema = z.object({
 
 export default function AppearanceForm() {
   const { setTheme, theme } = useTheme();
+
+  const themes = ["dark", "light", "system"];
+
+  const t = useTranslations("settings.appearance");
 
   const form = useForm<z.infer<typeof appearanceSchema>>({
     resolver: zodResolver(appearanceSchema),
@@ -41,7 +46,7 @@ export default function AppearanceForm() {
           name="theme"
           render={({ field: { ref: _ref, ...field } }) => (
             <FormItem>
-              <FormLabel>App theme</FormLabel>
+              <FormLabel>{t("theme-switcher-label")}</FormLabel>
               <FormControl>
                 <Select
                   {...field}
@@ -51,12 +56,16 @@ export default function AppearanceForm() {
                   }}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select theme..." />
+                    <SelectValue
+                      placeholder={t("theme-switcher-placeholder")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
+                    {themes.map((theme) => (
+                      <SelectItem key={theme} value={theme}>
+                        {t("theme-label", { theme })}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </FormControl>

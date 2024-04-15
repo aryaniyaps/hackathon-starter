@@ -1,16 +1,19 @@
 "use client";
 import { APP_NAME } from "@/lib/constants";
 import useCurrentUser from "@/lib/hooks/useCurrentUser";
+import { useTranslations } from "next-intl";
 
 export default function AccountSettingsPage() {
   const { data: user } = useCurrentUser();
 
+  const t = useTranslations("settings.account");
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col">
-        <h3 className="text-lg font-medium">User profile</h3>
+        <h3 className="text-lg font-medium">{t("title")}</h3>
         <p className="text-sm text-muted-foreground">
-          This is how others will see you on {APP_NAME}.
+          {t("description", { appName: APP_NAME })}
         </p>
       </div>
       <div className="flex w-full justify-between gap-8">

@@ -1,7 +1,42 @@
 {
   "locale-switcher": {
-    "label": "Sprache ändern",
+    "placeholder": "Sprache ändern",
     "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unbekannt}}"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "back-to-dashboard-label": "Zurück zum Dashboard",
+    "logout-description": "Sind Sie sicher, dass Sie sich abmelden möchten?",
+    "logout-button": "Abmelden",
+    "logout-cancel-button": "Stornieren",
+    "sidebar-nav": {
+      "user-settings-label": "Benutzereinstellungen",
+      "security-settings-label": "Sicherheitseinstellungen",
+      "app-settings-label": "App Einstellungen",
+      "pages": {
+        "account-settings-label": "Konto",
+        "appearance-settings-label": "Aussehen",
+        "language-settings-label": "Sprache",
+        "passkeys-settings-label": "Passschlüssel",
+        "sessions-settings-label": "Sitzungen"
+      }
+    },
+    "account": {
+      "title": "Benutzerprofil",
+      "description": "So werden Sie andere auf {appName} sehen."
+    },
+    "appearance": {
+      "title": "Aussehen",
+      "description": "Verwalten Sie hier, wie Ihre App aussieht.",
+      "theme-switcher-label": "App-Thema",
+      "theme-switcher-placeholder": "Thema wählen...",
+      "theme-label": "{theme, select, dark {Dunkel} light {Licht} system {System} other {Andere}}"
+    },
+    "language": {
+      "title": "Sprache",
+      "description": "Wählen Sie Ihre bevorzugte Sprache.",
+      "switcher-label": "App-Sprache"
+    }
   },
   "login": {
     "title-refresh": "Bestätigen Sie, dass Sie es sind",

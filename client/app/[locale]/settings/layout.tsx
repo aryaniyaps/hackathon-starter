@@ -1,28 +1,33 @@
 import SidebarNav from "@/components/settings/sidebar-nav";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/lib/navigation";
+import { useTranslations } from "next-intl";
 
 const sidebarNavItems = {
-  "User settings": [
+  "user-settings-label": [
     {
-      title: "Account",
+      title: "pages.account-settings-label",
       href: "/settings",
     },
   ],
-  "Security settings": [
+  "security-settings-label": [
     {
-      title: "Passkeys",
+      title: "pages.passkeys-settings-label",
       href: "/settings/passkeys",
     },
     {
-      title: "Sessions",
+      title: "pages.sessions-settings-label",
       href: "/settings/sessions",
     },
   ],
-  "App settings": [
+  "app-settings-label": [
     {
-      title: "Appearance",
+      title: "pages.appearance-settings-label",
       href: "/settings/appearance",
+    },
+    {
+      title: "pages.language-settings-label",
+      href: "/settings/language",
     },
   ],
 };
@@ -32,14 +37,16 @@ export default function SettingsLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const t = useTranslations("settings");
+
   return (
     <main className="flex h-full w-full max-w-full flex-col">
       <div className="border-b p-4">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <h1 className="font-semibold">Settings</h1>
+          <h1 className="font-semibold">{t("title")}</h1>
           <Link href="/dashboard">
             <Button variant="link" size="sm">
-              Back to dashboard
+              {t("back-to-dashboard-label")}
             </Button>
           </Link>
         </div>

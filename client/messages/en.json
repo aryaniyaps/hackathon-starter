@@ -1,7 +1,42 @@
 {
   "locale-switcher": {
-    "label": "Change language",
+    "placeholder": "Change language",
     "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unknown}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "back-to-dashboard-label": "Back to dashboard",
+    "logout-description": "Are you sure you want to logout?",
+    "logout-button": "Logout",
+    "logout-cancel-button": "Cancel",
+    "sidebar-nav": {
+      "user-settings-label": "User settings",
+      "security-settings-label": "Security settings",
+      "app-settings-label": "App settings",
+      "pages": {
+        "account-settings-label": "Account",
+        "appearance-settings-label": "Appearance",
+        "language-settings-label": "Language",
+        "passkeys-settings-label": "Passkeys",
+        "sessions-settings-label": "Sessions"
+      }
+    },
+    "account": {
+      "title": "User profile",
+      "description": "This is how others will see you on {appName}."
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Manage how your app looks here.",
+      "theme-switcher-label": "App theme",
+      "theme-switcher-placeholder": "Select theme...",
+      "theme-label": "{theme, select, dark {Dark} light {Light} system {System} other {Other}}"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Select your preferred language.",
+      "switcher-label": "App language"
+    }
   },
   "login": {
     "title-refresh": "Confirm it's you",
