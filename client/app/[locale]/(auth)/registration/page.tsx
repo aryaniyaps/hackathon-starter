@@ -55,7 +55,7 @@ export default async function RegistrationPage({
   const flow = await getRegistrationFlow(String(flowId));
 
   return (
-    <div className="w-full h-full max-w-md mx-auto flex items-center">
+    <div className="w-full max-w-md mx-auto flex items-center">
       <UserAuthCard
         // This defines what kind of card we want to render.
         flowType={"registration"}

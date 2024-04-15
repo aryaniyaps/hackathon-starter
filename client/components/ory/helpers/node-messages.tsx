@@ -30,6 +30,8 @@ const NodeMessage = ({ key, message, global, ...props }: NodeMessageProps) => {
         "text-destructive text-sm font-bold": !global,
         "text-destructive-foreground bg-destructive/75":
           message.type === UiTextTypeEnum.Error && global,
+        "text-secondary-foreground bg-secondary/75":
+          message.type === UiTextTypeEnum.Info && global,
         "text-center border px-6 py-4 rounded-lg": global,
       })}
       {...props}

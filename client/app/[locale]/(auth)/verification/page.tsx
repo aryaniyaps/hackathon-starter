@@ -1,4 +1,4 @@
-import { RecoveryFlow } from "@ory/client-fetch";
+import { VerificationFlow } from "@ory/client-fetch";
 
 import { UserAuthCard } from "@/components/ory/user-auth-card";
 import { APP_NAME } from "@/lib/constants";
@@ -11,14 +11,14 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: `${APP_NAME} Account Recovery`,
+  title: `${APP_NAME} Account Verification`,
 };
 
-async function getRecoveryFlow(flowId: string): Promise<RecoveryFlow> {
+async function getVerificationFlow(flowId: string): Promise<VerificationFlow> {
   const cookie = headers().get("cookie") || "";
 
   try {
-    return await ory.getRecoveryFlow({
+    return await ory.getVerificationFlow({
       id: String(flowId),
       cookie,
     });
@@ -30,32 +30,39 @@ async function getRecoveryFlow(flowId: string): Promise<RecoveryFlow> {
   }
 }
 
-export default async function RecoveryPage({
+export default async function VerificationPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const returnTo = searchParams["return_to"];
+
   // Get ?flow=... from the URL
   const flowId = searchParams["flow"];
 
   if (!flowId) {
-    redirect(
-      `${env.NEXT_PUBLIC_KRATOS_PUBLIC_URL}/self-service/recovery/browser`
+    const redirectUrl = new URL(
+      `${env.NEXT_PUBLIC_KRATOS_PUBLIC_URL}/self-service/verification/browser`
     );
+
+    if (returnTo != undefined)
+      redirectUrl.searchParams.set("return_to", String(returnTo));
+
+    redirect(redirectUrl.toString());
   }
 
-  const flow = await getRecoveryFlow(String(flowId));
+  const flow = await getVerificationFlow(String(flowId));
 
   return (
-    <div className="w-full h-full max-w-md mx-auto flex items-center">
+    <div className="w-full max-w-md mx-auto flex items-center">
       <UserAuthCard
         // This defines what kind of card we want to render.
-        flowType={"recovery"}
+        flowType={"verification"}
         // we always need the flow data which populates the form fields and error messages dynamically
         flow={flow}
-        // the registration card should allow the user to go to the registration page and the login page
+        // the verification card should allow the user to go to the registration page and the login page
         additionalProps={{
-          loginURL: "/login",
+          signupURL: "/registration",
         }}
         // we might need webauthn support which requires additional js
         includeScripts={true}
