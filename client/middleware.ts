@@ -17,7 +17,6 @@ const intlMiddleware = createMiddleware({
 });
 
 const protectedRoutes = [
-  "/",
   "/dashboard",
   "/settings",
   "/settings/appearance",

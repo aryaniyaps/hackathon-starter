@@ -10,7 +10,6 @@ export const localePrefix = "never";
 export const defaultLocale = "en";
 
 export const pathnames = {
-  "/": "/",
   "/settings": "/settings",
   "/settings/appearance": "/settings/appearance",
   "/settings/language": "/settings/language",

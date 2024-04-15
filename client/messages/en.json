@@ -8,6 +8,7 @@
     "back-to-dashboard-label": "Back to dashboard",
     "logout-description": "Are you sure you want to logout?",
     "logout-button": "Logout",
+    "logout-dialog-trigger": "Logout",
     "logout-cancel-button": "Cancel",
     "sidebar-nav": {
       "user-settings-label": "User settings",

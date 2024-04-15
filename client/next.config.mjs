@@ -10,6 +10,16 @@ jiti("./lib/env");
 const withNextIntl = createNextIntlPlugin("./lib/i18n.ts");
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/dashboard",
+        permanent: true,
+      },
+    ];
+  },
+};
 
 export default withNextIntl(nextConfig);

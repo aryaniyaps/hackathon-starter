@@ -8,6 +8,7 @@
     "back-to-dashboard-label": "Zurück zum Dashboard",
     "logout-description": "Sind Sie sicher, dass Sie sich abmelden möchten?",
     "logout-button": "Abmelden",
+    "logout-dialog-trigger": "Abmelden",
     "logout-cancel-button": "Stornieren",
     "sidebar-nav": {
       "user-settings-label": "Benutzereinstellungen",
