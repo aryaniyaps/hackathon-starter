@@ -46,7 +46,7 @@ export default function LogoutDialog() {
           <DialogClose asChild>
             <Button variant="ghost">{t("logout-cancel-button")}</Button>
           </DialogClose>
-          <Button variant="destructive" onClick={handleLogout}>
+          <Button variant="destructive" type="submit" onClick={handleLogout}>
             {t("logout-button")}
           </Button>
         </DialogFooter>

@@ -1,5 +1,6 @@
 "use client";
 
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { getQueryClient } from "@/lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
@@ -27,9 +28,11 @@ export function Providers({
         messages={messages}
         timeZone="Asia/Kolkata"
       >
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <TooltipProvider>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </TooltipProvider>
       </NextIntlClientProvider>
     </NextThemesProvider>
   );

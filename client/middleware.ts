@@ -21,6 +21,7 @@ const protectedRoutes = [
   "/settings",
   "/settings/appearance",
   "/settings/language",
+  "/settings/sessions",
 ];
 
 // FIXME: should we redirect users from recovery and verification pages
