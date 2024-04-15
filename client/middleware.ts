@@ -1,18 +1,19 @@
 import { ResponseError } from "@ory/client-fetch";
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
+import { defaultLocale, localePrefix, locales } from "./lib/i18n";
 import ory from "./lib/ory";
 
 const intlMiddleware = createMiddleware({
   // A list of all locales that are supported
-  locales: ["en", "de"],
+  locales,
 
   // Used when no locale matches
-  defaultLocale: "en",
+  defaultLocale,
   // we don't need a locale prefix because the app runs
   // behind an authentication layer, and there's no need
   // for SEO (can change if needed!)
-  localePrefix: "never",
+  localePrefix,
 });
 
 const protectedRoutes = ["/", "/dash"];

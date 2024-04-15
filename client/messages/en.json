@@ -1,4 +1,8 @@
 {
+  "locale-switcher": {
+    "label": "Change language",
+    "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unknown}}"
+  },
   "login": {
     "title-refresh": "Confirm it's you",
     "title-aal2": "Two Factor Authentication",

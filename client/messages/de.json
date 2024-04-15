@@ -1,4 +1,8 @@
 {
+  "locale-switcher": {
+    "label": "Sprache ändern",
+    "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unbekannt}}"
+  },
   "login": {
     "title-refresh": "Bestätigen Sie, dass Sie es sind",
     "title-aal2": "Zwei-Faktor-Authentifizierung",

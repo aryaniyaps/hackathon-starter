@@ -1,8 +1,17 @@
+import { Pathnames } from "next-intl/navigation";
 import { getRequestConfig } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 // Can be imported from a shared config
-const locales = ["en", "de"];
+export const locales = ["en", "de"];
+
+export const localePrefix = "never";
+
+export const defaultLocale = "en";
+
+export const pathnames = {
+  "/": "/",
+} satisfies Pathnames<typeof locales>;
 
 export default getRequestConfig(async ({ locale }) => {
   // Validate that the incoming `locale` parameter is valid
