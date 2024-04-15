@@ -1,11 +1,7 @@
 "use client";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import parseUserAgent from "@/utils/userAgent";
 import { Session } from "@ory/client-fetch";
 import RevokeSessionDialog from "./revoke-session-dialog";
 
@@ -20,25 +16,23 @@ export default function SessionCard({ session }: { session: Session }) {
     <Card>
       <CardHeader>
         <div className="flex w-full items-center justify-between gap-4">
-          <p>SESSION HEADER</p>
-          <RevokeSessionDialog sessionId={session.id} />
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-col gap-2">
-          <p>Devices</p>
-          <div>
+          <div className="flex flex-col gap-2">
             {session.devices?.map((device) => (
-              <div className="flex flex-col gap-2" key={device.id}>
-                <p>{device.id}</p>
-                <p>{device.ip_address}</p>
-                <p>{device.location}</p>
-                <p>{device.user_agent}</p>
+              <div key={device.id} className="flex flex-col">
+                <p className="font-bold">
+                  {device.ip_address} {device.location}
+                </p>
+                {device.user_agent ? (
+                  <p className="text-xs text-muted-foreground">
+                    {parseUserAgent(device.user_agent)}
+                  </p>
+                ) : null}
               </div>
             ))}
           </div>
+          <RevokeSessionDialog sessionId={session.id} />
         </div>
-      </CardContent>
+      </CardHeader>
       <CardFooter className="flex gap-2">
         <p className="text-xs text-muted-foreground">
           created at {dateTimeFormat.format(session.issued_at)}
