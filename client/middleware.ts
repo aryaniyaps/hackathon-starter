@@ -15,13 +15,16 @@ const intlMiddleware = createMiddleware({
   localePrefix: "never",
 });
 
-const protectedRoutes = ["/"];
+const protectedRoutes = ["/", "/dash"];
 
 // FIXME: should we redirect users from recovery and verification pages
 // if they are already authenticated?
 const authRoutes = ["/login", "/registration", "/recovery", "/verification"];
 
 export default async function middleware(request: NextRequest) {
+  // run internationalization middleware
+  const response = intlMiddleware(request);
+
   // check user session
   if (protectedRoutes.includes(request.nextUrl.pathname)) {
     // TODO: run intl middleware here also before returning redirects?
@@ -51,8 +54,7 @@ export default async function middleware(request: NextRequest) {
       }
     }
   }
-  // run internationalization middleware
-  return intlMiddleware(request);
+  return response;
 }
 
 export const config = {
