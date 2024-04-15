@@ -16,7 +16,12 @@ const intlMiddleware = createMiddleware({
   localePrefix,
 });
 
-const protectedRoutes = ["/", "/dashboard"];
+const protectedRoutes = [
+  "/",
+  "/dashboard",
+  "/settings",
+  "/settings/appearance",
+];
 
 // FIXME: should we redirect users from recovery and verification pages
 // if they are already authenticated?
