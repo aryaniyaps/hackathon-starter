@@ -16,6 +16,7 @@ import {
   Image,
   Laptop,
   Loader2,
+  LogOut,
   Moon,
   MoreHorizontal,
   MoreVertical,
@@ -53,6 +54,7 @@ export const Icons = {
       <circle cx="12" cy="12" r="10"></circle>
     </svg>
   ),
+  logOut: LogOut,
   arrowUp: ArrowUp,
   users: Users,
   paperclip: Paperclip,

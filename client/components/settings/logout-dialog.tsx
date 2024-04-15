@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
+import { Icons } from "../icons";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import {
@@ -40,7 +41,9 @@ export default function LogoutDialog() {
   const onSubmit: SubmitHandler<z.infer<typeof logoutSchema>> = async (
     input
   ) => {
-    await logout.mutateAsync({ rememberSession: input.rememberSession });
+    const data = await logout.mutateAsync({
+      rememberSession: input.rememberSession,
+    });
   };
 
   return (
@@ -48,9 +51,9 @@ export default function LogoutDialog() {
       <DialogTrigger asChild>
         <Button
           variant="destructive"
-          className="block w-full bg-transparent text-left text-foreground hover:text-destructive-foreground"
+          className="flex gap-2 w-full justify-start items-center bg-transparent text-left text-foreground hover:text-destructive-foreground"
         >
-          Logout
+          <Icons.logOut className="w-4 h-4" /> <p>Logout</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
