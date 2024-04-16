@@ -40,7 +40,6 @@ export type UserSettingsCardProps = {
   title?: string;
   includeScripts?: boolean;
   className?: string;
-  dividerClassName?: string;
 } & UserAuthFormAdditionalProps;
 
 export const UserSettingsCard = ({
@@ -50,7 +49,6 @@ export const UserSettingsCard = ({
   includeScripts,
   onSubmit,
   className,
-  dividerClassName,
 }: UserSettingsCardProps): JSX.Element | null => {
   const t = useTranslations("settings.account");
 
@@ -117,7 +115,7 @@ export const UserSettingsCard = ({
   return hasFlow ? (
     <>
       <div className="flex flex-col gap-8 w-5/6">
-        {cardTitle && <h3 className="text-lg font-semibold">{cardTitle}</h3>}
+        {cardTitle && <h3 className="text-lg font-medium">{cardTitle}</h3>}
         <UserAuthForm
           flow={flow}
           onSubmit={onSubmit}
@@ -126,8 +124,8 @@ export const UserSettingsCard = ({
         >
           {$flow}
         </UserAuthForm>
+        <Separator />
       </div>
-      <Separator className={dividerClassName} />
     </>
   ) : null;
 };

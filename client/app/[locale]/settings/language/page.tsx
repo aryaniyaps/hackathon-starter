@@ -1,5 +1,11 @@
 import LanguageForm from "@/components/settings/language/language-form";
+import { APP_NAME } from "@/lib/constants";
+import { Metadata } from "next";
 import { useTranslations } from "next-intl";
+
+export const metadata: Metadata = {
+  title: `Language settings | ${APP_NAME}`,
+};
 
 export default function LanguageSettingsPage() {
   const t = useTranslations("settings.language");

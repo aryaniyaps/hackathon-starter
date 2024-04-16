@@ -3,10 +3,12 @@ import {
   UserSettingsCard,
   UserSettingsFlowType,
 } from "@/components/ory/user-settings-card";
+import { APP_NAME } from "@/lib/constants";
 import { env } from "@/lib/env";
 import { handleFlowError } from "@/lib/errors";
 import kratos from "@/lib/kratos";
 import { ResponseError, SettingsFlow } from "@ory/client-fetch";
+import { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -25,6 +27,10 @@ async function getSettingsFlow(flowId: string): Promise<SettingsFlow> {
     throw err;
   }
 }
+
+export const metadata: Metadata = {
+  title: `Account settings | ${APP_NAME}`,
+};
 
 export default async function AccountSettingsPage({
   searchParams,

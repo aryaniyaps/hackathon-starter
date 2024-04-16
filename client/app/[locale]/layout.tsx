@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
+import { APP_NAME } from "@/lib/constants";
 import type { Metadata } from "next";
 import { useMessages } from "next-intl";
 import { Inter } from "next/font/google";
@@ -11,7 +12,7 @@ const fontSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Create Next App",
+  title: `${APP_NAME}`,
 };
 
 export default function LocaleLayout({

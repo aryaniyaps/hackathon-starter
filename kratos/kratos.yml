@@ -95,7 +95,7 @@ selfservice:
     settings:
       ui_url: http://localhost:3000/settings
       required_aal: highest_available
-      privileged_session_max_age: 15m
+      privileged_session_max_age: 5m
 
     verification:
       ui_url: http://localhost:3000/verification

@@ -1,11 +1,13 @@
-"use client";
-import SessionCard from "@/components/settings/sessions/session-card";
+import CurrentSessionCard from "@/components/settings/sessions/current-session-card";
 import SessionList from "@/components/settings/sessions/session-list";
-import useCurrentSession from "@/lib/hooks/useCurrentSession";
+import { APP_NAME } from "@/lib/constants";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: `Sessions settings | ${APP_NAME}`,
+};
 
 export default function SessionsSettingsPage() {
-  const { data: session } = useCurrentSession();
-
   return (
     <div className="flex h-full flex-col space-y-8">
       <div className="flex flex-col">
@@ -15,7 +17,7 @@ export default function SessionsSettingsPage() {
           sessions that you do not recognize.
         </p>
       </div>
-      <SessionCard session={session} isCurrentSession />
+      <CurrentSessionCard />
       <SessionList />
     </div>
   );
