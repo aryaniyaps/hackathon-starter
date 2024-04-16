@@ -11,6 +11,7 @@ import useCurrentSession from "@/lib/hooks/useCurrentSession";
 import { Link } from "@/lib/navigation";
 import { getAvatarURL } from "@/utils/avatar";
 import { useTranslations } from "next-intl";
+import { Icons } from "../icons";
 import { Separator } from "../ui/separator";
 
 export default function UserNav() {
@@ -41,7 +42,10 @@ export default function UserNav() {
         </DropdownMenuLabel>
         <Separator className="my-2" />
         <Link href="/settings">
-          <DropdownMenuItem>{t("settings-label")}</DropdownMenuItem>
+          <DropdownMenuItem className="flex gap-2 items-center">
+            <Icons.settings className="h-4 w-4" />
+            {t("settings-label")}
+          </DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
     </DropdownMenu>
