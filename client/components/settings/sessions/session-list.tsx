@@ -8,7 +8,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import kratos from "@/lib/kratos";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -64,13 +63,11 @@ export default function SessionList() {
           </PaginationContent>
         </Pagination>
       </div>
-      <ScrollArea className="min-h-0 flex-1 w-full overflow-y-auto">
-        <div className="flex h-full flex-1 flex-col gap-4">
-          {data.map((session) => (
-            <SessionCard session={session} key={session.id} />
-          ))}
-        </div>
-      </ScrollArea>
+      <div className="flex h-full flex-1 flex-col gap-4">
+        {data.map((session) => (
+          <SessionCard session={session} key={session.id} />
+        ))}
+      </div>
     </div>
   );
 }
