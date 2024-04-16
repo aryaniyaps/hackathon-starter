@@ -9,7 +9,7 @@ import {
 import { defaultLocale, locales } from "@/lib/i18n";
 import { usePathname, useRouter } from "@/lib/navigation";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 
 export default function LocaleSwitcher({ locale }: { locale: string }) {
@@ -19,13 +19,15 @@ export default function LocaleSwitcher({ locale }: { locale: string }) {
   const [isPending, startTransition] = useTransition();
   const params = useParams();
 
+  const searchParams = useSearchParams();
+
   const handleLocaleChange = (locale: string) => {
     startTransition(() => {
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will
         // always match for the current route, we can skip runtime checks.
-        { pathname, params },
+        { pathname, params, query: Object.fromEntries(searchParams) },
         { locale: locale }
       );
     });

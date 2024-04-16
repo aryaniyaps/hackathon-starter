@@ -31,8 +31,25 @@
       }
     },
     "account": {
-      "title": "Benutzerprofil",
-      "description": "So werden Sie andere auf {appName} sehen."
+      "navigation-back-button": "Zurück",
+      "navigation-backup-codes": "2FA-Backup-Codes",
+      "navigation-logout": "Abmelden",
+      "navigation-oidc": "Soziale Medien",
+      "navigation-password": "Passwort",
+      "navigation-profile": "Profil",
+      "navigation-totp": "Zwei-Faktor App",
+      "navigation-webauthn": "Sicherheitsschlüssel",
+      "navigation-passkey": "Passkeys",
+      "subtitle-instructions": "Hier können Sie Einstellungen zu Ihrem Konto vornehmen. Für manche Einstellungen müssen Sie Ihre Identität erneut bestätigen.",
+      "title": "Kontoeinstellungen",
+      "title-lookup-secret": "Manage 2FA Backup Recovery Codes",
+      "title-navigation": "Konto Einstellungen",
+      "title-oidc": "Anmeldung über soziale Medien",
+      "title-password": "Passwort ändern",
+      "title-profile": "Profil Einstellungen",
+      "title-totp": "Zwei-Faktor TOTP App",
+      "title-webauthn": "Sicherheitsschlüssel verwalten",
+      "title-passkey": "Passkeys verwalten"
     },
     "appearance": {
       "title": "Aussehen",
