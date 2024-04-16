@@ -1,3 +1,4 @@
+"use client";
 import { UiNode, UiText, UiTextTypeEnum } from "@ory/client-fetch";
 import { JSX } from "react";
 

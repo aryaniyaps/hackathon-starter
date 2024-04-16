@@ -62,9 +62,7 @@ export const FilterFlowNodes = ({
     <>
       {hiddenNodes.length > 0 ? <>{hiddenNodes}</> : null}
       {visibleNodes.length > 0 ? (
-        <div className="flex flex-col gap-8 px-2 py-2 overflow-y-auto">
-          {visibleNodes}
-        </div>
+        <div className="flex flex-col gap-8">{visibleNodes}</div>
       ) : null}
     </>
   );

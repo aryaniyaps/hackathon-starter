@@ -51,7 +51,7 @@ export default function SettingsLayout({
           </Link>
         </div>
       </div>
-      <div className="mb-8 flex flex-1 h-full">
+      <div className="mb-8 flex flex-1 h-full overflow-y-auto">
         <div className="mx-auto flex h-full max-w-7xl flex-1 flex-col space-y-8 p-4 lg:flex-row lg:space-x-12 lg:space-y-0">
           <aside className="lg:w-1/6">
             <SidebarNav items={sidebarNavItems} />

@@ -31,8 +31,24 @@
       }
     },
     "account": {
-      "title": "User profile",
-      "description": "This is how others will see you on {appName}."
+      "navigation-back-button": "Back",
+      "navigation-backup-codes": "2FA Backup Codes",
+      "navigation-logout": "Logout",
+      "navigation-oidc": "Social Sign In",
+      "navigation-password": "Password",
+      "navigation-profile": "Profile",
+      "navigation-totp": "Authenticator App",
+      "navigation-webauthn": "Hardware Tokens",
+      "navigation-passkey": "Passkeys",
+      "subtitle-instructions": "Here you can manage settings related to your account. Keep in mind that certain actions require you to re-authenticate.",
+      "title-lookup-secret": "Manage 2FA Backup Recovery Codes",
+      "title-navigation": "Account Settings",
+      "title-oidc": "Social Sign In",
+      "title-password": "Change Password",
+      "title-profile": "Profile Settings",
+      "title-totp": "Manage 2FA TOTP Authenticator App",
+      "title-webauthn": "Manage Hardware Tokens",
+      "title-passkey": "Manage Passkeys"
     },
     "appearance": {
       "title": "Appearance",
@@ -45,7 +61,8 @@
       "title": "Language",
       "description": "Select your preferred language.",
       "switcher-label": "App language"
-    }
+    },
+    "settingsSTARTSFROMHERE": "COPIED"
   },
   "login": {
     "title-refresh": "Confirm it's you",

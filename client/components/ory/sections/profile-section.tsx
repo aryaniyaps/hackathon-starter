@@ -20,7 +20,7 @@ export const ProfileSettingsSection = ({
       />
       <FilterFlowNodes
         filter={{ ...filter, attributes: "submit,button" }}
-        buttonOverrideProps={{ className: "w-min" }}
+        buttonOverrideProps={{ className: "w-full" }}
       />
     </div>
   );

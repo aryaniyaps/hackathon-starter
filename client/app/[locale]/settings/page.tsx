@@ -1,61 +1,81 @@
-"use client";
-import { APP_NAME } from "@/lib/constants";
-import useCurrentSession from "@/lib/hooks/useCurrentSession";
-import { useTranslations } from "next-intl";
+import { NodeMessages } from "@/components/ory/helpers/node-messages";
+import {
+  UserSettingsCard,
+  UserSettingsFlowType,
+} from "@/components/ory/user-settings-card";
+import { env } from "@/lib/env";
+import { handleFlowError } from "@/lib/errors";
+import kratos from "@/lib/kratos";
+import { ResponseError, SettingsFlow } from "@ory/client-fetch";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function AccountSettingsPage() {
-  const { data: user } = useCurrentSession();
+async function getSettingsFlow(flowId: string): Promise<SettingsFlow> {
+  const cookie = headers().get("cookie") || "";
 
-  const t = useTranslations("settings.account");
+  try {
+    return await kratos.getSettingsFlow({
+      id: String(flowId),
+      cookie,
+    });
+  } catch (err) {
+    if (err instanceof ResponseError) {
+      await handleFlowError(err, "settings");
+    }
+    throw err;
+  }
+}
+
+export default async function AccountSettingsPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  // const t = useTranslations("settings.account");
+
+  const returnTo = searchParams["return_to"];
+
+  // Get ?flow=... from the URL
+  const flowId = searchParams["flow"];
+
+  if (!flowId) {
+    const redirectUrl = new URL(
+      `${env.NEXT_PUBLIC_KRATOS_PUBLIC_URL}/self-service/settings/browser`
+    );
+
+    if (returnTo != undefined)
+      redirectUrl.searchParams.set("return_to", String(returnTo));
+
+    redirect(redirectUrl.toString());
+  }
+
+  const flow = await getSettingsFlow(String(flowId));
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col">
-        <h3 className="text-lg font-medium">{t("title")}</h3>
-        <p className="text-sm text-muted-foreground">
-          {t("description", { appName: APP_NAME })}
-        </p>
-      </div>
-      <div className="flex w-full justify-between gap-8">
-        {/* <ProfileForm />
-        <div className="flex flex-col items-center gap-4">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Avatar className="h-32 w-32">
-                <AvatarImage
-                  src={user?.avatarUrl}
-                  loading="eager"
-                  alt={user?.email}
-                />
-                <AvatarFallback>{user?.email.slice(0, 2)}</AvatarFallback>
-              </Avatar>
-            </TooltipTrigger>
-            <TooltipContent>
-              Avatars are powered by{" "}
-              <Link
-                className="text-primary"
-                href="https://gravatar.com/"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Gravatar.
-              </Link>
-            </TooltipContent>
-          </Tooltip>
-          <p className="text-sm text-muted-foreground">User avatar</p>
-        </div>
-      </div>
-      <Separator />
-      <div>
-        <h3 className="text-lg font-medium">User email</h3>
-        <p className="text-sm text-muted-foreground">
-          Your email address is private.
-        </p>
-      </div>
-      <div className="flex w-full gap-4">
-        <Input className="w-96" value={user.email} disabled />
-        <ChangeEmailDialog /> */}
-      </div>
+    <div id="settingsForm" className="flex flex-col gap-8">
+      {/* Show a success message if the user changed their password */}
+      <NodeMessages uiMessages={flow.ui.messages} gap={4} />
+      {/* here we simply map all of the settings flows we could have. These flows won't render if they aren't enabled inside your Ory Network project */}
+      {(
+        [
+          "profile",
+          "password",
+          "totp",
+          "webauthn",
+          "lookup_secret",
+          "oidc",
+        ] as UserSettingsFlowType[]
+      ).map((flowType: UserSettingsFlowType, index) => (
+        // here we render the settings flow using Ory Elements
+        <UserSettingsCard
+          key={index}
+          // we always need to pass the component the flow since it contains the form fields, error messages and csrf token
+          flow={flow}
+          method={flowType}
+          // include scripts for webauthn support
+          includeScripts={true}
+        />
+      ))}
     </div>
   );
 }
