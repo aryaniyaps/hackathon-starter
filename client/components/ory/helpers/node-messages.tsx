@@ -10,16 +10,21 @@ export type NodeMessagesProps = {
   nodes?: UiNode[];
   uiMessages?: UiText[];
   gap: number;
-  global?: boolean;
+  isGlobal?: boolean;
 };
 
 type NodeMessageProps = {
   message: UiText;
   key: string;
-  global: boolean;
+  isGlobal: boolean;
 };
 
-const NodeMessage = ({ key, message, global, ...props }: NodeMessageProps) => {
+const NodeMessage = ({
+  key,
+  message,
+  isGlobal,
+  ...props
+}: NodeMessageProps) => {
   const t = useTranslations();
   const formatter = useFormatter();
 
@@ -28,12 +33,12 @@ const NodeMessage = ({ key, message, global, ...props }: NodeMessageProps) => {
       key={key}
       data-testid={`ui/message/${message.id}`}
       className={cn({
-        "text-destructive text-sm font-bold": !global,
+        "text-destructive text-sm font-bold": !isGlobal,
         "text-destructive-foreground bg-destructive/75":
-          message.type === UiTextTypeEnum.Error && global,
+          message.type === UiTextTypeEnum.Error && isGlobal,
         "text-secondary-foreground bg-secondary/75":
-          message.type === UiTextTypeEnum.Info && global,
-        "text-center border px-6 py-4 rounded-lg": global,
+          message.type === UiTextTypeEnum.Info && isGlobal,
+        "text-center border px-6 py-4 rounded-lg": isGlobal,
       })}
       {...props}
     >
@@ -47,7 +52,7 @@ export const NodeMessages = ({
   uiMessages,
   ...props
 }: NodeMessagesProps): JSX.Element | null => {
-  const { gap, global = false, ...messageProps } = props;
+  const { gap, isGlobal: global = false, ...messageProps } = props;
   const $groupMessages = nodes?.reduce<JSX.Element[]>(
     (groups, { messages }) => {
       groups.push(
@@ -55,7 +60,7 @@ export const NodeMessages = ({
           .map((message, key) => {
             return NodeMessage({
               message,
-              global,
+              isGlobal: global,
               key: `node-group-message-${message.id}-${key}`,
               ...messageProps,
             });
@@ -68,7 +73,11 @@ export const NodeMessages = ({
   );
 
   const $messages = uiMessages?.map((message, key) =>
-    NodeMessage({ message, global, key: `ui-messsage-${message.id}-${key}` })
+    NodeMessage({
+      message,
+      isGlobal: global,
+      key: `ui-messsage-${message.id}-${key}`,
+    })
   );
 
   const $allMessages = [...($groupMessages ?? []), ...($messages ?? [])];

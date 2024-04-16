@@ -14,6 +14,10 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 
+// TODO: make this a form where the form method will be GET and
+// action will be submit. This will automatically redirect to the post logout
+// URL, as in other server side flows
+// There's also a user-logout-card in @ory/elements you can refer.
 export default function LogoutDialog() {
   const logout = useLogout();
   const router = useRouter();

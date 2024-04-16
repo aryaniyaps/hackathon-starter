@@ -411,7 +411,7 @@ export const UserAuthCard = ({
         {subtitle && <CardDescription>{subtitle}</CardDescription>}
       </CardHeader>
       <CardContent className="flex flex-col gap-8">
-        <NodeMessages global uiMessages={flow.ui.messages} gap={4} />
+        <NodeMessages isGlobal uiMessages={flow.ui.messages} gap={4} />
         {$oidc && (
           <>
             <Separator />
