@@ -58,7 +58,7 @@ export default function SettingsLayout({
             <SidebarNav items={sidebarNavItems} />
           </aside>
           <ScrollArea className="h-full flex-1 overflow-y-auto">
-            <div className="h-full flex-1 lg:max-w-2xl">{children}</div>
+            <div className="h-full flex-1 lg:max-w-2xl pl-2">{children}</div>
           </ScrollArea>
         </div>
       </div>

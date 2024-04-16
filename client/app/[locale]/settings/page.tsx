@@ -54,7 +54,7 @@ export default async function AccountSettingsPage({
   return (
     <div id="settingsForm" className="flex flex-col gap-8">
       {/* Show a success message if the user changed their password */}
-      <NodeMessages uiMessages={flow.ui.messages} gap={4} />
+      <NodeMessages global uiMessages={flow.ui.messages} gap={4} />
       {/* here we simply map all of the settings flows we could have. These flows won't render if they aren't enabled inside your Ory Network project */}
       {(
         [
