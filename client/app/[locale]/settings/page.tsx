@@ -37,8 +37,6 @@ export default async function AccountSettingsPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  // const t = useTranslations("settings.account");
-
   const returnTo = searchParams["return_to"];
 
   // Get ?flow=... from the URL

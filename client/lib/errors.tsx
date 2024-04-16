@@ -52,10 +52,12 @@ export async function handleFlowError<S>(
       window.location.href = data.redirect_browser_to;
       break;
   }
-
   switch (err.response?.status) {
     case 410:
       // The flow expired, let's request a new one.
+      redirect("/" + flowType);
+    case 404:
+      // The flow was not found, let's request a new one.
       redirect("/" + flowType);
   }
 
