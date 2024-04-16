@@ -1,5 +1,6 @@
 import SidebarNav from "@/components/settings/sidebar-nav";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from "@/lib/navigation";
 import { useTranslations } from "next-intl";
 
@@ -56,9 +57,9 @@ export default function SettingsLayout({
           <aside className="lg:w-1/6 h-full">
             <SidebarNav items={sidebarNavItems} />
           </aside>
-          <div className="h-full flex-1 overflow-y-auto">
+          <ScrollArea className="h-full flex-1 overflow-y-auto">
             <div className="h-full flex-1 lg:max-w-2xl">{children}</div>
-          </div>
+          </ScrollArea>
         </div>
       </div>
     </main>
