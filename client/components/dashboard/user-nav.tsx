@@ -11,6 +11,7 @@ import useCurrentSession from "@/lib/hooks/useCurrentSession";
 import { Link } from "@/lib/navigation";
 import { getAvatarURL } from "@/utils/avatar";
 import { useTranslations } from "next-intl";
+import { Separator } from "../ui/separator";
 
 export default function UserNav() {
   const { data: session } = useCurrentSession();
@@ -32,7 +33,13 @@ export default function UserNav() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={15}>
-        <DropdownMenuLabel>{session.identity?.traits.email}</DropdownMenuLabel>
+        <DropdownMenuLabel className="flex flex-col gap-2">
+          <p>{session.identity?.traits.name}</p>
+          <p className="text-muted-foreground text-sm">
+            {session.identity?.traits.email}
+          </p>
+        </DropdownMenuLabel>
+        <Separator className="my-2" />
         <Link href="/settings">
           <DropdownMenuItem>{t("settings-label")}</DropdownMenuItem>
         </Link>
