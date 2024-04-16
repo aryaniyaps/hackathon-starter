@@ -19,8 +19,19 @@ import SessionCard from "./session-card";
 export default function SessionList() {
   const [page, setPage] = useState(0);
 
-  const fetchSessions = async (page = 0) =>
-    await kratos.listMySessions({ pageSize: 20, page });
+  async function fetchSessions(page = 0) {
+    const data = await kratos.listMySessions({ pageSize: 5, page });
+    // TODO: parse link header here using `parse-link-header`
+    // and return an object like this:
+    // {
+    //   sessions: [...],
+    //   pageMeta: {
+    //     next: "",
+    //     prev: ""
+    //   }
+    // }
+    return data;
+  }
 
   const { isPending, data, isFetching } = useSuspenseQuery({
     queryKey: ["sessions", page],
