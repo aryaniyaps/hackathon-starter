@@ -20,16 +20,21 @@ export default function SessionList() {
   const [page, setPage] = useState(0);
 
   async function fetchSessions(page = 0) {
-    const data = await kratos.listMySessions({ pageSize: 5, page });
+    const data = await kratos.listMySessions({
+      pageSize: 5,
+      page,
+      pageToken: "",
+    });
     // TODO: parse link header here using `parse-link-header`
     // and return an object like this:
     // {
     //   sessions: [...],
     //   pageMeta: {
-    //     next: "",
-    //     prev: ""
+    //     nextPageToken: "",
+    //     prevPageToken: ""
     //   }
     // }
+    // hence we can paginate using page tokens
     return data;
   }
 
