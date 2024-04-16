@@ -114,7 +114,7 @@ export const UserSettingsCard = ({
 
   return hasFlow ? (
     <>
-      <div className="flex flex-col gap-8 w-5/6">
+      <div className="flex flex-col gap-8 w-full">
         {cardTitle && <h3 className="text-lg font-medium">{cardTitle}</h3>}
         <UserAuthForm
           flow={flow}
