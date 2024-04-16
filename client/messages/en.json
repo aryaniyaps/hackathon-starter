@@ -60,8 +60,7 @@
       "title": "Language",
       "description": "Select your preferred language.",
       "switcher-label": "App language"
-    },
-    "settingsSTARTSFROMHERE": "COPIED"
+    }
   },
   "login": {
     "title-refresh": "Confirm it's you",

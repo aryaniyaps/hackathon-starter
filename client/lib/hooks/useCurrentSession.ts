@@ -5,7 +5,13 @@ export default function useCurrentSession() {
   return useSuspenseQuery({
     queryKey: ["/sessions/@me"],
     queryFn: async () => {
-      return await kratos.toSession();
+      try {
+        return await kratos.toSession();
+      } catch (err) {
+        console.log("ERRORRRRRRRR");
+        console.error(err);
+        throw err;
+      }
     },
   });
 }

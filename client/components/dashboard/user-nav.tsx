@@ -9,10 +9,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useCurrentSession from "@/lib/hooks/useCurrentSession";
 import { Link } from "@/lib/navigation";
+import { getAvatarURL } from "@/utils/avatar";
 import { useTranslations } from "next-intl";
 
 export default function UserNav() {
-  const { data: user } = useCurrentSession();
+  const { data: session } = useCurrentSession();
 
   const t = useTranslations("dashboard.user-nav");
 
@@ -21,17 +22,17 @@ export default function UserNav() {
       <DropdownMenuTrigger>
         <Avatar className="h-8 w-8">
           <AvatarImage
-            src={"https://picsum.photos/200"}
+            src={getAvatarURL(session.identity?.traits.email)}
             loading="eager"
-            alt={"user.email"}
+            alt={session.identity?.traits.email}
           />
           <AvatarFallback>
-            {user.identity?.traits.email.slice(0, 2)}
+            {session.identity?.traits.email.slice(0, 2)}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={15}>
-        <DropdownMenuLabel>{user.identity?.traits.email}</DropdownMenuLabel>
+        <DropdownMenuLabel>{session.identity?.traits.email}</DropdownMenuLabel>
         <Link href="/settings">
           <DropdownMenuItem>{t("settings-label")}</DropdownMenuItem>
         </Link>
