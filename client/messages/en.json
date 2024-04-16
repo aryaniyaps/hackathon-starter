@@ -26,7 +26,6 @@
         "account-settings-label": "Account",
         "appearance-settings-label": "Appearance",
         "language-settings-label": "Language",
-        "passkeys-settings-label": "Passkeys",
         "sessions-settings-label": "Sessions"
       }
     },

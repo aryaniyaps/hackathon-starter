@@ -13,10 +13,6 @@ const sidebarNavItems = {
   ],
   "security-settings-label": [
     {
-      title: "pages.passkeys-settings-label",
-      href: "/settings/passkeys",
-    },
-    {
       title: "pages.sessions-settings-label",
       href: "/settings/sessions",
     },
