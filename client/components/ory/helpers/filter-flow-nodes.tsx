@@ -1,4 +1,4 @@
-import { UiNode } from "@ory/client-fetch";
+import { UiNode } from "@ory/client";
 import {
   FilterNodesByGroups,
   filterNodesByGroups,

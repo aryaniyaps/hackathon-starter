@@ -7,7 +7,8 @@ import { APP_NAME } from "@/lib/constants";
 import { env } from "@/lib/env";
 import { handleFlowError } from "@/lib/errors";
 import kratos from "@/lib/kratos";
-import { ResponseError, SettingsFlow } from "@ory/client-fetch";
+import { SettingsFlow } from "@ory/client";
+import { AxiosError } from "axios";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -16,13 +17,14 @@ async function getSettingsFlow(flowId: string): Promise<SettingsFlow> {
   const cookie = headers().get("cookie") || "";
 
   try {
-    return await kratos.getSettingsFlow({
+    const { data } = await kratos.getSettingsFlow({
       id: String(flowId),
       cookie,
     });
+    return data;
   } catch (err) {
-    if (err instanceof ResponseError) {
-      await handleFlowError(err, "settings");
+    if (err instanceof AxiosError) {
+      handleFlowError(err, "settings");
     }
     throw err;
   }

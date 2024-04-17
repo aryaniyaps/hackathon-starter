@@ -1,14 +1,14 @@
-import { ResponseError } from "@ory/client-fetch";
+import { AxiosError } from "axios";
 import { redirect } from "next/navigation";
 
 // FIXME: handle toasts properly
 
 // A small function to help us deal with errors coming from fetching a flow.
-export async function handleFlowError<S>(
-  err: ResponseError,
+export function handleFlowError<S>(
+  err: AxiosError,
   flowType: "login" | "registration" | "settings" | "recovery" | "verification"
 ): Promise<never> {
-  const data = await err.response.json();
+  const data = err.response?.data as any;
   switch (data.error?.id) {
     case "session_inactive":
       redirect("/login?return_to=" + window.location.href);
@@ -52,7 +52,7 @@ export async function handleFlowError<S>(
       window.location.href = data.redirect_browser_to;
       break;
   }
-  switch (err.response?.status) {
+  switch (err.status) {
     case 410:
       // The flow expired, let's request a new one.
       redirect("/" + flowType);

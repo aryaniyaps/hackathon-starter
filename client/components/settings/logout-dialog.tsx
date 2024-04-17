@@ -1,5 +1,5 @@
 "use client";
-import { LogoutFlow } from "@ory/client-fetch";
+import { LogoutFlow } from "@ory/client";
 import { useTranslations } from "next-intl";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";

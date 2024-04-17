@@ -15,6 +15,9 @@ import { Icons } from "../icons";
 import { Separator } from "../ui/separator";
 
 export default function UserNav() {
+  // this hook is somehow being executed on the server which raises
+  // errors. is this because its a suspense query?
+  // the error goes away when its a normal query
   const { data: session } = useCurrentSession();
 
   const t = useTranslations("dashboard.user-nav");

@@ -1,5 +1,5 @@
 "use client";
-import { SettingsFlow } from "@ory/client-fetch";
+import { SettingsFlow } from "@ory/client";
 import { JSX } from "react";
 
 import { useTranslations } from "next-intl";

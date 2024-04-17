@@ -1,7 +1,7 @@
 "use client";
 import { JSX } from "react";
 
-import { SettingsFlow } from "@ory/client-fetch";
+import { SettingsFlow } from "@ory/client";
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";
 import { hasWebauthn } from "../helpers/utils";
 

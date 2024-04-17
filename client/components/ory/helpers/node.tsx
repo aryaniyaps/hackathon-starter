@@ -1,4 +1,4 @@
-import { UiNode, UiNodeAttributes, UiText } from "@ory/client-fetch";
+import { UiNode, UiNodeAttributes, UiText } from "@ory/client";
 import {
   isUiNodeAnchorAttributes,
   isUiNodeImageAttributes,

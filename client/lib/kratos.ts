@@ -1,10 +1,10 @@
-import { Configuration, FrontendApi } from "@ory/client-fetch";
+import { Configuration, FrontendApi } from "@ory/client";
 import { env } from "./env";
 
 const kratos = new FrontendApi(
   new Configuration({
     basePath: env.NEXT_PUBLIC_KRATOS_PUBLIC_URL,
-    credentials: "include",
+    baseOptions: { withCredentials: true },
   })
 );
 

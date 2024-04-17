@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from "@/lib/navigation";
 import { cn } from "@/utils/style";
-import { LogoutFlow } from "@ory/client-fetch";
+import { LogoutFlow } from "@ory/client";
 import { useTranslations } from "next-intl";
 import { buttonVariants } from "../ui/button";
 import LogoutDialog from "./logout-dialog";

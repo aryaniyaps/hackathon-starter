@@ -1,4 +1,4 @@
-import { UiNode } from "@ory/client-fetch";
+import { UiNode } from "@ory/client";
 import { JSX } from "react";
 
 import { Button } from "@/components/ui/button";

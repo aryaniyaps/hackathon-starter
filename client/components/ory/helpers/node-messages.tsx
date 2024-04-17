@@ -1,5 +1,5 @@
 "use client";
-import { UiNode, UiText, UiTextTypeEnum } from "@ory/client-fetch";
+import { UiNode, UiText, UiTextTypeEnum } from "@ory/client";
 import { JSX } from "react";
 
 import { cn } from "@/utils/style";

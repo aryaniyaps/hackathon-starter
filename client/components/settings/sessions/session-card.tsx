@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import parseUserAgent from "@/utils/userAgent";
-import { Session } from "@ory/client-fetch";
+import { Session } from "@ory/client";
 import { useFormatter } from "next-intl";
 import RevokeSessionDialog from "./revoke-session-dialog";
 

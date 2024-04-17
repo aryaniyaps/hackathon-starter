@@ -4,7 +4,8 @@ import kratos from "../kratos";
 export default function useRevokeSession() {
   return useMutation({
     mutationFn: async ({ sessionId }: { sessionId: string }) => {
-      return await kratos.disableMySession({ id: sessionId });
+      const { data } = await kratos.disableMySession({ id: sessionId });
+      return data;
     },
   });
 }

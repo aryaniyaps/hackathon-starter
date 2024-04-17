@@ -5,7 +5,8 @@ export default function useSessions() {
   return useSuspenseQuery({
     queryKey: ["/auth/sessions"],
     queryFn: async ({ pageParam }) => {
-      return await kratos.listMySessions({ pageSize: 20 });
+      const { data } = await kratos.listMySessions({ pageSize: 20 });
+      return data;
     },
   });
 }
