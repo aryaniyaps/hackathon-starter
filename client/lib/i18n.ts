@@ -16,6 +16,7 @@ export const pathnames = {
   "/settings/sessions": "/settings/sessions",
   "/dashboard": "/dashboard",
   "/login": "/login",
+  "/logout": "/logout",
   "/registration": "/registration",
   "/recovery": "/recovery",
   "/verification": "/verification",

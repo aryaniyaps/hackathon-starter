@@ -2,7 +2,6 @@
 
 import { Link, usePathname } from "@/lib/navigation";
 import { cn } from "@/utils/style";
-import { LogoutFlow } from "@ory/client";
 import { useTranslations } from "next-intl";
 import { buttonVariants } from "../ui/button";
 import LogoutDialog from "./logout-dialog";
@@ -15,13 +14,11 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
       title: string;
     }[]
   >;
-  logoutFlow: LogoutFlow;
 }
 
 export default function SidebarNav({
   className,
   items,
-  logoutFlow,
   ...props
 }: SidebarNavProps) {
   const pathname = usePathname();
@@ -62,7 +59,7 @@ export default function SidebarNav({
           </div>
         ))}
       </div>
-      <LogoutDialog logoutFlow={logoutFlow} />
+      <LogoutDialog />
     </nav>
   );
 }

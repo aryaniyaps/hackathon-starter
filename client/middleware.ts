@@ -1,4 +1,4 @@
-import { ResponseError } from "@ory/client-fetch";
+import { AxiosError } from "axios";
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale, localePrefix, locales } from "./lib/i18n";
@@ -19,9 +19,10 @@ const intlMiddleware = createMiddleware({
 const protectedRoutes = [
   "/dashboard",
   "/settings",
+  "/settings/sessions",
   "/settings/appearance",
   "/settings/language",
-  "/settings/sessions",
+  "/logout",
 ];
 
 // FIXME: should we redirect users from recovery and verification pages
@@ -40,8 +41,8 @@ export default async function middleware(request: NextRequest) {
       const cookie = request.headers.get("cookie") || "";
       await kratos.toSession({ cookie });
     } catch (err) {
-      if (err instanceof ResponseError) {
-        const data = await err.response.json();
+      if (err instanceof AxiosError) {
+        const data = err.response?.data;
         switch (err.response?.status) {
           // 422 we need to redirect the user to the location specified in the response
           case 422:

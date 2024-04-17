@@ -1,5 +1,5 @@
 "use client";
-import { LogoutFlow } from "@ory/client";
+import { Link } from "@/lib/navigation";
 import { useTranslations } from "next-intl";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
@@ -18,11 +18,7 @@ import {
 // action will be submit. This will automatically redirect to the post logout
 // URL, as in other server side flows
 // There's also a user-logout-card in @ory/elements you can refer.
-export default function LogoutDialog({
-  logoutFlow,
-}: {
-  logoutFlow: LogoutFlow;
-}) {
+export default function LogoutDialog() {
   const t = useTranslations("settings");
 
   return (
@@ -46,11 +42,11 @@ export default function LogoutDialog({
           <DialogClose asChild>
             <Button variant="ghost">{t("logout-cancel-button")}</Button>
           </DialogClose>
-          <a href={logoutFlow.logout_url}>
+          <Link href="/logout">
             <Button variant="destructive" type="submit">
               {t("logout-button")}
             </Button>
-          </a>
+          </Link>
         </DialogFooter>
       </DialogContent>
     </Dialog>
