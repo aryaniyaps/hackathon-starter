@@ -37,7 +37,9 @@ const NodeMessage = ({
         "text-destructive-foreground bg-destructive/75":
           message.type === UiTextTypeEnum.Error && isGlobal,
         "text-secondary-foreground bg-secondary/75":
-          message.type === UiTextTypeEnum.Info && isGlobal,
+          (message.type === UiTextTypeEnum.Info ||
+            message.type === UiTextTypeEnum.Success) &&
+          isGlobal,
         "text-center border px-6 py-4 rounded-lg": isGlobal,
       })}
       {...props}

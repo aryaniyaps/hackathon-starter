@@ -1,73 +1,44 @@
 "use client";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import kratos from "@/lib/kratos";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import useSessions from "@/lib/hooks/useSessions";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Fragment } from "react";
 import RevokeOtherSessionsDialog from "./revoke-other-sessions-dialog";
 import SessionCard from "./session-card";
 
 // TODO: handle empty state (no other active sessions)
+// TODO: fix duplicate session cards?
 export default function SessionList() {
-  const [page, setPage] = useState(0);
-
-  async function fetchSessions(page = 0) {
-    const { data } = await kratos.listMySessions({
-      pageSize: 5,
-      page,
-      pageToken: "",
-    });
-    // TODO: parse link header here using `parse-link-header`
-    // and return an object like this:
-    // {
-    //   sessions: [...],
-    //   pageMeta: {
-    //     nextPageToken: "",
-    //     prevPageToken: ""
-    //   }
-    // }
-    // hence we can paginate using page tokens
-    return data;
-  }
-
-  const { isPending, data, isFetching } = useSuspenseQuery({
-    queryKey: ["sessions", page],
-    queryFn: () => fetchSessions(page),
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useSessions();
 
   return (
     <div className="flex flex-col gap-8 h-full relative">
       <div className="flex justify-between items-center w-full">
+        <h3 className="font-semibold">Active sessions</h3>
         <RevokeOtherSessionsDialog />
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
       </div>
-      <div className="flex h-full flex-1 flex-col gap-4">
-        {data.map((session) => (
-          <SessionCard session={session} key={session.id} />
-        ))}
-      </div>
+      <ScrollArea className="h-full flex-1 overflow-y-auto">
+        <div className="flex h-full flex-1 flex-col gap-4">
+          {data.pages.map((page, i) => (
+            <Fragment key={i}>
+              {page.sessions.map((session) => (
+                <SessionCard session={session} key={session.id} />
+              ))}
+            </Fragment>
+          ))}
+          {hasNextPage ? (
+            <Button
+              className="w-full"
+              variant="secondary"
+              onClick={() => fetchNextPage()}
+              disabled={!hasNextPage || isFetchingNextPage}
+            >
+              {isFetchingNextPage ? "Loading more..." : "Load More"}
+            </Button>
+          ) : null}
+        </div>
+      </ScrollArea>
     </div>
   );
 }
