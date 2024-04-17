@@ -1,8 +1,8 @@
-import { AxiosError } from "axios";
+import { ResponseError } from "@ory/client-fetch";
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale, localePrefix, locales } from "./lib/i18n";
-import kratos from "./lib/kratos";
+import { kratosFetch } from "./lib/kratos";
 
 const intlMiddleware = createMiddleware({
   // A list of all locales that are supported
@@ -19,9 +19,9 @@ const intlMiddleware = createMiddleware({
 const protectedRoutes = [
   "/dashboard",
   "/settings",
-  "/settings/sessions",
   "/settings/appearance",
   "/settings/language",
+  "/settings/sessions",
   "/logout",
 ];
 
@@ -39,10 +39,10 @@ export default async function middleware(request: NextRequest) {
     // TODO: write error page at /error or don't redirect there, we can let nextjs handle errors too
     try {
       const cookie = request.headers.get("cookie") || "";
-      await kratos.toSession({ cookie });
+      await kratosFetch.toSession({ cookie });
     } catch (err) {
-      if (err instanceof AxiosError) {
-        const data = err.response?.data;
+      if (err instanceof ResponseError) {
+        const data = await err.response.json();
         switch (err.response?.status) {
           // 422 we need to redirect the user to the location specified in the response
           case 422:

@@ -1,5 +1,4 @@
 "use client";
-import { Link } from "@/lib/navigation";
 import { useTranslations } from "next-intl";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
@@ -37,17 +36,16 @@ export default function LogoutDialog() {
           <DialogTitle>{t("logout-button")}</DialogTitle>
           <DialogDescription>{t("logout-description")}</DialogDescription>
         </DialogHeader>
-
-        <DialogFooter className="flex w-full items-end gap-4">
-          <DialogClose asChild>
-            <Button variant="ghost">{t("logout-cancel-button")}</Button>
-          </DialogClose>
-          <Link href="/logout">
+        <form action="/logout" method="POST">
+          <DialogFooter className="flex w-full items-end gap-4">
+            <DialogClose asChild>
+              <Button variant="ghost">{t("logout-cancel-button")}</Button>
+            </DialogClose>
             <Button variant="destructive" type="submit">
               {t("logout-button")}
             </Button>
-          </Link>
-        </DialogFooter>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

@@ -45,6 +45,7 @@ export default getRequestConfig(async ({ locale }) => {
           maximumFractionDigits: 5,
         },
       },
+      now: new Date(),
     },
   };
 });

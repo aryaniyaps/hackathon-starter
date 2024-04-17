@@ -27,6 +27,7 @@ export function Providers({
         locale={locale}
         messages={messages}
         timeZone="Asia/Kolkata"
+        now={new Date()}
       >
         <TooltipProvider>
           <QueryClientProvider client={queryClient}>

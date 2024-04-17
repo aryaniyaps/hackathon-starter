@@ -2,8 +2,9 @@ import { handleFlowError } from "@/lib/errors";
 import kratos from "@/lib/kratos";
 import { AxiosError } from "axios";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export async function GET() {
+export async function POST() {
   const cookie = headers().get("cookie") || "";
   try {
     const { data: logoutFlow } = await kratos.createBrowserLogoutFlow({
@@ -17,5 +18,5 @@ export async function GET() {
     }
   }
 
-  // TODO: redirect here?
+  redirect("/login");
 }

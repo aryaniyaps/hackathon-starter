@@ -19,7 +19,7 @@ export default function SessionList() {
   const [page, setPage] = useState(0);
 
   async function fetchSessions(page = 0) {
-    const data = await kratos.listMySessions({
+    const { data } = await kratos.listMySessions({
       pageSize: 5,
       page,
       pageToken: "",
