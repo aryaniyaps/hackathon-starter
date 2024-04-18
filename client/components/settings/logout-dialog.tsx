@@ -36,7 +36,7 @@ export default function LogoutDialog() {
           <DialogTitle>{t("logout-button")}</DialogTitle>
           <DialogDescription>{t("logout-description")}</DialogDescription>
         </DialogHeader>
-        <form action="/logout" method="POST">
+        <form action="/logout">
           <DialogFooter className="flex w-full items-end gap-4">
             <DialogClose asChild>
               <Button variant="ghost">{t("logout-cancel-button")}</Button>

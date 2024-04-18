@@ -79,6 +79,7 @@ export default async function LoginPage({
         additionalProps={{
           forgotPasswordURL: "/recovery",
           signupURL: "/registration",
+          logoutURL: "/logout"
         }}
         // we might need webauthn support which requires additional js
         includeScripts={true}

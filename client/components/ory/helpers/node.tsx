@@ -273,6 +273,8 @@ export const Node = ({
     const attrs = node.attributes;
     const nodeType = attrs.type;
 
+    console.log(attrs.name === "webauthn_login_trigger")
+
     const isSocial =
       (attrs.name === "provider" ||
         attrs.name === "link" ||
@@ -320,7 +322,6 @@ export const Node = ({
           <Button
             className={cn("w-full flex gap-2", className)}
             variant={"secondary"}
-            size={"default"}
             disabled={attrs.disabled}
             {...(buttonSocialOverrideProps && buttonSocialOverrideProps)}
             {...submit}
@@ -334,7 +335,6 @@ export const Node = ({
           <Button
             className={cn("w-full", className)}
             variant={"default"}
-            size={"default"}
             disabled={attrs.disabled}
             {...(buttonOverrideProps && buttonOverrideProps)}
             {...submit}

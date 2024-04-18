@@ -4,7 +4,7 @@ import { AxiosError } from "axios";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function POST() {
+export async function GET() {
   const cookie = headers().get("cookie") || "";
   try {
     const { data: logoutFlow } = await kratos.createBrowserLogoutFlow({
