@@ -17,20 +17,23 @@ import {
 } from "@/components/ui/tooltip";
 import { APP_NAME } from "@/lib/constants";
 import useRevokeSession from "@/lib/hooks/useRevokeSession";
+import { useState } from "react";
 
 export default function RevokeSessionDialog({
   sessionId,
 }: {
   sessionId: string;
 }) {
+  const [open, setOpen] = useState(false);
   const revokeSession = useRevokeSession();
 
   async function handleRevokeSession() {
     await revokeSession.mutateAsync({ sessionId });
+    setOpen(false);
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <Tooltip>
         <TooltipTrigger asChild>
           <span>

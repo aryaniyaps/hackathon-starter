@@ -37,11 +37,11 @@ export default function SettingsLayout({
       <SettingsHeader />
       <div className="mb-8 flex flex-1 h-full overflow-y-auto">
         <div className="mx-auto flex h-full max-w-7xl flex-1 flex-col space-y-8 p-4 lg:flex-row lg:space-x-12 lg:space-y-0">
-          <aside className="lg:w-1/6 h-full">
+          <aside className="lg:w-1/6 h-full pr-2">
             <SidebarNav items={sidebarNavItems} />
           </aside>
           <ScrollArea className="h-full flex-1 overflow-y-auto">
-            <div className="h-full flex-1 lg:max-w-2xl pl-2 mb-48">{children}</div>
+            <div className="h-full flex-1 lg:max-w-2xl mb-48">{children}</div>
           </ScrollArea>
         </div>
       </div>

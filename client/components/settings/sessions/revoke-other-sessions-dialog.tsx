@@ -11,16 +11,19 @@ import {
 } from "@/components/ui/dialog";
 import { APP_NAME } from "@/lib/constants";
 import useRevokeOtherSessions from "@/lib/hooks/useRevokeOtherSessions";
+import { useState } from "react";
 
 export default function RevokeOtherSessionsDialog() {
+  const [open, setOpen] = useState(false);
   const revokeOtherSessions = useRevokeOtherSessions();
 
   async function handleRevokeOtherSessions() {
     await revokeOtherSessions.mutateAsync();
+    setOpen(false);
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="destructive">Logout from all other devices</Button>
       </DialogTrigger>
