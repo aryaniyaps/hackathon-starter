@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import parseUserAgent from "@/utils/userAgent";
-import { Session } from "@ory/client";
+import { Session } from "@ory/kratos-client";
 import { useFormatter } from "next-intl";
 import RevokeSessionDialog from "./revoke-session-dialog";
 
@@ -19,6 +19,7 @@ export default function SessionCard({
       <CardHeader>
         <div className="flex w-full items-center justify-between gap-4">
           <div className="flex flex-col gap-2">
+            <p>{session.id}</p>
             {session.devices?.map((device) => (
               <div key={device.id} className="flex flex-col">
                 <p className="font-bold">
@@ -42,12 +43,12 @@ export default function SessionCard({
       <CardFooter className="flex gap-4">
         {session.issued_at ? (
           <p className="text-xs text-muted-foreground">
-            created {formatter.relativeTime(session.issued_at)}
+            created {formatter.relativeTime(new Date(session.issued_at))}
           </p>
         ) : null}
         {session.expires_at ? (
           <p className="text-xs text-muted-foreground">
-            expires in {formatter.relativeTime(session.expires_at)}
+            expires in {formatter.relativeTime(new Date(session.expires_at))}
           </p>
         ) : null}
       </CardFooter>

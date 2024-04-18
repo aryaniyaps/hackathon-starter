@@ -7,7 +7,7 @@ import {
   RegistrationFlow,
   SettingsFlow,
   VerificationFlow,
-} from "@ory/client";
+} from "@ory/kratos-client";
 
 export type SelfServiceFlow =
   | LoginFlow

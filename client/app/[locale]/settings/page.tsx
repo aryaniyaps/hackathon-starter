@@ -7,7 +7,7 @@ import { APP_NAME } from "@/lib/constants";
 import { env } from "@/lib/env";
 import { handleFlowError } from "@/lib/errors";
 import kratos from "@/lib/kratos";
-import { SettingsFlow } from "@ory/client";
+import { SettingsFlow } from "@ory/kratos-client";
 import { AxiosError } from "axios";
 import { Metadata } from "next";
 import { headers } from "next/headers";

@@ -1,5 +1,5 @@
 "use client";
-import { UiNode, UiText, UiTextTypeEnum } from "@ory/client";
+import { UiNode, UiText, UiTextTypeEnum } from "@ory/kratos-client";
 import { JSX } from "react";
 
 import { cn } from "@/utils/style";

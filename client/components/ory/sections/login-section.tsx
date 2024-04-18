@@ -1,4 +1,4 @@
-import { UiNode } from "@ory/client";
+import { UiNode } from "@ory/kratos-client";
 import { JSX } from "react";
 
 import { Button } from "@/components/ui/button";

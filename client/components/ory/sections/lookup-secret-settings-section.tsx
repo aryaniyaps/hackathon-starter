@@ -1,5 +1,5 @@
 "use client";
-import { SettingsFlow } from "@ory/client";
+import { SettingsFlow } from "@ory/kratos-client";
 import { JSX } from "react";
 
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";

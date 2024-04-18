@@ -1,8 +1,8 @@
-import { Configuration, FrontendApi } from "@ory/client";
 import {
   Configuration as FetchConfiguration,
   FrontendApi as FetchFrontendApi,
 } from "@ory/client-fetch";
+import { Configuration, FrontendApi } from "@ory/kratos-client";
 import { env } from "./env";
 
 const kratos = new FrontendApi(

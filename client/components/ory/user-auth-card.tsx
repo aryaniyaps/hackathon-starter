@@ -1,11 +1,11 @@
 "use client";
+import { filterNodesByGroups } from "@ory/integrations/ui";
 import {
   LoginFlow,
   RecoveryFlow,
   RegistrationFlow,
   VerificationFlow,
-} from "@ory/client";
-import { filterNodesByGroups } from "@ory/integrations/ui";
+} from "@ory/kratos-client";
 import { JSX } from "react";
 
 import { APP_NAME } from "@/lib/constants";

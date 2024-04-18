@@ -1,6 +1,6 @@
 "use client";
-import { UiNode, UiNodeScriptAttributes } from "@ory/client";
 import { filterNodesByGroups } from "@ory/integrations/ui";
+import { UiNode, UiNodeScriptAttributes } from "@ory/kratos-client";
 import { HTMLAttributeReferrerPolicy, useEffect } from "react";
 
 export const useScriptNodes = ({ nodes }: { nodes: UiNode[] }) => {

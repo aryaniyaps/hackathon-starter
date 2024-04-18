@@ -1,4 +1,4 @@
-import { UiNode } from "@ory/client";
+import { UiNode } from "@ory/kratos-client";
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";
 import { hasCode } from "../helpers/utils";
 

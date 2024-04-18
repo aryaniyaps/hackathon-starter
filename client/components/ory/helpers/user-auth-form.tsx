@@ -1,11 +1,11 @@
+import { FilterNodesByGroups } from "@ory/integrations/ui";
 import {
   UpdateLoginFlowBody,
   UpdateRecoveryFlowBody,
   UpdateRegistrationFlowBody,
   UpdateSettingsFlowBody,
   UpdateVerificationFlowBody,
-} from "@ory/client";
-import { FilterNodesByGroups } from "@ory/integrations/ui";
+} from "@ory/kratos-client";
 import { JSX } from "react";
 
 import { cn } from "@/utils/style";

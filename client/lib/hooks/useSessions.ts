@@ -5,26 +5,29 @@ import kratos from "../kratos";
 
 export default function useSessions() {
   return useSuspenseInfiniteQuery({
-    queryKey: ["sessions"],
+    queryKey: ["/sessions"],
     queryFn: async ({ pageParam }) => {
+      console.log("FETCHING DATA...", pageParam);
       const { data, headers } = await kratos.listMySessions({
         pageSize: DEFAULT_PAGE_SIZE,
-        pageToken: pageParam === "" ? undefined : pageParam,
+        pageToken: pageParam,
       });
 
-      const linkHeader = headers.link || "";
+      console.log("LENGTH OF FETCHED DATA: ", data.length);
+
+      const linkHeader = headers.link;
 
       const links = parseLinkHeader(linkHeader);
 
       return {
         sessions: data,
         pageMeta: {
-          next: links?.next?.page_token,
-          first: links?.first?.page_token,
+          nextPageToken: links?.next?.page_token,
+          nextPage: links?.next?.page,
         },
       };
     },
-    initialPageParam: "",
-    getNextPageParam: (lastPage) => lastPage.pageMeta.next ?? null,
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) => lastPage.pageMeta.nextPageToken,
   });
 }

@@ -1,4 +1,4 @@
-import { RecoveryFlow } from "@ory/client";
+import { RecoveryFlow } from "@ory/kratos-client";
 
 import { UserAuthCard } from "@/components/ory/user-auth-card";
 import { APP_NAME } from "@/lib/constants";

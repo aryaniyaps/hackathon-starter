@@ -1,4 +1,4 @@
-import { RegistrationFlow } from "@ory/client";
+import { RegistrationFlow } from "@ory/kratos-client";
 
 import { UserAuthCard } from "@/components/ory/user-auth-card";
 import { APP_NAME } from "@/lib/constants";

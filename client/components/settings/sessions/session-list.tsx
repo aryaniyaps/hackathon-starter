@@ -31,8 +31,8 @@ export default function SessionList() {
             <Button
               className="w-full"
               variant="secondary"
-              onClick={() => fetchNextPage()}
-              disabled={!hasNextPage || isFetchingNextPage}
+              onClick={async () => await fetchNextPage()}
+              disabled={isFetchingNextPage}
             >
               {isFetchingNextPage ? "Loading more..." : "Load More"}
             </Button>

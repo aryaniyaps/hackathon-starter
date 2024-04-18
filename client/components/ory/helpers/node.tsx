@@ -1,10 +1,10 @@
-import { UiNode, UiNodeAttributes, UiText } from "@ory/client";
 import {
   isUiNodeAnchorAttributes,
   isUiNodeImageAttributes,
   isUiNodeInputAttributes,
   isUiNodeTextAttributes,
 } from "@ory/integrations/ui";
+import { UiNode, UiNodeAttributes, UiText } from "@ory/kratos-client";
 import { JSX, MouseEvent, useId } from "react";
 
 import { Icons } from "@/components/icons";

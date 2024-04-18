@@ -1,4 +1,3 @@
-import { UiNode } from "@ory/client";
 import {
   FilterNodesByGroups,
   filterNodesByGroups,
@@ -9,6 +8,7 @@ import {
   isUiNodeScriptAttributes,
   isUiNodeTextAttributes,
 } from "@ory/integrations/ui";
+import { UiNode } from "@ory/kratos-client";
 import { JSX } from "react";
 
 import { Node, NodeOverrideProps } from "./node";
