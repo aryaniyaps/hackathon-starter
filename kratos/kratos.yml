@@ -52,9 +52,7 @@ selfservice:
       config:
         lifespan: 1h
     code:
-      enabled: true
-      config:
-        lifespan: 1h
+      enabled: false
     webauthn:
       enabled: true
       config:
@@ -96,7 +94,7 @@ selfservice:
     settings:
       ui_url: http://localhost:3000/settings
       required_aal: highest_available
-      privileged_session_max_age: 5m
+      privileged_session_max_age: 2m
 
     verification:
       ui_url: http://localhost:3000/verification
@@ -138,3 +136,30 @@ identity:
 courier:
   smtp:
     connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+  templates:
+    verification_code:
+      valid:
+        email:
+          body:
+            html: file://email-templates/verification_code/valid/email.body.gotmpl
+            plaintext: file://email-templates/verification_code/valid/email.body.plaintext.gotmpl
+          subject: file://email-templates/verification_code/valid/subject.gotmpl
+      invalid:
+        email:
+          body:
+            html: file://email-templates/verification_code/invalid/email.body.gotmpl
+            plaintext: file://email-templates/verification_code/invalid/email.body.plaintext.gotmpl
+          subject: file://email-templates/verification_code/invalid/subject.gotmpl
+    recovery_code:
+      valid:
+        email:
+          body:
+            html: file://email-templates/recovery_code/valid/email.body.gotmpl
+            plaintext: file://email-templates/recovery_code/valid/email.body.plaintext.gotmpl
+          subject: file://email-templates/recovery_code/valid/subject.gotmpl
+      invalid:
+        email:
+          body:
+            html: file://email-templates/recovery_code/invalid/email.body.gotmpl
+            plaintext: file://email-templates/recovery_code/invalid/email.body.plaintext.gotmpl
+          subject: file://email-templates/recovery_code/invalid/subject.gotmpl
