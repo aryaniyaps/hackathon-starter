@@ -70,7 +70,7 @@ export const UserAuthForm = ({
   ...props
 }: UserAuthFormProps): JSX.Element => (
   <form
-    className={cn("m-0 p-0", className)}
+    className={cn("m-0 p-0 w-full", className)}
     action={flow.ui.action}
     method={flow.ui.method}
     onKeyDown={(e) => {
