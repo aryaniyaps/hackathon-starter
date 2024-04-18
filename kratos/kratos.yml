@@ -116,6 +116,9 @@ selfservice:
 
     login:
       ui_url: http://localhost:3000/login
+      after:
+        hooks:
+          - hook: require_verified_address
 
     registration:
       lifespan: 15m
@@ -123,8 +126,13 @@ selfservice:
       after:
         webauthn:
           hooks:
-            - hook: session
+            # FIXME: session action is executed before the user is verified.
+            # therefore, users can access the app without verifying their email.
+            # if we remove the session action, the user will have to login once again after
+            # registration. This could improve security but reduce DX.
+            # https://github.com/ory/kratos/issues/3160
             - hook: show_verification_ui
+            - hook: session
         oidc:
           hooks:
             - hook: session
