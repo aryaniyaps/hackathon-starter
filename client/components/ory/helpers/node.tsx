@@ -394,7 +394,7 @@ export const Node = ({
     }
   } else if (isUiNodeAnchorAttributes(node.attributes)) {
     return (
-      <Link href={node.attributes.href}>
+      <Link href={node.attributes.href} className="flex justify-center">
         <Button
           variant="link"
           title={formatMessage(node.attributes.title)}

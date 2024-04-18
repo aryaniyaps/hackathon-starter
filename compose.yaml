@@ -56,11 +56,11 @@ services:
     networks:
       - intranet
 
-  mailslurper:
-    image: oryd/mailslurper:latest-smtps
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
     ports:
-      - "4436:4436"
-      - "4437:4437"
+      - "1025:1025"
+      - "8025:8025"
     networks:
       - intranet
 

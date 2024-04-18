@@ -107,6 +107,12 @@
       color: #0867ec;
       text-decoration: underline;
     }
+
+    .code {
+      font-size: 24px; 
+      font-weight: bold; 
+      color: #0867ec;
+    }
     /* -------------------------------------
     BUTTONS
 ------------------------------------- */
@@ -298,21 +304,7 @@
                 <td class="wrapper">
                   <p>Hi there,</p>
                   <p>Please enter the following recovery code to recover your account:</p>
-                  <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-                    <tbody>
-                      <tr>
-                        <td align="left">
-                          <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                            <tbody>
-                              <tr>
-                                <td> {{ .RecoveryCode }} </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <p class="code">{{ .RecoveryCode }}</p>
                 </td>
               </tr>
 
