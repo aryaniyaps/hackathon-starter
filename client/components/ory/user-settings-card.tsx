@@ -3,7 +3,6 @@ import { SettingsFlow } from "@ory/kratos-client";
 import { JSX } from "react";
 
 import { useTranslations } from "next-intl";
-import { Separator } from "../ui/separator";
 import { useScriptNodes } from "./helpers/node-script";
 import {
   UserAuthForm,
@@ -56,54 +55,46 @@ export const UserSettingsCard = ({
     useScriptNodes({ nodes: flow.ui.nodes });
   }
 
-  let hasFlow = false;
   let $flow: JSX.Element | null = null;
   let cardTitle = "";
 
   switch (method) {
     case "profile":
-      hasFlow = true;
       cardTitle = title ?? t("title-profile");
       $flow = <ProfileSettingsSection flow={flow} />;
       break;
     case "password":
       if (hasPassword(flow.ui.nodes)) {
-        hasFlow = true;
         cardTitle = title ?? t("title-password");
         $flow = <PasswordSettingsSection flow={flow} />;
       }
       break;
     case "webauthn":
       if (hasWebauthn(flow.ui.nodes)) {
-        hasFlow = true;
         cardTitle = title ?? t("title-webauthn");
         $flow = <WebAuthnSettingsSection flow={flow} />;
       }
       break;
     case "passkey":
       if (hasPasskey(flow.ui.nodes)) {
-        hasFlow = true;
         cardTitle = title ?? t("title-passkey");
         $flow = <PasskeySettingsSection flow={flow} />;
       }
       break;
     case "lookup_secret":
       if (hasLookupSecret(flow.ui.nodes)) {
-        hasFlow = true;
         cardTitle = title ?? t("title-lookup-secret");
         $flow = <LookupSecretSettingsSection flow={flow} />;
       }
       break;
     case "oidc":
       if (hasOidc(flow.ui.nodes)) {
-        hasFlow = true;
         cardTitle = title ?? t("title-oidc");
         $flow = <OIDCSettingsSection flow={flow} />;
       }
       break;
     case "totp":
       if (hasTotp(flow.ui.nodes)) {
-        hasFlow = true;
         cardTitle = title ?? t("title-totp");
         $flow = <TOTPSettingsSection flow={flow} />;
       }
@@ -112,20 +103,17 @@ export const UserSettingsCard = ({
       $flow = null;
   }
 
-  return hasFlow ? (
-    <>
-      <div className="flex flex-col gap-8 w-full">
-        {cardTitle && <h3 className="text-lg font-medium">{cardTitle}</h3>}
-        <UserAuthForm
-          flow={flow}
-          onSubmit={onSubmit}
-          className={className}
-          data-testid={`${method}-settings-card`}
-        >
-          {$flow}
-        </UserAuthForm>
-        <Separator />
-      </div>
-    </>
-  ) : null;
+  return (
+    <div className="flex flex-col gap-8 w-full">
+      {cardTitle && <h3 className="text-lg font-medium">{cardTitle}</h3>}
+      <UserAuthForm
+        flow={flow}
+        onSubmit={onSubmit}
+        className={className}
+        data-testid={`${method}-settings-card`}
+      >
+        {$flow}
+      </UserAuthForm>
+    </div>
+  );
 };

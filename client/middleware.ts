@@ -20,7 +20,7 @@ const protectedRoutes = [
   "/dashboard",
   "/settings",
   "/settings/appearance",
-  "/settings/language",
+  "/settings/internationalization",
   "/settings/sessions",
   "/logout",
 ];

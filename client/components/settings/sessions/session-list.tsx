@@ -15,7 +15,12 @@ export default function SessionList() {
   return (
     <div className="flex flex-col gap-8 h-full relative">
       <div className="flex justify-between items-center w-full">
-        <h3 className="font-semibold">Active sessions</h3>
+        <div className="flex flex-col gap-2">
+          <h3 className="font-semibold">Active sessions</h3>
+          <p className="text-sm text-muted-foreground">
+            Revoke any sessions that you do not recognize.
+          </p>
+        </div>
         <RevokeOtherSessionsDialog />
       </div>
       <ScrollArea className="h-full flex-1 overflow-y-auto">

@@ -10,5 +10,5 @@ export function getAvatarURL(email: string) {
   const hash = sha256(address);
 
   // Grab the actual image URL
-  return `https://www.gravatar.com/avatar/${hash}`;
+  return `https://www.gravatar.com/avatar/${hash}?default=identicon`;
 }

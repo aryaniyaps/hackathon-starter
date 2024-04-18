@@ -21,8 +21,8 @@ const sidebarNavItems = {
       href: "/settings/appearance",
     },
     {
-      title: "pages.language-settings-label",
-      href: "/settings/language",
+      title: "pages.internationalization-settings-label",
+      href: "/settings/internationalization",
     },
   ],
 };

@@ -25,7 +25,7 @@
       "pages": {
         "account-settings-label": "Konto",
         "appearance-settings-label": "Aussehen",
-        "language-settings-label": "Sprache",
+        "internationalization-settings-label": "Internationalisierung",
         "sessions-settings-label": "Sitzungen"
       }
     },

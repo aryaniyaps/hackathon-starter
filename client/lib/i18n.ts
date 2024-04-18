@@ -12,7 +12,7 @@ export const defaultLocale = "en";
 export const pathnames = {
   "/settings": "/settings",
   "/settings/appearance": "/settings/appearance",
-  "/settings/language": "/settings/language",
+  "/settings/internationalization": "/settings/internationalization",
   "/settings/sessions": "/settings/sessions",
   "/dashboard": "/dashboard",
   "/login": "/login",
