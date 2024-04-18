@@ -396,6 +396,7 @@ export const Node = ({
     return (
       <Link href={node.attributes.href}>
         <Button
+          variant="link"
           title={formatMessage(node.attributes.title)}
           data-testid={`node/anchor/${node.attributes.id}`}
           className={className}
