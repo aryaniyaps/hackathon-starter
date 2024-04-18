@@ -52,7 +52,9 @@ selfservice:
       config:
         lifespan: 1h
     code:
-      enabled: false
+      enabled: true
+      config:
+        lifespan: 15m
     webauthn:
       enabled: true
       config:
@@ -97,12 +99,16 @@ selfservice:
       privileged_session_max_age: 2m
 
     verification:
+      use: code
       ui_url: http://localhost:3000/verification
       enabled: true
+      notify_unknown_recipients: true
 
     recovery:
+      use: code
       ui_url: http://localhost:3000/recovery
       enabled: true
+      notify_unknown_recipients: true
 
     logout:
       after:
