@@ -34,18 +34,11 @@ export default function RevokeSessionDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <span>
-            <DialogTrigger asChild>
-              <Button size="icon" variant="destructive">
-                <Icons.trash className="h-4 w-4" />
-              </Button>
-            </DialogTrigger>
-          </span>
-        </TooltipTrigger>
-        <TooltipContent>Revoke session</TooltipContent>
-      </Tooltip>
+      <DialogTrigger asChild>
+        <Button size="icon" variant="destructive" title="revoke session">
+          <Icons.trash className="h-4 w-4" />
+        </Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[475px]">
         <DialogHeader>
           <DialogTitle>Revoke session</DialogTitle>
