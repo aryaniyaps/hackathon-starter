@@ -16,6 +16,10 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 
+// TODO: convert this to a client side page
+// (as used in an SPA), so that we can have smoother profile updates,
+// show changes that were made, but most importantly, be able to
+// show verification page after verifiable addresses were updated
 async function getSettingsFlow(flowId: string): Promise<SettingsFlow> {
   const cookie = headers().get("cookie") || "";
 
@@ -25,7 +29,7 @@ async function getSettingsFlow(flowId: string): Promise<SettingsFlow> {
       cookie,
     });
 
-    console.log("data", data)
+    console.log("data", data);
 
     // continue_with is a list of actions that the user might need to take before the settings update is complete.
     // It could, for example, contain a link to the verification form.
