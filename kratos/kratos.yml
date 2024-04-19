@@ -54,9 +54,7 @@ selfservice:
     lookup_secret:
       enabled: true
     link:
-      enabled: true
-      config:
-        lifespan: 1h
+      enabled: false
     code:
       enabled: true
       config:
