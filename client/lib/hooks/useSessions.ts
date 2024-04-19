@@ -18,10 +18,10 @@ export default function useSessions() {
 
       return {
         sessions: data,
-        nextPageToken: links?.next?.page_token
+        nextPageToken: links?.next?.page_token,
       };
     },
-    initialPageParam: undefined as string | undefined,
+    initialPageParam: "1",
     getNextPageParam: (lastPage) => lastPage.nextPageToken,
   });
 }
