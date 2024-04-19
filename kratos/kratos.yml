@@ -29,6 +29,8 @@ session:
   cookie:
     domain: localhost
     name: session
+  # sessions won't expire for 1 week
+  lifespan: 168h0m0s
   whoami:
     # users can use the application without completing a second factor
     required_aal: aal1
