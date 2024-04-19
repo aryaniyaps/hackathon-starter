@@ -38,7 +38,7 @@ session:
 selfservice:
   default_browser_return_url: http://localhost:3000/dashboard
   allowed_return_urls:
-    - http://localhost:3000/
+    - http://localhost:3000/dashboard
 
   methods:
     password:
@@ -137,6 +137,7 @@ selfservice:
             - hook: session
         oidc:
           hooks:
+            - hook: show_verification_ui
             - hook: session
     error:
       ui_url: http://localhost:3000/error

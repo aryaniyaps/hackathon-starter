@@ -23,6 +23,7 @@ export interface AdditionalProps {
 }
 
 export interface MessageSectionProps {
+  isSubmittable?: boolean;
   url?: string;
   buttonText: string;
   dataTestId?: string;
@@ -34,7 +35,20 @@ export const MessageSection = ({
   url,
   buttonText,
   dataTestId,
-}: MessageSectionProps): JSX.Element => (
+  isSubmittable=false,
+}: MessageSectionProps): JSX.Element => {
+  if  (isSubmittable) {
+    return (
+      <form action={url} method="POST" className="text-muted-foreground">
+      {text}
+        <Button data-testid={dataTestId} type="submit" variant="link">
+          {buttonText}
+        </Button>
+    </form>
+    )
+  }
+
+  return (
   <p className="text-muted-foreground">
     {text}
     <Link href={url}>
@@ -43,4 +57,4 @@ export const MessageSection = ({
       </Button>
     </Link>
   </p>
-);
+)};

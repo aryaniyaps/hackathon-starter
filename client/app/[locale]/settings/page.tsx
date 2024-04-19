@@ -24,6 +24,24 @@ async function getSettingsFlow(flowId: string): Promise<SettingsFlow> {
       id: String(flowId),
       cookie,
     });
+
+    console.log("data", data)
+
+    // continue_with is a list of actions that the user might need to take before the settings update is complete.
+    // It could, for example, contain a link to the verification form.
+    if (data.continue_with) {
+      for (const item of data.continue_with) {
+        switch (item.action) {
+          case "show_verification_ui":
+            redirect("/verification?flow=" + item.flow.id);
+        }
+      }
+    }
+
+    if (data.return_to) {
+      redirect(data.return_to);
+    }
+
     return data;
   } catch (err) {
     if (err instanceof AxiosError) {
