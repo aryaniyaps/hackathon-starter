@@ -342,7 +342,7 @@ export const UserAuthCard = ({
           buttonText: t("login.logout-button"),
           dataTestId: "logout-link",
           url: additionalProps.logoutURL,
-          isSubmittable: true
+          isSubmittable: true,
         };
       } else if (additionalProps?.signupURL) {
         message = {

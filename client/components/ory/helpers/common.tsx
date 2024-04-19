@@ -35,26 +35,27 @@ export const MessageSection = ({
   url,
   buttonText,
   dataTestId,
-  isSubmittable=false,
+  isSubmittable = false,
 }: MessageSectionProps): JSX.Element => {
-  if  (isSubmittable) {
+  if (isSubmittable) {
     return (
       <form action={url} method="POST" className="text-muted-foreground">
-      {text}
+        {text}
         <Button data-testid={dataTestId} type="submit" variant="link">
           {buttonText}
         </Button>
-    </form>
-    )
+      </form>
+    );
   }
 
   return (
-  <p className="text-muted-foreground">
-    {text}
-    <Link href={url}>
-      <Button data-testid={dataTestId} variant="link">
-        {buttonText}
-      </Button>
-    </Link>
-  </p>
-)};
+    <p className="text-muted-foreground">
+      {text}
+      <Link href={url}>
+        <Button data-testid={dataTestId} variant="link">
+          {buttonText}
+        </Button>
+      </Link>
+    </p>
+  );
+};
