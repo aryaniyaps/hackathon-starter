@@ -313,7 +313,7 @@ export const UserAuthCard = ({
     ]
       .filter(Boolean) // remove nulls
       .map((flow, index) => (
-        <div key={index}>
+        <div key={index} className="w-full">
           {index > 0 ? (
             <>
               <Separator /> {flow}
