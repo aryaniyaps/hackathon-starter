@@ -389,7 +389,15 @@ export const UserAuthCard = ({
       $flow = LinkSection({
         nodes: flow.ui.nodes,
       });
-      if (additionalProps?.signupURL) {
+      if (isLoggedIn(flow) && additionalProps?.logoutURL) {
+        message = {
+          text: t("login.logout-label"),
+          buttonText: t("login.logout-button"),
+          dataTestId: "logout-link",
+          url: additionalProps.logoutURL,
+          isSubmittable: true,
+        };
+      } else if (additionalProps?.signupURL) {
         message = {
           text: t("verification.registration-label"),
           buttonText: t("verification.registration-button"),
