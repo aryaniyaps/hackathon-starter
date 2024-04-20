@@ -100,7 +100,7 @@ selfservice:
     settings:
       ui_url: http://localhost:3000/settings
       required_aal: highest_available
-      privileged_session_max_age: 2m
+      privileged_session_max_age: 5m
 
     verification:
       use: code
@@ -155,4 +155,6 @@ identity:
 courier:
   smtp:
     connection_uri: smtp://mailhog:1025/?disable_starttls=true
+    from_address: noreply@localhost
+    from_name: Starter
   template_override_path: /etc/config/kratos/email-templates

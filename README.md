@@ -1,13 +1,64 @@
-# hackathon starter
+# Hackathon Starter
 
-Setting up Google OIDC:
+## Setup instructions
 
-Create a Google Oauth2 application
+### Prerequisites:
 
-add the following URL to authorized redirect URIs:
+- Docker Engine
+- Nodejs v20+ (LTS)
 
-http://localhost:4433/self-service/methods/oidc/callback/google
+### Setup Google Oauth2 application
 
-assuming Ory Kratos is hosted at localhost:4433
+To implement the sign in/ up with google authentication flow, we need to set up a
+Google Oauth2 application.
 
-refer https://github.com/spa5k/kratos-next for UI implementation
+Execute the following steps:
+
+1. Go to Google Cloud Console:
+   - Visit the Google Cloud Console.
+   - Sign in with your Google account.
+2. Create a new project:
+   - If you don't have a project yet, click on "Select a project" at the top left of the console.
+   - Click on "New Project" and follow the prompts to create a new project.
+3. Enable the Google Identity service API:
+   - In the Google Cloud Console, navigate to the "APIs & Services" > "Library" section.
+   - Search for "Google Identity service API" and enable it for your project.
+4. Set up OAuth2 Credentials:
+   - In the Google Cloud Console, go to "APIs & Services" > "Credentials".
+   - Click on "Create Credentials" and select "OAuth client ID".
+   - Choose the application type based on your needs (e.g., Web application, Android app, iOS app, etc.).
+   - Be sure to add the URI **http://localhost:4433/self-service/methods/oidc/callback/google** to the authorized redirect URIs _(assuming Ory Kratos is hosted at localhost:4433)_.
+5. Configure OAuth Consent Screen:
+   - If prompted, configure the OAuth consent screen. Provide details like the application name, user support email, and other required information.
+6. Obtain Client ID and Client Secret:
+   - After creating the OAuth client ID, you will be provided with a Client ID and Client Secret.
+7. Paste the Client ID and Client Secret in the `.env` file
+   - in the `.env` file present in the root directory, paste the Client ID and Client Secret as follows:
+   ```
+   GOOGLE_CLIENT_ID="<Client ID goes here>"
+   GOOGLE_CLIENT_SECRET="<Client Secret goes here>"
+   ```
+
+### Installing dependencies
+
+You can install the dependencies for the frontend by running the following command:
+
+```
+cd client
+npm install
+```
+
+### Starting the application
+
+Get the Docker Compose services up and running with the following command (from the root directory):
+
+```
+docker compose up
+```
+
+In another terminal, start the frontend app with the following command:
+
+```
+cd client
+npm run dev
+```
