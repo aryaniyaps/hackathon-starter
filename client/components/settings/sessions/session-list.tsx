@@ -34,7 +34,7 @@ export default function SessionList() {
       </div>
       {isEmpty ? (
         <div className="w-full flex items-center gap-2 text-muted-foreground font-semibold">
-          <Icons.squirrel className="w-6 h-6" />
+          <Icons.squirrel className="w-10 h-10" />
           <p>No active sessions found!</p>
         </div>
       ) : (
