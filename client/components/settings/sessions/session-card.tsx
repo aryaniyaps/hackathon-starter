@@ -42,16 +42,16 @@ export function SessionCardSkeleton() {
           <div className="flex gap-2 items-center">
             <Skeleton className="w-6 h-6" />
             <div className="flex flex-col gap-2">
-              <Skeleton className="h-4 w-[200px]" />
-              <Skeleton className="h-2 w-[200px]" />
+              <Skeleton className="h-4 w-[150px]" />
+              <Skeleton className="h-3 w-[175px]" />
             </div>
           </div>
           <Skeleton className="h-10 w-10" />
         </div>
       </CardHeader>
       <CardFooter className="flex gap-4">
-        <Skeleton className="h-2 w-[150px]" />
-        <Skeleton className="h-2 w-[150px]" />
+        <Skeleton className="h-3 w-[150px]" />
+        <Skeleton className="h-3 w-[150px]" />
       </CardFooter>
     </Card>
   );
