@@ -30,7 +30,7 @@ import {
   TextCursor,
   Trash,
   Trash2,
-  Twitter,
+  Squirrel,
   User,
   Users,
   X,
@@ -54,6 +54,7 @@ export const Icons = {
       <circle cx="12" cy="12" r="10"></circle>
     </svg>
   ),
+  squirrel: Squirrel,
   logOut: LogOut,
   arrowUp: ArrowUp,
   users: Users,
@@ -81,7 +82,6 @@ export const Icons = {
   send: SendIcon,
   help: HelpCircle,
   pizza: Pizza,
-  twitter: Twitter,
   check: Check,
   copy: Copy,
   copyDone: ClipboardCheck,
