@@ -2,11 +2,21 @@
 import { Button } from "@/components/ui/button";
 import useSessions from "@/lib/hooks/useSessions";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Fragment, useMemo } from "react";
+import { useMemo } from "react";
 import RevokeOtherSessionsDialog from "./revoke-other-sessions-dialog";
-import SessionCard from "./session-card";
+import SessionCard, { SessionCardSkeleton } from "./session-card";
 import { useTranslations } from "next-intl";
 
+function SessionListSkeleton() {
+  return (
+    <div className="flex h-full flex-1 flex-col gap-4">
+      <SessionCardSkeleton />
+      <SessionCardSkeleton />
+      <SessionCardSkeleton />
+      <SessionCardSkeleton />
+    </div>
+  );
+}
 // TODO: fix duplicate session cards?
 // TODO: add loading state here
 export default function SessionList() {
@@ -33,19 +43,17 @@ export default function SessionList() {
         </div>
         <RevokeOtherSessionsDialog disabled={isEmpty} />
       </div>
-      {isEmpty ? (
+      {!data ? (
+        <SessionListSkeleton />
+      ) : isEmpty ? (
         <p className="w-full text-muted-foreground font-semibold">
           {t("active-sessions-empty-message")}
         </p>
       ) : (
         <ScrollArea className="h-full flex-1 overflow-y-auto">
           <div className="flex h-full flex-1 flex-col gap-4">
-            {data.pages.map((page, i) => (
-              <Fragment key={i}>
-                {page.sessions.map((session) => (
-                  <SessionCard session={session} key={session.id} />
-                ))}
-              </Fragment>
+            {allSessions.map((session) => (
+              <SessionCard session={session} key={session.id} />
             ))}
             {hasNextPage ? (
               <Button

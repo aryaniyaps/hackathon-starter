@@ -3,9 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import getBrowserOSInfo, { getDeviceIcon } from "@/utils/userAgent";
 import { Session, SessionDevice } from "@ory/kratos-client";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import RevokeSessionDialog from "./revoke-session-dialog";
 import { UAParser } from "ua-parser-js";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function DeviceInformation({ device }: { device: SessionDevice }) {
   if (device.user_agent) {
@@ -30,6 +31,29 @@ function DeviceInformation({ device }: { device: SessionDevice }) {
     <p className="font-bold">
       {device.ip_address} {device.location}
     </p>
+  );
+}
+
+export function SessionCardSkeleton() {
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex w-full items-center justify-between gap-4">
+          <div className="flex gap-2 items-center">
+            <Skeleton className="w-6 h-6" />
+            <div className="flex flex-col gap-2">
+              <Skeleton className="h-4 w-[200px]" />
+              <Skeleton className="h-2 w-[200px]" />
+            </div>
+          </div>
+          <Skeleton className="h-10 w-10" />
+        </div>
+      </CardHeader>
+      <CardFooter className="flex gap-4">
+        <Skeleton className="h-2 w-[150px]" />
+        <Skeleton className="h-2 w-[150px]" />
+      </CardFooter>
+    </Card>
   );
 }
 
