@@ -33,11 +33,13 @@ Execute the following steps:
 6. Obtain Client ID and Client Secret:
    - After creating the OAuth client ID, you will be provided with a Client ID and Client Secret.
 7. Paste the Client ID and Client Secret in the `.env` file
+
    - in the `.env` file present in the root directory, paste the Client ID and Client Secret as follows:
-   ```
-   GOOGLE_CLIENT_ID="<Client ID goes here>"
-   GOOGLE_CLIENT_SECRET="<Client Secret goes here>"
-   ```
+
+     ```
+     GOOGLE_CLIENT_ID="<Client ID goes here>"
+     GOOGLE_CLIENT_SECRET="<Client Secret goes here>"
+     ```
 
 ### Installing dependencies
 
