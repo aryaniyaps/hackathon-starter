@@ -5,11 +5,11 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Fragment, useMemo } from "react";
 import RevokeOtherSessionsDialog from "./revoke-other-sessions-dialog";
 import SessionCard from "./session-card";
-import { Icons } from "@/components/icons";
+import { useTranslations } from "next-intl";
 
-// TODO: handle empty state (no other active sessions)
 // TODO: fix duplicate session cards?
 export default function SessionList() {
+  const t = useTranslations("settings.sessions");
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSessions();
 
@@ -25,16 +25,16 @@ export default function SessionList() {
     <div className="flex flex-col gap-8 h-full relative">
       <div className="flex justify-between items-center w-full">
         <div className="flex flex-col gap-2">
-          <h3 className="font-semibold">Active sessions</h3>
+          <h3 className="font-semibold">{t("active-sessions-label")}</h3>
           <p className="text-sm text-muted-foreground">
-            Revoke any sessions that you do not recognize.
+            {t("active-sessions-description")}
           </p>
         </div>
         <RevokeOtherSessionsDialog disabled={isEmpty} />
       </div>
       {isEmpty ? (
         <p className="w-full text-muted-foreground font-semibold">
-          No active sessions found!
+          {t("active-sessions-empty-message")}
         </p>
       ) : (
         <ScrollArea className="h-full flex-1 overflow-y-auto">

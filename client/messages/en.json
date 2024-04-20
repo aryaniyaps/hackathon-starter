@@ -60,6 +60,24 @@
       "title": "Language",
       "description": "Select your preferred language.",
       "switcher-label": "App language"
+    },
+    "sessions": {
+      "title": "Sessions",
+      "active-sessions-label": "Active sessions",
+      "active-sessions-description": "Revoke any sessions that you do not recognize.",
+      "active-sessions-empty-message": "No active sessions found!",
+      "current-session-label": "Current session",
+      "disable-all-sessions-label": "Logout from all other devices",
+      "disable-all-sessions-dialog-title": "Logout from all other devices",
+      "disable-all-sessions-dialog-description": "This will remove access to your {appName} account from all other devices",
+      "disable-all-sessions-dialog-cancel-button": "Cancel",
+      "disable-all-sessions-dialog-confirm-button": "Confirm",
+      "disable-session-dialog-title": "Revoke session",
+      "disable-session-dialog-description": "This will remove access to your {appName} account from the device",
+      "disable-session-dialog-cancel-button": "Cancel",
+      "disable-session-dialog-confirm-button": "Confirm",
+      "session-card-created-at-label": "Created {createdAt, date, short} at {createdAt, time, short}",
+      "session-card-expires-at-label": "Expires {expiresAt, date, short} at {expiresAt, time, short}"
     }
   },
   "login": {

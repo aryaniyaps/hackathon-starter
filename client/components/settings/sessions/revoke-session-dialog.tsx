@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/tooltip";
 import { APP_NAME } from "@/lib/constants";
 import useRevokeSession from "@/lib/hooks/useRevokeSession";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function RevokeSessionDialog({
@@ -26,6 +27,7 @@ export default function RevokeSessionDialog({
 }) {
   const [open, setOpen] = useState(false);
   const revokeSession = useRevokeSession();
+  const t = useTranslations("settings.sessions");
 
   async function handleRevokeSession() {
     await revokeSession.mutateAsync({ sessionId });
@@ -41,21 +43,23 @@ export default function RevokeSessionDialog({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[475px]">
         <DialogHeader>
-          <DialogTitle>Revoke session</DialogTitle>
+          <DialogTitle>{t("disable-session-dialog-title")}</DialogTitle>
           <DialogDescription>
-            This will remove access to your {APP_NAME} account from the device
+            {t("disable-session-dialog-description", { appName: APP_NAME })}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex w-full items-end gap-4">
           <DialogClose asChild>
-            <Button variant="ghost">Cancel</Button>
+            <Button variant="ghost">
+              {t("disable-session-dialog-cancel-button")}
+            </Button>
           </DialogClose>
           <Button
             type="submit"
             variant="destructive"
             onClick={handleRevokeSession}
           >
-            Revoke session
+            {t("disable-session-dialog-confirm-button")}
           </Button>
         </DialogFooter>
       </DialogContent>

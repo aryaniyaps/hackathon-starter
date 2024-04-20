@@ -61,6 +61,24 @@
       "title": "Sprache",
       "description": "Wählen Sie Ihre bevorzugte Sprache.",
       "switcher-label": "App-Sprache"
+    },
+    "sessions": {
+      "title": "Sitzungen",
+      "active-sessions-label": "Aktive Sitzungen",
+      "active-sessions-description": "Widerrufen Sie alle Sitzungen, die Sie nicht kennen.",
+      "active-sessions-empty-message": "Keine aktiven Sitzungen gefunden!",
+      "current-session-label": "Aktuelle Sitzung",
+      "disable-all-sessions-label": "Melden Sie sich von allen anderen Geräten ab",
+      "disable-all-sessions-dialog-title": "Melden Sie sich von allen anderen Geräten ab",
+      "disable-all-sessions-dialog-description": "Dadurch wird der Zugriff auf Ihr {appName}-Konto von allen anderen Geräten entfernt",
+      "disable-all-sessions-dialog-cancel-button": "Stornieren",
+      "disable-all-sessions-dialog-confirm-button": "Bestätigen",
+      "disable-session-dialog-title": "Sitzung widerrufen",
+      "disable-session-dialog-description": "Dadurch wird der Zugriff auf Ihr {appName}-Konto vom Gerät entfernt",
+      "disable-session-dialog-cancel-button": "Stornieren",
+      "disable-session-dialog-confirm-button": "Bestätigen",
+      "session-card-created-at-label": "Erstellt {createdAt, time, short} um {createdAt, date, short}",
+      "session-card-expires-at-label": "Läuft {expiresAt, time, short} um {expiresAt, date, short} ab"
     }
   },
   "login": {

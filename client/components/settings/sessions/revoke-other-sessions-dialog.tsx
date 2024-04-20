@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { APP_NAME } from "@/lib/constants";
 import useRevokeOtherSessions from "@/lib/hooks/useRevokeOtherSessions";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function RevokeOtherSessionsDialog({
@@ -19,6 +20,7 @@ export default function RevokeOtherSessionsDialog({
   disabled: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("settings.sessions");
   const revokeOtherSessions = useRevokeOtherSessions();
 
   async function handleRevokeOtherSessions() {
@@ -30,27 +32,30 @@ export default function RevokeOtherSessionsDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="destructive" disabled={disabled}>
-          Logout from all other devices
+          {t("disable-all-sessions-label")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[475px]">
         <DialogHeader>
-          <DialogTitle>Logout from all other devices</DialogTitle>
+          <DialogTitle>{t("disable-all-sessions-dialog-title")}</DialogTitle>
           <DialogDescription>
-            This will remove access to your {APP_NAME} account from all other
-            devices
+            {t("disable-all-sessions-dialog-description", {
+              appName: APP_NAME,
+            })}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex w-full items-end gap-4">
           <DialogClose asChild>
-            <Button variant="ghost">Cancel</Button>
+            <Button variant="ghost">
+              {t("disable-all-sessions-dialog-cancel-button")}
+            </Button>
           </DialogClose>
           <Button
             type="submit"
             variant="destructive"
             onClick={handleRevokeOtherSessions}
           >
-            Confirm
+            {t("disable-all-sessions-dialog-confirm-button")}
           </Button>
         </DialogFooter>
       </DialogContent>
