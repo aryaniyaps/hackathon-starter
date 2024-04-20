@@ -36,6 +36,13 @@ import {
   X,
   type LucideIcon,
   type LucideProps,
+  Smartphone,
+  Tablet,
+  Monitor,
+  Tv,
+  Cpu,
+  Terminal,
+  Watch,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -54,6 +61,13 @@ export const Icons = {
       <circle cx="12" cy="12" r="10"></circle>
     </svg>
   ),
+  smartphone: Smartphone,
+  tablet: Tablet,
+  monitor: Monitor,
+  tv: Tv,
+  cpu: Cpu,
+  terminal: Terminal,
+  watch: Watch,
   squirrel: Squirrel,
   logOut: LogOut,
   arrowUp: ArrowUp,

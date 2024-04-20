@@ -1,10 +1,37 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
-import parseUserAgent from "@/utils/userAgent";
-import { Session } from "@ory/kratos-client";
+import getBrowserOSInfo, { getDeviceIcon } from "@/utils/userAgent";
+import { Session, SessionDevice } from "@ory/kratos-client";
 import { useFormatter } from "next-intl";
 import RevokeSessionDialog from "./revoke-session-dialog";
+import { UAParser } from "ua-parser-js";
+
+function DeviceInformation({ device }: { device: SessionDevice }) {
+  if (device.user_agent) {
+    const parserResult = new UAParser(device.user_agent).getResult();
+    const DeviceIcon = getDeviceIcon(parserResult);
+
+    return (
+      <div className="flex gap-2 items-center">
+        <DeviceIcon className="w-6 h-6" />
+        <div key={device.id} className="flex flex-col">
+          <p className="font-bold">
+            {device.ip_address} {device.location}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            {getBrowserOSInfo(parserResult)}
+          </p>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <p className="font-bold" key={device.id}>
+      {device.ip_address} {device.location}
+    </p>
+  );
+}
 
 export default function SessionCard({
   session,
@@ -19,18 +46,8 @@ export default function SessionCard({
       <CardHeader>
         <div className="flex w-full items-center justify-between gap-4">
           <div className="flex flex-col gap-2">
-            <p>{session.id}</p>
             {session.devices?.map((device) => (
-              <div key={device.id} className="flex flex-col">
-                <p className="font-bold">
-                  {device.ip_address} {device.location}
-                </p>
-                {device.user_agent ? (
-                  <p className="text-xs text-muted-foreground">
-                    {parseUserAgent(device.user_agent)}
-                  </p>
-                ) : null}
-              </div>
+              <DeviceInformation device={device} />
             ))}
           </div>
           {isCurrentSession ? (

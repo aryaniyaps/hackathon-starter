@@ -33,10 +33,9 @@ export default function SessionList() {
         <RevokeOtherSessionsDialog disabled={isEmpty} />
       </div>
       {isEmpty ? (
-        <div className="w-full flex items-center gap-2 text-muted-foreground font-semibold">
-          <Icons.squirrel className="w-10 h-10" />
-          <p>No active sessions found!</p>
-        </div>
+        <p className="w-full text-muted-foreground font-semibold">
+          No active sessions found!
+        </p>
       ) : (
         <ScrollArea className="h-full flex-1 overflow-y-auto">
           <div className="flex h-full flex-1 flex-col gap-4">
