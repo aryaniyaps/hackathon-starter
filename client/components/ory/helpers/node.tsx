@@ -273,8 +273,6 @@ export const Node = ({
     const attrs = node.attributes;
     const nodeType = attrs.type;
 
-    console.log(attrs.name === "webauthn_login_trigger")
-
     const isSocial =
       (attrs.name === "provider" ||
         attrs.name === "link" ||
