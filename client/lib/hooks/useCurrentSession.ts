@@ -6,12 +6,8 @@ export default function useCurrentSession() {
   return useQuery({
     queryKey: ["/sessions/@me"],
     queryFn: async () => {
-      try {
-        const { data } = await kratos.toSession({});
-        return data;
-      } catch (err) {
-        throw err;
-      }
+      const { data } = await kratos.toSession({});
+      return data;
     },
   });
 }
