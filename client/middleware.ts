@@ -23,11 +23,10 @@ const protectedRoutes = [
   "/settings/internationalization",
   "/settings/sessions",
   "/logout",
+  "/verification",
 ];
 
-// FIXME: should we redirect users from recovery and verification pages
-// if they are already authenticated?
-const authRoutes = ["/login", "/registration", "/recovery", "/verification"];
+const authRoutes = ["/login", "/registration", "/recovery"];
 
 export default async function middleware(request: NextRequest) {
   // run internationalization middleware

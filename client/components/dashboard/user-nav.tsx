@@ -13,6 +13,7 @@ import { getAvatarURL } from "@/utils/avatar";
 import { useTranslations } from "next-intl";
 import { Icons } from "../icons";
 import { Separator } from "../ui/separator";
+import { Skeleton } from "../ui/skeleton";
 
 export default function UserNav() {
   // this hook is somehow being executed on the server which raises
@@ -21,6 +22,29 @@ export default function UserNav() {
   const { data: session } = useCurrentSession();
 
   const t = useTranslations("dashboard.user-nav");
+
+  if (!session) {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Skeleton className="h-8 w-8 rounded-full" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" sideOffset={15}>
+          <DropdownMenuLabel className="flex flex-col gap-2">
+            <Skeleton className="h-4 w-[200px]" />
+            <Skeleton className="h-4 w-[150px]" />
+          </DropdownMenuLabel>
+          <Separator className="my-2" />
+          <Link href="/settings">
+            <DropdownMenuItem className="flex gap-2 items-center">
+              <Icons.settings className="h-4 w-4" />
+              {t("settings-label")}
+            </DropdownMenuItem>
+          </Link>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  }
 
   return (
     <DropdownMenu>

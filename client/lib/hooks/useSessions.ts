@@ -1,10 +1,10 @@
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import parseLinkHeader from "parse-link-header";
 import { DEFAULT_PAGE_SIZE } from "../constants";
 import kratos from "../kratos";
 
 export default function useSessions() {
-  return useSuspenseInfiniteQuery({
+  return useInfiniteQuery({
     queryKey: ["/sessions"],
     queryFn: async ({ pageParam }) => {
       const { data, headers } = await kratos.listMySessions({
