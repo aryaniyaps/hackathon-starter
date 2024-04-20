@@ -3,6 +3,10 @@ import { JSX } from "react";
 import { FilterFlowNodes } from "../helpers/filter-flow-nodes";
 import { SelfServiceFlow } from "../helpers/types";
 import { hasPasskey, hasWebauthn } from "../helpers/utils";
+import { Link } from "@/lib/navigation";
+import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+import { UiNode } from "@ory/kratos-client";
 
 export const PasswordlessSection = (
   flow: SelfServiceFlow
@@ -75,16 +79,23 @@ export const PasskeyLoginSection = (
   ) : null;
 };
 
-export const PasswordlessLoginSection = (
-  flow: SelfServiceFlow
-): JSX.Element | null => {
-  if (hasWebauthn(flow.ui.nodes)) {
+export interface PasswordlessLoginSectionProps {
+  nodes: UiNode[];
+  recoveryURL?: string;
+}
+
+export const PasswordlessLoginSection = ({
+  nodes,
+  recoveryURL,
+}: PasswordlessLoginSectionProps): JSX.Element | null => {
+  const t = useTranslations();
+  if (hasWebauthn(nodes)) {
     return (
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-6">
           <FilterFlowNodes
             filter={{
-              nodes: flow.ui.nodes,
+              nodes: nodes,
               // we will also map default fields here but not oidc and password fields
               groups: ["webauthn"],
               withoutDefaultAttributes: true,
@@ -94,12 +105,17 @@ export const PasswordlessLoginSection = (
         </div>
         <FilterFlowNodes
           filter={{
-            nodes: flow.ui.nodes,
+            nodes: nodes,
             groups: ["webauthn"],
             withoutDefaultAttributes: true,
             attributes: ["button", "submit"],
           }}
         />
+        <Link href={recoveryURL} className="w-full flex justify-center">
+          <Button data-testid="forgot-password-link" variant="link">
+            {t("login.recover-account")}
+          </Button>
+        </Link>
       </div>
     );
   }

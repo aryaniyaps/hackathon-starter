@@ -113,6 +113,9 @@ selfservice:
       ui_url: http://localhost:3000/recovery
       enabled: true
       notify_unknown_recipients: true
+      after:
+        hooks:
+          - hook: revoke_active_sessions
 
     logout:
       after:

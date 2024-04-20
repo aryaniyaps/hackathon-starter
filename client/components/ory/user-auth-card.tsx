@@ -51,7 +51,7 @@ import { ProfileRegistrationSection } from "./sections/profile-section";
 import { RegistrationSection } from "./sections/registration-section";
 
 export interface LoginSectionAdditionalProps {
-  forgotPasswordURL?: string;
+  recoveryURL?: string;
   signupURL?: string;
   logoutURL?: string;
 }
@@ -326,7 +326,10 @@ export const UserAuthCard = ({
 
   switch (flowType) {
     case "login":
-      $passwordlessWebauthn = PasswordlessLoginSection(flow);
+      $passwordlessWebauthn = PasswordlessLoginSection({
+        nodes: flow.ui.nodes,
+        ...additionalProps,
+      });
       $passkey = PasskeyLoginSection(flow);
       $oidc = OIDCSection(flow);
       $code = AuthCodeSection({ nodes: flow.ui.nodes });

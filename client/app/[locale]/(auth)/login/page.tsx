@@ -77,9 +77,9 @@ export default async function LoginPage({
         flow={flow}
         // the login card should allow the user to go to the registration page and the recovery page
         additionalProps={{
-          forgotPasswordURL: "/recovery",
+          recoveryURL: "/recovery",
           signupURL: "/registration",
-          logoutURL: "/logout"
+          logoutURL: "/logout",
         }}
         // we might need webauthn support which requires additional js
         includeScripts={true}

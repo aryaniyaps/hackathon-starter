@@ -9,12 +9,12 @@ import { hasPassword } from "../helpers/utils";
 
 export interface LoginSectionProps {
   nodes: UiNode[];
-  forgotPasswordURL?: string;
+  recoveryURL?: string;
 }
 
 export const LoginSection = ({
   nodes,
-  forgotPasswordURL,
+  recoveryURL,
 }: LoginSectionProps): JSX.Element | null => {
   const t = useTranslations();
   return hasPassword(nodes) ? (
@@ -27,8 +27,8 @@ export const LoginSection = ({
             excludeAttributes: ["submit", "hidden"],
           }}
         />
-        {forgotPasswordURL && (
-          <Link href={forgotPasswordURL}>
+        {recoveryURL && (
+          <Link href={recoveryURL}>
             <Button data-testid="forgot-password-link" variant="link">
               {t("login.forgot-password")}
             </Button>
