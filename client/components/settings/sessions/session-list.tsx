@@ -8,6 +8,7 @@ import SessionCard from "./session-card";
 import { useTranslations } from "next-intl";
 
 // TODO: fix duplicate session cards?
+// TODO: add loading state here
 export default function SessionList() {
   const t = useTranslations("settings.sessions");
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
