@@ -10,8 +10,7 @@ local claims = {
     },
     verified_addresses: std.prune([
       // Carry over verified status from Social Sign-In provider.
-      if 'email' in claims && claims.email_verified then { via: 'email', value: claims.email },
+      if 'email' in claims && claims.email_verified then { via: 'email', value: claims.email }
     ]),
-  },
   },
 }

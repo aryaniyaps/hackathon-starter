@@ -18,7 +18,6 @@ function SessionListSkeleton() {
   );
 }
 // TODO: fix duplicate session cards?
-// TODO: add loading state here
 export default function SessionList() {
   const t = useTranslations("settings.sessions");
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -50,23 +49,21 @@ export default function SessionList() {
           {t("active-sessions-empty-message")}
         </p>
       ) : (
-        <ScrollArea className="h-full flex-1 overflow-y-auto">
-          <div className="flex h-full flex-1 flex-col gap-4">
-            {allSessions.map((session) => (
-              <SessionCard session={session} key={session.id} />
-            ))}
-            {hasNextPage ? (
-              <Button
-                className="w-full"
-                variant="secondary"
-                onClick={async () => await fetchNextPage()}
-                disabled={isFetchingNextPage}
-              >
-                {isFetchingNextPage ? "Loading more..." : "Load More"}
-              </Button>
-            ) : null}
-          </div>
-        </ScrollArea>
+        <div className="flex h-full flex-1 flex-col gap-4">
+          {allSessions.map((session) => (
+            <SessionCard session={session} key={session.id} />
+          ))}
+          {hasNextPage ? (
+            <Button
+              className="w-full"
+              variant="secondary"
+              onClick={async () => await fetchNextPage()}
+              disabled={isFetchingNextPage}
+            >
+              {isFetchingNextPage ? "Loading more..." : "Load More"}
+            </Button>
+          ) : null}
+        </div>
       )}
     </div>
   );
