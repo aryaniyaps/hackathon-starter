@@ -20,6 +20,11 @@ const protectedRoutes = [
   "/verification",
 ];
 
+// FIXME: the login route is used for two factor verification too,
+// so it maybe accessed when the user is authenticated itself
+
+// We should check if the aal=aal2 search param is being passed and conditionally
+// redirect from the login URL
 const authRoutes = ["/login", "/registration", "/recovery"];
 
 async function handleProtectedRoutes(
@@ -52,6 +57,7 @@ async function handleProtectedRoutes(
 
 async function handleAuthRoutes(request: NextRequest, response: NextResponse) {
   try {
+    console.log("REQUEST: ", request);
     const cookie = request.headers.get("cookie") || "";
     await kratosFetch.toSession({ cookie });
     // If the user is authenticated and trying to access an auth route,

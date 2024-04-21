@@ -13,7 +13,6 @@ export function handleClientSideFlowError<S>(
   return async (err: unknown) => {
     if (err instanceof AxiosError) {
       const data = err.response?.data as any;
-      console.log("DATA: ", data);
       switch (data.error?.id) {
         case "session_inactive":
           router.push("/login?return_to=" + window.location.href);
