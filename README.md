@@ -20,19 +20,16 @@ Execute the following steps:
 2. Create a new project:
    - If you don't have a project yet, click on "Select a project" at the top left of the console.
    - Click on "New Project" and follow the prompts to create a new project.
-3. Enable the Google Identity service API:
-   - In the Google Cloud Console, navigate to the "APIs & Services" > "Library" section.
-   - Search for "Google Identity service API" and enable it for your project.
-4. Set up OAuth2 Credentials:
+3. Set up OAuth2 Credentials:
    - In the Google Cloud Console, go to "APIs & Services" > "Credentials".
    - Click on "Create Credentials" and select "OAuth client ID".
    - Choose the application type based on your needs (e.g., Web application, Android app, iOS app, etc.).
    - Be sure to add the URI **http://localhost:4433/self-service/methods/oidc/callback/google** to the authorized redirect URIs _(assuming Ory Kratos is hosted at localhost:4433)_.
-5. Configure OAuth Consent Screen:
+4. Configure OAuth Consent Screen:
    - If prompted, configure the OAuth consent screen. Provide details like the application name, user support email, and other required information.
-6. Obtain Client ID and Client Secret:
+5. Obtain Client ID and Client Secret:
    - After creating the OAuth client ID, you will be provided with a Client ID and Client Secret.
-7. Paste the Client ID and Client Secret in the `.env` file
+6. Paste the Client ID and Client Secret in the `.env` file
 
    - in the `.env` file present in the root directory, paste the Client ID and Client Secret as follows:
 

@@ -144,8 +144,8 @@ selfservice:
           hooks:
             - hook: show_verification_ui
             - hook: session
-    error:
-      ui_url: http://localhost:3000/error
+    # error:
+    #   ui_url: http://localhost:3000/error
 
 log:
   level: debug
