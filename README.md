@@ -23,7 +23,7 @@ Execute the following steps:
 3. Set up OAuth2 Credentials:
    - In the Google Cloud Console, go to "APIs & Services" > "Credentials".
    - Click on "Create Credentials" and select "OAuth client ID".
-   - Choose the application type based on your needs (e.g., Web application, Android app, iOS app, etc.).
+   - Choose the application type based on your needs (Web application).
    - Be sure to add the URI **http://localhost:4433/self-service/methods/oidc/callback/google** to the authorized redirect URIs _(assuming Ory Kratos is hosted at localhost:4433)_.
 4. Configure OAuth Consent Screen:
    - If prompted, configure the OAuth consent screen. Provide details like the application name, user support email, and other required information.
