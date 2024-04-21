@@ -43,6 +43,7 @@ selfservice:
     - http://localhost:3000/settings/appearance
     - http://localhost:3000/settings/internationalization
     - http://localhost:3000/settings/sessions
+    - http://localhost:3000/verification
 
   methods:
     password:

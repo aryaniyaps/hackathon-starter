@@ -5,14 +5,8 @@ import { defaultLocale, localePrefix, locales } from "./lib/i18n";
 import { kratosFetch } from "./lib/kratos";
 
 const intlMiddleware = createMiddleware({
-  // A list of all locales that are supported
   locales,
-
-  // Used when no locale matches
   defaultLocale,
-  // we don't need a locale prefix because the app runs
-  // behind an authentication layer, and there's no need
-  // for SEO (can change if needed!)
   localePrefix,
 });
 
@@ -28,36 +22,66 @@ const protectedRoutes = [
 
 const authRoutes = ["/login", "/registration", "/recovery"];
 
-export default async function middleware(request: NextRequest) {
-  // run internationalization middleware
-  const response = intlMiddleware(request);
-
-  // check user session
-  if (protectedRoutes.includes(request.nextUrl.pathname)) {
-    // TODO: run intl middleware here also before returning redirects?
-    // TODO: write error page at /error or don't redirect there, we can let nextjs handle errors too
-    try {
-      const cookie = request.headers.get("cookie") || "";
-      await kratosFetch.toSession({ cookie });
-    } catch (err) {
-      if (err instanceof ResponseError) {
-        const data = await err.response.json();
-        switch (err.response?.status) {
-          // 422 we need to redirect the user to the location specified in the response
-          case 422:
-            return NextResponse.redirect(data.redirect_browser_to);
-          //return router.push("/login", { query: { aal: "aal2" } })
-          case 401:
-            // The user is not logged in, so we redirect them to the login page.
-            const redirectUrl = new URL("/login", request.url);
-            redirectUrl.searchParams.set("return_to", request.nextUrl.pathname);
-            return NextResponse.redirect(redirectUrl);
-          default:
-            console.error(err);
-        }
+async function handleProtectedRoutes(
+  request: NextRequest,
+  response: NextResponse
+) {
+  try {
+    const cookie = request.headers.get("cookie") || "";
+    await kratosFetch.toSession({ cookie });
+    return NextResponse.next(response);
+  } catch (err) {
+    if (err instanceof ResponseError) {
+      const data = await err.response.json();
+      switch (err.response?.status) {
+        case 422:
+          return NextResponse.redirect(data.redirect_browser_to);
+        case 401:
+          const redirectUrl = new URL("/login", request.url);
+          redirectUrl.searchParams.set("return_to", request.nextUrl.pathname);
+          return NextResponse.redirect(redirectUrl);
+        default:
+          console.error(err);
+          return NextResponse.next(response);
       }
     }
+    console.error(err);
+    return NextResponse.next(response);
   }
+}
+
+async function handleAuthRoutes(request: NextRequest, response: NextResponse) {
+  try {
+    const cookie = request.headers.get("cookie") || "";
+    await kratosFetch.toSession({ cookie });
+    // If the user is authenticated and trying to access an auth route,
+    // redirect them to the dashboard
+    const redirectUrl = new URL("/dashboard", request.url);
+    return NextResponse.redirect(redirectUrl);
+  } catch (err) {
+    // If the user is not authenticated, proceed to the auth route
+    if (err instanceof ResponseError && err.response?.status === 401) {
+      return NextResponse.next(response);
+    }
+
+    const redirectUrl = new URL("/dashboard", request.url);
+    return NextResponse.redirect(redirectUrl);
+  }
+}
+
+export default async function middleware(request: NextRequest) {
+  const response = intlMiddleware(request);
+
+  const pathname = request.nextUrl.pathname;
+
+  if (protectedRoutes.includes(pathname)) {
+    return await handleProtectedRoutes(request, response);
+  }
+
+  if (authRoutes.includes(pathname)) {
+    return await handleAuthRoutes(request, response);
+  }
+
   return response;
 }
 
