@@ -17,6 +17,7 @@ dependencies = [
     "orjson>=3.9.15",
     "structlog>=24.1.0",
     "redis>=5.0.3",
+    "ory-kratos-client>=1.1.0",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
