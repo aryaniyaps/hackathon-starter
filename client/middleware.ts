@@ -20,11 +20,6 @@ const protectedRoutes = [
   "/verification",
 ];
 
-// FIXME: the login route is used for two factor verification too,
-// so it maybe accessed when the user is authenticated itself
-
-// We should check if the aal=aal2 search param is being passed and conditionally
-// redirect from the login URL
 const authRoutes = ["/login", "/registration", "/recovery"];
 
 async function handleProtectedRoutes(
@@ -56,9 +51,22 @@ async function handleProtectedRoutes(
 }
 
 async function handleAuthRoutes(request: NextRequest, response: NextResponse) {
+  const cookie = request.headers.get("cookie") || "";
   try {
-    console.log("REQUEST: ", request);
-    const cookie = request.headers.get("cookie") || "";
+    // exempt reauthentication flows
+    if (request.nextUrl.pathname === "/login") {
+      const flowId = request.nextUrl.searchParams.get("flow");
+      if (flowId !== null) {
+        try {
+          const flow = await kratosFetch.getLoginFlow({ id: flowId, cookie });
+
+          if (flow.requested_aal === "aal1" || flow.requested_aal === "aal2") {
+            return NextResponse.next(response);
+          }
+        } catch (err) {}
+      }
+    }
+
     await kratosFetch.toSession({ cookie });
     // If the user is authenticated and trying to access an auth route,
     // redirect them to the dashboard
@@ -70,8 +78,7 @@ async function handleAuthRoutes(request: NextRequest, response: NextResponse) {
       return NextResponse.next(response);
     }
 
-    const redirectUrl = new URL("/dashboard", request.url);
-    return NextResponse.redirect(redirectUrl);
+    console.error(err);
   }
 }
 
