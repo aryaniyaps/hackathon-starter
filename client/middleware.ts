@@ -28,7 +28,19 @@ async function handleProtectedRoutes(
 ) {
   try {
     const cookie = request.headers.get("cookie") || "";
-    await kratosFetch.toSession({ cookie });
+    const session = await kratosFetch.toSession({ cookie });
+
+    if (
+      !session.identity?.verifiable_addresses?.some(
+        (address) => address.verified
+      ) &&
+      request.nextUrl.pathname !== "/verification"
+    ) {
+      // user isn't verified yet
+      const redirectUrl = new URL("/verification", request.url);
+      redirectUrl.searchParams.set("return_to", request.nextUrl.pathname);
+      return NextResponse.redirect(redirectUrl);
+    }
     return NextResponse.next(response);
   } catch (err) {
     if (err instanceof ResponseError) {
