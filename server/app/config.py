@@ -99,16 +99,6 @@ class Settings(BaseSettings):
         ),
     ]
 
-    # zitadel config
-
-    zitadel_introspection_url: str
-
-    zitadel_domain: str
-
-    zitadel_api_private_key_path: str
-
-    zitadel_algorithm: str = "RS256"
-
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="server_",

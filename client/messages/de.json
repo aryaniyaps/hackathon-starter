@@ -22,11 +22,13 @@
       "user-settings-label": "Benutzereinstellungen",
       "security-settings-label": "Sicherheitseinstellungen",
       "app-settings-label": "App Einstellungen",
+      "billing-settings-label": "Abrechnungseinstellungen",
       "pages": {
         "account-settings-label": "Konto",
         "appearance-settings-label": "Aussehen",
         "internationalization-settings-label": "Internationalisierung",
-        "sessions-settings-label": "Sitzungen"
+        "sessions-settings-label": "Sitzungen",
+        "billing-settings-label": "Abrechnung"
       }
     },
     "account": {
@@ -79,6 +81,10 @@
       "disable-session-dialog-confirm-button": "Bestätigen",
       "session-card-created-at-label": "Erstellt {createdAt, time, short} um {createdAt, date, short}",
       "session-card-expires-at-label": "Läuft {expiresAt, time, short} um {expiresAt, date, short} ab"
+    },
+    "billing": {
+      "title": "Abrechnung",
+      "description": "Verwalten Sie hier Ihre Abrechnungseinstellungen"
     }
   },
   "login": {

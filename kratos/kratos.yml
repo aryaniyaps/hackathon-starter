@@ -132,6 +132,20 @@ selfservice:
       lifespan: 15m
       ui_url: http://localhost:3000/registration
       after:
+        hooks:
+          - hook: web_hook
+            config:
+              url: http://localhost:8000/web_hooks/create_stripe_customer
+              method: POST
+              body: file://etc/config/kratos/web_hooks/create_stripe_customer_payload.jsonnet
+              auth:
+                type: api_key
+                config:
+                  name: Authorization
+                  value: API_KE
+                  in: header # or cookie
+              response:
+                parse: true
         webauthn:
           hooks:
             # FIXME: session action is executed before the user is verified.
@@ -143,7 +157,6 @@ selfservice:
             - hook: session
         oidc:
           hooks:
-            - hook: show_verification_ui
             - hook: session
     # error:
     #   ui_url: http://localhost:3000/error

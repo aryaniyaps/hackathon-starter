@@ -22,11 +22,13 @@
       "user-settings-label": "User settings",
       "security-settings-label": "Security settings",
       "app-settings-label": "App settings",
+      "billing-settings-label": "Billing settings",
       "pages": {
         "account-settings-label": "Account",
         "appearance-settings-label": "Appearance",
         "internationalization-settings-label": "Internationalization",
-        "sessions-settings-label": "Sessions"
+        "sessions-settings-label": "Sessions",
+        "billing-settings-label": "Billing"
       }
     },
     "account": {
@@ -78,6 +80,10 @@
       "disable-session-dialog-confirm-button": "Confirm",
       "session-card-created-at-label": "Created {createdAt, date, short} at {createdAt, time, short}",
       "session-card-expires-at-label": "Expires {expiresAt, date, short} at {expiresAt, time, short}"
+    },
+    "billing": {
+      "title": "Billing",
+      "description": "Manage your billing settings here"
     }
   },
   "login": {

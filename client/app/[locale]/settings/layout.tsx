@@ -25,6 +25,12 @@ const sidebarNavItems = {
       href: "/settings/internationalization",
     },
   ],
+  "billing-settings-label": [
+    {
+      title: "pages.billing-settings-label",
+      href: "/settings/billing",
+    },
+  ],
 };
 
 export default function SettingsLayout({
