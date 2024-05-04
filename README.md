@@ -5,7 +5,7 @@
 ### Prerequisites:
 
 - Docker Engine
-- Nodejs v20+ (LTS)
+- NodeJS v20+ (LTS)
 
 ### Setup Google Oauth2 application
 
