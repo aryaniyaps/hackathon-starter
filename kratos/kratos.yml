@@ -137,7 +137,7 @@ selfservice:
             config:
               url: http://localhost:8000/web_hooks/create_stripe_customer
               method: POST
-              body: file://etc/config/kratos/web_hooks/create_stripe_customer_payload.jsonnet
+              body: file://etc/config/kratos/web-hooks/create_stripe_customer_payload.jsonnet
               auth:
                 type: api_key
                 config:
@@ -145,6 +145,7 @@ selfservice:
                   value: API_KEY
                   in: header # or cookie
               response:
+                ignore: false
                 parse: true
         webauthn:
           hooks:
