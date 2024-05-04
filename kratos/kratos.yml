@@ -142,19 +142,13 @@ selfservice:
                 type: api_key
                 config:
                   name: Authorization
-                  value: API_KE
+                  value: API_KEY
                   in: header # or cookie
               response:
                 parse: true
         webauthn:
           hooks:
-            # FIXME: session action is executed before the user is verified.
-            # therefore, users can access the app without verifying their email.
-            # if we remove the session action, the user will have to login once again after
-            # registration. This could improve security but reduce DX.
-            # https://github.com/ory/kratos/issues/3160
             - hook: show_verification_ui
-            - hook: session
         oidc:
           hooks:
             - hook: session
