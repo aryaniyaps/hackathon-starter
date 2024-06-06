@@ -1,11 +1,9 @@
 from .base import BaseSchema
 
 
-class IdentityTraits(BaseSchema):
-    email: str
-    name: str
-    customer_id: str
+class PublicMetadata(BaseSchema):
+    stripe_customer_id: str
 
 
 class Identity(BaseSchema):
-    traits: IdentityTraits
+    metadata_public: PublicMetadata

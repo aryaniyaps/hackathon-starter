@@ -99,6 +99,10 @@ class Settings(BaseSettings):
         ),
     ]
 
+    # stripe config
+
+    stripe_api_key: str
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="server_",

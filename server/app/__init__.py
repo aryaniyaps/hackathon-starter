@@ -10,10 +10,22 @@ from app.config import settings
 from app.lib.constants import APP_NAME, SUPPORT_EMAIL
 from app.lib.openapi import generate_operation_id
 from app.lib.rate_limit import rate_limit_backend, rate_limit_config
+from app.lib.stripe import setup_stripe_client
+from app.routes.web_hooks import web_hook_router
+
+
+def setup_third_party_clients() -> None:
+    """Set up third party clients."""
+    setup_stripe_client(
+        api_key=settings.stripe_api_key,
+    )
 
 
 def add_routes(app: FastAPI) -> None:
     """Register routes for the app."""
+    app.include_router(
+        router=web_hook_router,
+    )
 
 
 def add_middleware(app: FastAPI) -> None:
@@ -57,6 +69,7 @@ def create_app() -> FastAPI:
             "email": SUPPORT_EMAIL,
         },
     )
+    setup_third_party_clients()
     add_routes(app)
     add_middleware(app)
     return app
