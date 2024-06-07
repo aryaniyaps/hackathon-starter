@@ -20,8 +20,8 @@
               "via": "email"
             },
             "credentials": {
-              "webauthn": {
-                "identifier": true
+              "passkey": {
+                "display_name": true
               }
             }
           }
@@ -35,15 +35,6 @@
       },
       "required": ["email", "name"],
       "additionalProperties": false
-    },
-    "metadata_public": {
-      "type": "object",
-      "properties": {
-        "stripe_customer_id": {
-          "type": "string",
-          "title": "Stripe Customer ID"
-        }
-      }
     }
   },
   "additionalProperties": false

@@ -1,4 +1,4 @@
-version: v1.1.0
+version: v1.2.0
 dsn: ""
 
 serve:
@@ -60,17 +60,19 @@ selfservice:
       enabled: true
       config:
         lifespan: 15m
-    webauthn:
+    passkey:
       enabled: true
       config:
-        passwordless: true
         rp:
           display_name: Starter
           # Set 'id' to the top-level domain.
           id: localhost
-          # Set 'origin' to the exact URL of the page that prompts the user to use WebAuthn. You must include the scheme, host, and port.
+          # Set 'origin' to the exact URL of the page that prompts the user to use passkey. You must include the scheme, host, and port.
           origins:
             - http://localhost:3000
+
+    webauthn:
+      enabled: false
     oidc:
       enabled: true
       config:
@@ -132,27 +134,29 @@ selfservice:
       lifespan: 15m
       ui_url: http://localhost:3000/registration
       after:
-        hooks:
-          - hook: web_hook
-            config:
-              url: http://localhost:8000/web_hooks/create_stripe_customer
-              method: POST
-              body: file://etc/config/kratos/web-hooks/create_stripe_customer_payload.jsonnet
-              auth:
-                type: api_key
-                config:
-                  name: Authorization
-                  value: API_KEY
-                  in: header # or cookie
-              response:
-                ignore: false
-                parse: true
-        webauthn:
+        # TODO: store customer ID in a separate database, as recommended in
+        # the Kratos documentation
+        # hooks:
+        #   - hook: web_hook
+        #     config:
+        #       url: http://localhost:8000/web_hooks/create_stripe_customer
+        #       method: POST
+        #       body: file://etc/config/kratos/web-hooks/create_stripe_customer_payload.jsonnet
+        #       auth:
+        #         type: api_key
+        #         config:
+        #           name: Authorization
+        #           value: API_KEY
+        #           in: header # or cookie
+        #       response:
+        #         ignore: false
+        #         parse: true
+        passkey:
           hooks:
             - hook: show_verification_ui
         oidc:
           hooks:
-            - hook: session
+            - hook: show_verification_ui
     # error:
     #   ui_url: http://localhost:3000/error
 
