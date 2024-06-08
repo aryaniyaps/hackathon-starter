@@ -5,14 +5,12 @@ import {
 import { Configuration, FrontendApi } from "@ory/kratos-client";
 import { env } from "./env";
 
-const kratos = new FrontendApi(
+export const kratos = new FrontendApi(
   new Configuration({
     basePath: env.NEXT_PUBLIC_KRATOS_PUBLIC_URL,
     baseOptions: { withCredentials: true, mode: "cors" },
   })
 );
-
-export default kratos;
 
 export const kratosFetch = new FetchFrontendApi(
   new FetchConfiguration({

@@ -1,5 +1,5 @@
 import { handleFlowError } from "@/lib/errors";
-import kratos from "@/lib/kratos";
+import { kratos } from "@/lib/kratos";
 import { AxiosError } from "axios";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";

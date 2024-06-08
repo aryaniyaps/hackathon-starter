@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import parseLinkHeader from "parse-link-header";
 import { DEFAULT_PAGE_SIZE } from "../constants";
-import kratos from "../kratos";
+import { kratos } from "../kratos";
 
 export default function useSessions() {
   return useInfiniteQuery({
@@ -16,12 +16,14 @@ export default function useSessions() {
 
       const links = parseLinkHeader(linkHeader);
 
+      console.log(links);
+
       return {
         sessions: data,
         nextPageToken: links?.next?.page_token,
       };
     },
-    initialPageParam: "1",
+    initialPageParam: undefined as undefined | string,
     getNextPageParam: (lastPage) => lastPage.nextPageToken,
   });
 }

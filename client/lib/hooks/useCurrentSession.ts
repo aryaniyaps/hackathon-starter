@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import kratos from "../kratos";
+import { kratos } from "../kratos";
 
 export default function useCurrentSession() {
   return useQuery({

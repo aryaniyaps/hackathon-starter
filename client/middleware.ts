@@ -58,7 +58,10 @@ async function handleAuthRoutes(request: NextRequest, response: NextResponse) {
       const flowId = request.nextUrl.searchParams.get("flow");
       if (flowId !== null) {
         try {
-          const flow = await kratosFetch.getLoginFlow({ id: flowId, cookie });
+          const flow = await kratosFetch.getLoginFlow({
+            id: flowId,
+            cookie,
+          });
 
           if (flow.requested_aal === "aal1" || flow.requested_aal === "aal2") {
             return NextResponse.next(response);

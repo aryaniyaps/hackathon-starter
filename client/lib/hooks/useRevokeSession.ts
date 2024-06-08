@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import kratos from "../kratos";
+import { kratos } from "../kratos";
 
 export default function useRevokeSession() {
   const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ export default function useRevokeSession() {
       return data;
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({queryKey: ["/sessions"]})
-    }
+      await queryClient.invalidateQueries({ queryKey: ["/sessions"] });
+    },
   });
 }

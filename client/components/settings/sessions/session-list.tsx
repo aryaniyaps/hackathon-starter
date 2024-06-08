@@ -1,11 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import useSessions from "@/lib/hooks/useSessions";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import RevokeOtherSessionsDialog from "./revoke-other-sessions-dialog";
 import SessionCard, { SessionCardSkeleton } from "./session-card";
-import { useTranslations } from "next-intl";
 
 function SessionListSkeleton() {
   return (

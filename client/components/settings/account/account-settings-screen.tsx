@@ -7,10 +7,10 @@ import {
 } from "@/components/ory/user-settings-card";
 import { Separator } from "@/components/ui/separator";
 import { handleClientSideFlowError } from "@/lib/errors";
-import kratos from "@/lib/kratos";
+import { kratos } from "@/lib/kratos";
 import { SettingsFlow, UpdateSettingsFlowBody } from "@ory/kratos-client";
 import { AxiosError } from "axios";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 
 export default function AccountSettingsScreen() {
